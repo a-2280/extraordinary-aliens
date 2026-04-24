@@ -1,3 +1,24 @@
+.footer-glow {
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    border-radius: 50%;
+    pointer-events: none;
+    background: linear-gradient(90deg,
+        #ff1500,
+        #ff6600,
+        #ffd000,
+        #00d060,
+        #fff,
+        #00cccc,
+        #0055ff,
+        #8800ee
+    );
+    filter: blur(55px);
+    mix-blend-mode: screen;
+    will-change: transform, opacity;
+}
+
 .logo--footer {
     width: 100%;
     aspect-ratio: 28 / 3;

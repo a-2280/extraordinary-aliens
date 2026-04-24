@@ -1,0 +1,295 @@
+/*--------------------------------------------------------------
+## Global Styling
+--------------------------------------------------------------*/
+
+a {
+  color: inherit;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.overflow {
+  overflow: hidden;
+}
+
+.radius-5 {
+    border-radius: 5px;
+}
+
+.radius-15 {
+  border-radius: 15px;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.shrink-0 {
+    flex-shrink: 0;
+}
+
+.text-light-grey {
+  color: #b4b4b4;
+}
+
+.text-grey {
+  color: #999999;
+}
+
+.text-dark-grey {
+  color: #474747;
+}
+
+/* ------------ Grid Styles ------------ */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.col-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* ------------ Flex Styles ------------ */
+
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+/* ------------ Gap Styles ------------ */
+
+.gap-20 {
+  gap: 20px;
+}
+
+.gap-3 {
+  gap: 3px;
+}
+
+.gap-30 {
+  gap: 30px;
+}
+
+.gap-40 {
+  gap: 40px;
+}
+
+.gap-100 {
+  gap: 100px;
+}
+
+/* ------------ Margin Styles ------------ */
+
+.m0 {
+  margin: 0px;
+}
+
+.ma {
+  margin: auto;
+}
+
+.mla {
+  margin-left: auto;
+}
+
+.mra {
+  margin-right: auto;
+}
+
+.mta {
+  margin-top: auto;
+}
+
+.mba {
+  margin-bottom: auto;
+}
+
+/* ------------ Padding Styles ------------ */
+
+.p0 {
+  padding: 0px;
+}
+
+.p15 {
+    padding: 15px;
+}
+
+.p20 {
+  padding: 20px;
+}
+
+.p35 {
+  padding: 35px;
+}
+
+.p40 {
+  padding: 40px;
+}
+
+.pl3 {
+    padding-left: 3px;
+}
+
+.py8 {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.px15 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* ------------ Position Styles ------------ */
+
+.pos-rel {
+  position: relative;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
+/* ------------ Z-Index Styles ------------ */
+
+.z-2 {
+  z-index: 2;
+}
+
+/* ------------ BG Styles ------------ */
+
+.bg-grey {
+  background-color: rgba(218, 218, 218, 0.45);
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-black {
+  background-color: #0F0F0F;
+}
+
+.bg-red {
+  background-color: rgba(255, 0, 0, 0.25);
+}
+
+/* ------------ Image Styles ------------ */
+
+div.bg-image,
+.bg-image {
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+}
+
+/* ------------ Spacer Styles ------------ */
+
+.spacer {
+  height: 100px;
+}
+
+/* ------------ Ratio Styles ------------ */
+
+.ratio-1-2 {
+  width: 100%;
+  aspect-ratio: 1 / 2;
+}
+
+.ratio-2-1 {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+}
+
+/* ------------ Width Styles ------------ */
+
+.w-50 {
+  width: 50%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+/* ------------ Height Styles ------------ */
+
+.h-100 {
+  height: 100%;
+}
+
+.h-100vh {
+  height: 100vh;
+}
+
+/* ------------ Max Styles ------------ */
+
+.max-1600 {
+  max-width: 1600px;
+}
+
+/* ------------ Mobile Styles ------------ */
+
+.m-hide {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.m-show {
+  display: none;
+  @media (max-width: 768px) {
+    display: inherit;
+  }
+}
+
+.m-wrap {
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
+}
+
+.m-100 {
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}

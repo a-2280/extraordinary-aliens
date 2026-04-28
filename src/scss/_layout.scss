@@ -46,6 +46,11 @@
   font-display: swap;
 }
 
+.h1 {
+  font-weight: 500;
+  font-size: 36px;
+}
+
 .h3 {
   font-size: 20;
 }
@@ -61,7 +66,7 @@
 }
 
 body {
-  color: #0F0F0F;
+  color: var(--grey-6);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 3%;
@@ -73,4 +78,14 @@ body {
     background: #0F0F0F;
     color: white;
   }
+}
+
+html {
+  background-color: #F4F4F4;
+}
+
+:root {
+  --black: #0F0F0F;
+  --grey-5: #A2A2A2;
+  --grey-6: #474747;
 }

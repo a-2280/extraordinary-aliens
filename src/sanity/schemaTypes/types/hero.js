@@ -1,3 +1,4 @@
+import { ColorWheelIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export default defineType({
@@ -6,11 +7,40 @@ export default defineType({
     type: "document",
     fields: [
         defineField({
-            name: "title",
-            title: "Title",
+            name: "description",
+            title: "Description",
+            type: "array",
+            of: [
+                {
+                    type: "block",
+                    marks: {
+                        annotations: [
+                            {
+                                name: "textColor",
+                                title: "Text Color",
+                                type: "object",
+                                icon: ColorWheelIcon,
+                                fields: [
+                                    {
+                                        name: "swatch",
+                                        title: "Color",
+                                        type: "reference",
+                                        to: [{ type: "colorSwatch" }],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                },
+            ],
+            validation: Rule => Rule.required(),
+        }),
+        defineField({
+            name: "button",
+            title: "CTA Button",
             type: "string",
             validation: Rule => Rule.required(),
-        })
+        }),
     ],
     preview: { select: { title: "title" } },
 })

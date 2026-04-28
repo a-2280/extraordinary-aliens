@@ -38,16 +38,12 @@ a {
     flex-shrink: 0;
 }
 
-.text-light-grey {
-  color: #b4b4b4;
+.text-black {
+  color: var(--black);
 }
 
-.text-grey {
-  color: #999999;
-}
-
-.text-dark-grey {
-  color: #474747;
+.text-grey-5 {
+  color: var(--grey-5);
 }
 
 /* ------------ Grid Styles ------------ */
@@ -176,6 +172,10 @@ a {
     padding-right: 15px;
 }
 
+.pth {
+  padding-top: 61px;
+}
+
 /* ------------ Position Styles ------------ */
 
 .pos-rel {
@@ -196,7 +196,7 @@ a {
 /* ------------ BG Styles ------------ */
 
 .bg-grey {
-  background-color: rgba(218, 218, 218, 0.45);
+  background-color: #DADADA73;
 }
 
 .bg-white {

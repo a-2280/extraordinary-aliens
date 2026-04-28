@@ -24,21 +24,11 @@ export default function Header({ data }) {
     }
 
     return (
-        <header className="p15 flex">
-            <button
-                className="bg-grey py8 px15 radius-5 f-nav flex gap-20 align-center shrink-0"
-                onClick={handleClick}
-            >
+        <header className='masthead p15 flex align-center text-black'>
+            <button className='bg-grey py8 px15 radius-5 f-nav flex gap-20 align-center shrink-0' onClick={handleClick}>
                 Extraordinary Aliens
-                <svg width="6" height="9" viewBox="0 0 6 9" fill="none">
-                    <path
-                        ref={pathRef}
-                        d={LEFT}
-                        stroke="rgba(15,15,15,1)"
-                        strokeWidth="1.16"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
+                <svg width='6' height='9' viewBox='0 0 6 9' fill='none'>
+                    <path ref={pathRef} d={LEFT} stroke='rgba(15,15,15,1)' strokeWidth='1.16' strokeLinecap='round' strokeLinejoin='round' />
                 </svg>
             </button>
             <ButtonList open={open} data={data} />
@@ -53,17 +43,17 @@ function ButtonList({ open, data }) {
         gsap.to(containerRef.current.children, {
             opacity: open ? 1 : 0,
             pointerEvents: open ? "auto" : "none",
-            xPercent: open ? 0 : -100,
+            x: open ? 0 : -10,
             duration: 0.3,
-            stagger: open ? .05 : { each: .05, from: "end" },
-            ease: open ? "power2.out" : "power2.in"
+            stagger: open ? .05 : { each: .08, from: "end" },
+            ease: open ? "power2.out" : "power2.in",
         });
     }, { scope: containerRef, dependencies: [open] });
 
     return (
         <div ref={containerRef} className="overflow w-100 flex gap-3 pl3">
             {data?.links?.map((link, index) => (
-                <div className="flex-1 bg-white radius-5 pos-rel" key={index} style={{ zIndex: data.links.length - index }}>
+                <div className="flex-1 radius-5 pos-rel" key={index} style={{ zIndex: data.links.length - index }}>
                     <div className="h5 bg-grey py8 px15 radius-5 flex gap-20 align-center">{link.title}</div>
                 </div>
             ))}

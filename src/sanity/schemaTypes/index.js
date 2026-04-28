@@ -1,4 +1,5 @@
 import ctaList from './types/ctaList'
+import colorSwatch from './types/colorSwatch'
 import footer from './types/footer'
 import footerDetail from './types/footerDetail'
 import footerDetails from './types/footerDetails'
@@ -11,5 +12,5 @@ import page from './types/page'
 import pageComponentList from './types/pageComponentList'
 
 export const schema = {
-  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail],
+  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail, colorSwatch],
 }

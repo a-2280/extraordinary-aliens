@@ -1,3 +1,5 @@
+"use client"
+
 import { PortableText } from "next-sanity"
 import React, { useRef, useEffect } from "react"
 import gsap from "gsap"
@@ -31,8 +33,25 @@ export default function Footer({ data }) {
         }
         rafId = requestAnimationFrame(tick)
 
-        const onEnter = () => { gsap.to(glow, { opacity: 0.72, duration: 1.2, overwrite: "auto" }) }
-        const onLeave = () => { gsap.to(glow, { opacity: 0, duration: 1.2, overwrite: "auto" }) }
+        let breatheTween = null
+
+        const onEnter = () => {
+            if (breatheTween) breatheTween.kill()
+            gsap.to(glow, {
+                opacity: 0.60, duration: 1.2, overwrite: "auto",
+                onComplete: () => {
+                    breatheTween = gsap.to(glow, {
+                        opacity: 0.38, scale: 0.9,
+                        duration: 3, repeat: -1, yoyo: true,
+                        ease: "sine.inOut"
+                    })
+                }
+            })
+        }
+        const onLeave = () => {
+            if (breatheTween) { breatheTween.kill(); breatheTween = null }
+            gsap.to(glow, { opacity: 0, duration: 1.2, overwrite: "auto" })
+        }
         const onMove = (e) => {
             const { left, top } = container.getBoundingClientRect()
             const newX = e.clientX - left
@@ -59,6 +78,7 @@ export default function Footer({ data }) {
 
         return () => {
             cancelAnimationFrame(rafId)
+            if (breatheTween) breatheTween.kill()
             container.removeEventListener("mouseenter", onEnter)
             container.removeEventListener("mouseleave", onLeave)
             container.removeEventListener("mousemove", onMove)

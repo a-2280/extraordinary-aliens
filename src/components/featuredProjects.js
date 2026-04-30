@@ -25,9 +25,11 @@ function Project({ project, cursorRef }) {
 
     return (
         <div className='grid col-4 pb150'>
-            <p className='h1 text-grey-6 pl30'>{project.title}</p>
+            <p className='h1 text-grey-6 pl30 fade--in' data-sal>
+                {project.title}
+            </p>
             <div className='span-3 flex flex-col gap-40'>
-                <div className='flex gap-20 space-between pr30'>
+                <div className='flex gap-20 space-between pr30 fade--in' data-sal>
                     <div className='f-20 text-grey-5 max-500'>
                         <PortableText value={project.description} />
                     </div>
@@ -39,8 +41,10 @@ function Project({ project, cursorRef }) {
                         ))}
                     </div>
                 </div>
-                <div className="flex flex-col gap-15">
-                    <div className="index">{activeIndex + 1} / {project.images.length}</div>
+                <div className='flex flex-col gap-15'>
+                    <div className='index fade--in' data-sal>
+                        {activeIndex + 1} / {project.images.length}
+                    </div>
                     <ProjectSlider images={project.images} cursorRef={cursorRef} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
                 </div>
             </div>

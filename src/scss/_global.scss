@@ -3,23 +3,23 @@
 --------------------------------------------------------------*/
 
 a {
-  color: inherit;
+    color: inherit;
 }
 
 .link {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .text-center {
-  text-align: center;
+    text-align: center;
 }
 
 .uppercase {
-  text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 .overflow {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 .radius-5 {
@@ -27,7 +27,7 @@ a {
 }
 
 .radius-15 {
-  border-radius: 15px;
+    border-radius: 15px;
 }
 
 .nowrap {
@@ -39,42 +39,42 @@ a {
 }
 
 .text-black {
-  color: var(--black);
+    color: var(--black);
 }
 
 .text-white {
-  color: var(--grey-1);
+    color: var(--grey-1);
 }
 
 .text-grey-4 {
-  color: var(--grey-4);
+    color: var(--grey-4);
 }
 
 .text-grey-5 {
-  color: var(--grey-5);
+    color: var(--grey-5);
 }
 
 .text-grey-6 {
-  color: var(--grey-6);
+    color: var(--grey-6);
 }
 
 .text-footer {
-  color: #999999;
+    color: #999999;
 }
 
 .pointer {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .cursor-none {
-  cursor: none;
+    cursor: none;
 }
 
 /* ------------ Grid Styles ------------ */
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .col-4 {
@@ -82,107 +82,111 @@ a {
 }
 
 .span-3 {
-  grid-column: span 3;
+    grid-column: span 3;
 }
 
 /* ------------ Flex Styles ------------ */
 
 .flex {
-  display: flex;
+    display: flex;
 }
 
 .flex-1 {
-  flex: 1;
+    flex: 1;
 }
 
 .flex-wrap {
-  flex-wrap: wrap;
+    flex-wrap: wrap;
 }
 
 .flex-col {
-  flex-direction: column;
+    flex-direction: column;
 }
 
 .align-center {
-  align-items: center;
+    align-items: center;
 }
 
 .justify-center {
-  justify-content: center;
+    justify-content: center;
 }
 
 .space-between {
-  justify-content: space-between;
+    justify-content: space-between;
 }
 
 /* ------------ Gap Styles ------------ */
 
 .gap-3 {
-  gap: 3px;
+    gap: 3px;
 }
 
 .gap-5 {
-  gap: 5px;
+    gap: 5px;
 }
 
 .gap-15 {
-  gap: 15px;
+    gap: 15px;
 }
 
 .gap-20 {
-  gap: 20px;
+    gap: 20px;
 }
 
 .gap-30 {
-  gap: 30px;
+    gap: 30px;
 }
 
 .gap-40 {
-  gap: 40px;
+    gap: 40px;
 }
 
 .gap-50 {
-  gap: 50px;
+    gap: 50px;
+}
+
+.gap-90 {
+    gap: 90px;
 }
 
 .gap-100 {
-  gap: 100px;
+    gap: 100px;
 }
 
 /* ------------ Margin Styles ------------ */
 
 .m0 {
-  margin: 0px;
+    margin: 0px;
 }
 
 .ma {
-  margin: auto;
+    margin: auto;
 }
 
 .mla {
-  margin-left: auto;
+    margin-left: auto;
 }
 
 .mra {
-  margin-right: auto;
+    margin-right: auto;
 }
 
 .mta {
-  margin-top: auto;
+    margin-top: auto;
 }
 
 .mba {
-  margin-bottom: auto;
+    margin-bottom: auto;
 }
 
 .mr15 {
-  margin-right: 15px;
+    margin-right: 15px;
 }
 
 /* ------------ Padding Styles ------------ */
 
 .p0 {
-  padding: 0px;
+    padding: 0px;
 }
 
 .p15 {
@@ -190,43 +194,43 @@ a {
 }
 
 .p20 {
-  padding: 20px;
+    padding: 20px;
 }
 
 .p30 {
-  padding: 30px;
+    padding: 30px;
 }
 
 .p35 {
-  padding: 35px;
+    padding: 35px;
 }
 
 .p40 {
-  padding: 40px;
+    padding: 40px;
 }
 
 .pt60 {
-  padding-top: 60px;
+    padding-top: 60px;
 }
 
 .pr15 {
-  padding-right: 15px;
+    padding-right: 15px;
 }
 
 .pr30 {
-  padding-right: 30px;
+    padding-right: 30px;
 }
 
 .pb60 {
-  padding-bottom: 60px;
+    padding-bottom: 60px;
 }
 
 .pb75 {
-  padding-bottom: 75px;
+    padding-bottom: 75px;
 }
 
 .pb150 {
-  padding-bottom: 150px;
+    padding-bottom: 150px;
 }
 
 .pl3 {
@@ -234,7 +238,7 @@ a {
 }
 
 .pl30 {
-  padding-left: 30px;
+    padding-left: 30px;
 }
 
 .py8 {
@@ -248,200 +252,205 @@ a {
 }
 
 .px30 {
-  padding-left: 30px;
-  padding-right: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .pth {
-  padding-top: 61px;
+    padding-top: 61px;
 }
 
 /* ------------ Position Styles ------------ */
 
 .pos-rel {
-  position: relative;
+    position: relative;
 }
 
 .pos-abs {
-  position: absolute;
+    position: absolute;
 }
 
 .sticky {
-  position: sticky;
-  top: 0;
+    position: sticky;
+    top: 0;
 }
 
 .top-0 {
-  top: 0;
+    top: 0;
 }
 
 .left-0 {
-  left: 0;
+    left: 0;
 }
 
 .top-half {
-  top: 50%;
-  transform: translateY(-50%);
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .left-half {
-  left: 50%;
-  transform: translateX(-50%);
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* ------------ Z-Index Styles ------------ */
 
 .z-2 {
-  z-index: 2;
+    z-index: 2;
 }
 
 /* ------------ BG Styles ------------ */
 
 .bg-grey {
-  background-color: #DADADA73;
+    background-color: #dadada73;
 }
 
 .bg-white {
-  background-color: white;
+    background-color: white;
 }
 
 .bg-black {
-  background-color: #0F0F0F;
+    background-color: #0f0f0f;
 }
 
 .bg-red {
-  background-color: rgba(255, 0, 0, 0.25);
+    background-color: rgba(255, 0, 0, 0.25);
 }
 
 .bg-blue {
-  background-color: rgba(0, 0, 255, 0.25);
+    background-color: rgba(0, 0, 255, 0.25);
 }
 
 /* ------------ Image Styles ------------ */
 
 div.bg-image,
 .bg-image {
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  object-fit: cover;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: cover;
 }
 
 /* ------------ Spacer Styles ------------ */
 
 .spacer {
-  height: 100px;
-  &.x2 {
-    height: 200px;
-  }
+    height: 100px;
+    &.x2 {
+        height: 200px;
+    }
 }
 
 /* ------------ Ratio Styles ------------ */
 
 .ratio-1-1 {
-  width: 100%;
-  aspect-ratio: 1 / 1;
+    width: 100%;
+    aspect-ratio: 1 / 1;
 }
 
 .ratio-1-2 {
-  width: 100%;
-  aspect-ratio: 1 / 2;
+    width: 100%;
+    aspect-ratio: 1 / 2;
 }
 
 .ratio-2-1 {
-  width: 100%;
-  aspect-ratio: 2 / 1;
+    width: 100%;
+    aspect-ratio: 2 / 1;
 }
 
 .ratio-8-5 {
-  width: 100%;
-  aspect-ratio: 8 / 5;
+    width: 100%;
+    aspect-ratio: 8 / 5;
 }
 
-  .ratio-16-9 {
-  width: 100%;
-  aspect-ratio: 16 / 9;
+.ratio-16-9 {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+.ratio-16-18 {
+    width: 100%;
+    aspect-ratio: 16 / 18;
 }
 
 /* ------------ Width Styles ------------ */
 
 .w-50 {
-  width: 50%;
+    width: 50%;
 }
 
 .w-100 {
-  width: 100%;
+    width: 100%;
 }
 
 /* ------------ Height Styles ------------ */
 
 .h-100 {
-  height: 100%;
+    height: 100%;
 }
 
 .h-75vh {
-  height: 75vh;
+    height: 75vh;
 }
 
 .h-100vh {
-  height: 100vh;
+    height: 100vh;
 }
 
 .h-full {
-  height: calc(100vh - 61px);
+    height: calc(100vh - 61px);
 }
 
 /* ------------ Max Styles ------------ */
 
 .max-300 {
-  max-width: 300px;}
-
+    max-width: 300px;
+}
 
 .max-450 {
-  max-width: 450px;
+    max-width: 450px;
 }
 
 .max-500 {
-  max-width: 500px;
+    max-width: 500px;
 }
 
 .max-950 {
-  max-width: 950px;
+    max-width: 950px;
 }
 
 .max-1600 {
-  max-width: 1600px;
+    max-width: 1600px;
 }
 
 .max-full {
-  max-height: calc(80vh - 61px);
+    max-height: calc(80vh - 61px);
 }
 
 /* ------------ Mobile Styles ------------ */
 
 .m-hide {
-  @media (max-width: 768px) {
-    display: none;
-  }
+    @media (max-width: 768px) {
+        display: none;
+    }
 }
 
 .m-show {
-  display: none;
-  @media (max-width: 768px) {
-    display: inherit;
-  }
+    display: none;
+    @media (max-width: 768px) {
+        display: inherit;
+    }
 }
 
 .m-wrap {
-  @media (max-width: 768px) {
-    flex-wrap: wrap;
-  }
+    @media (max-width: 768px) {
+        flex-wrap: wrap;
+    }
 }
 
 .m-100 {
-  @media (max-width: 768px) {
-    width: 100%;
-  }
+    @media (max-width: 768px) {
+        width: 100%;
+    }
 }

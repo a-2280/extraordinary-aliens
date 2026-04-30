@@ -72,15 +72,14 @@ export default function Mission({ mission }) {
                                 </div>
                                 <div className='flex flex-col gap-20'>
                                     <p className='h4'>{card.title}</p>
-                                    <p className={`h3 ${hoveredIndex === index ? "text-grey-6" : "text-grey-5"}`}>
-                                        {hoveredIndex === index ? card.description : card.caption}
-                                    </p>
+                                    <p className={`h3 ${hoveredIndex === index ? "text-grey-6" : "text-grey-5"}`}>{hoveredIndex === index ? card.description : card.caption}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
+            <Spacer />
         </div>
     )
 }

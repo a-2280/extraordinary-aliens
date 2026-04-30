@@ -1,0 +1,75 @@
+/*--------------------------------------------------------------
+## Featured Projects Styling
+--------------------------------------------------------------*/
+
+.featured-projects .tag {
+    height: fit-content;
+    background-color: #dadada73;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.featured-projects .slider-wrap {
+    overflow: hidden;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.featured-projects .slider-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+    will-change: transform;
+}
+
+.featured-projects .slide {
+    flex: 0 0 calc(100% - 15px);
+    height: 100%;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-right: 15px;
+
+    .bg-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    .label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        background: #dadada99;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+        white-space: nowrap;
+        transition: opacity 0.1s ease-in-out;
+    }
+    .label-right { opacity: 0; }
+    &.is-right {
+        .label-left  { opacity: 0; }
+        .label-right { opacity: 1; }
+    }
+}
+
+.featured-projects .index {
+    padding: 4px 7px;
+    border-radius: 5px;
+    border: 1px solid var(--grey-3);
+    color: var(--grey-5);
+    width: fit-content;
+}

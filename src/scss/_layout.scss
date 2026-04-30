@@ -49,10 +49,19 @@
 .h1 {
   font-weight: 500;
   font-size: 36px;
+  line-height: 107%;
+}
+
+.h2 {
+  font-size: 28px;
 }
 
 .h3 {
-  font-size: 20;
+  font-size: 20px;
+}
+
+.h4 {
+  font-size: 14px;
 }
 
 .h5 {
@@ -63,6 +72,10 @@
 
 .f-nav {
   font-size: 12px;
+}
+
+.f-20 {
+  font-size: 20px;
 }
 
 body {
@@ -81,11 +94,17 @@ body {
 }
 
 html {
-  background-color: #F4F4F4;
+  background-color: var(--grey-1);
 }
 
 :root {
   --black: #0F0F0F;
+
+  --grey-1: #F4F4F4;
+  --grey-3: #D9DAD8;
+  --grey-4: #B4B4B4;
   --grey-5: #A2A2A2;
   --grey-6: #474747;
+
+  --error: #F22731;
 }

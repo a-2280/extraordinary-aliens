@@ -1,9 +1,9 @@
-import { ColorWheelIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { ColorWheelIcon } from "@sanity/icons"
+import { defineField, defineType } from "sanity"
 
 export default defineType({
-    name: "hero",
-    title: "Hero",
+    name: "contactCta",
+    title: "Contact CTA",
     type: "document",
     fields: [
         defineField({
@@ -38,7 +38,7 @@ export default defineType({
         defineField({
             name: "button",
             title: "CTA Button",
-            type: "link",
+            type: "string",
             validation: Rule => Rule.required(),
         }),
     ],

@@ -7,6 +7,12 @@ export default {
     type: "object",
     fields: [
         {
+            name: "title",
+            title: "Title",
+            type: "string",
+            validation: Rule => Rule.required(),
+        },
+        {
             name: "url",
             title: "URL",
             type: "url",
@@ -15,12 +21,6 @@ export default {
                     allowRelative: true,
                     scheme: ["http", "https", "tel", "sms", "mailto"],
                 }),
-        },
-        {
-            name: "title",
-            title: "Title",
-            type: "string",
-            validation: Rule => Rule.required(),
         },
         {
             name: "openInNewWindow",

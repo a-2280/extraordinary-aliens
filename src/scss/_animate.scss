@@ -1,0 +1,67 @@
+/*--------------------------------------------------------------
+## Animate Styling
+--------------------------------------------------------------*/
+
+.fade--in {
+    opacity: 0;
+    transition: 0.65s ease opacity 0.2s;
+    &.sal-animate {
+        opacity: 1;
+    }
+}
+
+/* ------------ Delays Styles ------------ */
+
+.delay-100 {
+	transition-delay: 0.4s;
+}
+
+/* ------------ Border Styles ------------ */
+
+.b-1 {
+	position: relative;
+	&:before {
+		content:'';
+		height: 1px;
+		position: absolute;
+		transition: 0.65s ease width 0.3s;
+		background-color: rgba(19, 29, 34, .1);
+		width: 0;
+		left: 0;
+		top: 0;
+	}
+	&.sal-animate {
+		&:before {
+			width: 100%;
+		}
+	}
+}
+
+/* ------------ Zoom Styles ------------ */
+
+.hover--zoom {
+	.bg-image { transition: 0.65s ease transform; }
+	&:hover .bg-image { transform: scale(1.03); }
+}
+
+.image--zoom {
+	.bg-image { transform: scale(1.125); transition: 3s ease transform; }
+	&.sal-animate .bg-image { transform: none; }
+}
+
+/* ------------ Page Transition ------------ */
+
+.page--transition {
+	opacity: 0;
+	will-change: opacity;
+	z-index: 9999;
+	&.fade--out { animation: fadeOut 0.35s ease forwards; }
+	&.fade--in  { animation: fadeIn 0.45s ease forwards 0.35s; }
+}
+
+@keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+/* ------------ Hover Color Styles ------------ */
+
+.hover--grey-6     { transition: color .3s ease; &:hover { color: var(--grey-6); } }

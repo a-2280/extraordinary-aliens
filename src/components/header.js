@@ -25,7 +25,7 @@ export default function Header({ data }) {
 
     return (
         <header className='masthead p15 flex align-center text-black'>
-            <button className='bg-grey py8 px15 radius-5 f-nav flex gap-20 align-center shrink-0' onClick={handleClick}>
+            <button className='button-nav f-nav flex gap-20 align-center shrink-0' onClick={handleClick}>
                 Extraordinary Aliens
                 <svg width='6' height='9' viewBox='0 0 6 9' fill='none'>
                     <path ref={pathRef} d={LEFT} stroke='rgba(15,15,15,1)' strokeWidth='1.16' strokeLinecap='round' strokeLinejoin='round' />
@@ -51,12 +51,13 @@ function ButtonList({ open, data }) {
     }, { scope: containerRef, dependencies: [open] });
 
     return (
-        <div ref={containerRef} className="overflow w-100 flex gap-3 pl3">
+        <div ref={containerRef} className='overflow w-100 flex gap-3 pl3'>
             {data?.links?.map((link, index) => (
-                <div className="flex-1 radius-5 pos-rel" key={index} style={{ zIndex: data.links.length - index }}>
-                    <div className="h5 bg-grey py8 px15 radius-5 flex gap-20 align-center">{link.title}</div>
+                <div className='flex-1 h5 button-nav flex align-center space-between' key={index} style={{ zIndex: data.links.length - index }}>
+                    <p>{link.title}</p>
+                    <div className='dot' />
                 </div>
             ))}
         </div>
-    );
+    )
 }

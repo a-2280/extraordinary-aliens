@@ -1,8 +1,6 @@
 import { ComponentIcon } from "@sanity/icons"
 
-export const components = [
-    { type: "hero" },
-]
+export const components = [{ type: "hero" }, { type: "mission" }, { type: "specialProjects" },]
 
 export default {
     name: "pageComponentList",

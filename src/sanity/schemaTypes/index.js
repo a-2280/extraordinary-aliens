@@ -10,7 +10,13 @@ import layout from './types/layout'
 import link from './types/link'
 import page from './types/page'
 import pageComponentList from './types/pageComponentList'
+import projects from './types/projects'
+import tag from './types/tag'
+import mission from './types/mission'
+import missionCard from './types/missionCard'
+import specialProjects from './types/specialProjects'
+import contactCta from './types/contactCta'
 
 export const schema = {
-  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail, colorSwatch],
+  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail, colorSwatch, projects, tag, mission, missionCard, specialProjects, contactCta],
 }

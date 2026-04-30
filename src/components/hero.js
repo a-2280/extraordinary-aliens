@@ -1,4 +1,5 @@
 import { PortableText } from "@portabletext/react";
+import { FaPlay } from "react-icons/fa"
 
 const components = {
     marks: {
@@ -10,12 +11,21 @@ const components = {
 
 export default function Hero({ data }) {
     return (
-        <div className='px15 pth h-100vh'>
-            <div>
-                <div className="h1">
+        <div className='px30 pth h-75vh'>
+            <div className='h-100  flex flex-col justify-center gap-20'>
+                <div className='h1 max-950 fade--in' data-sal>
                     <PortableText value={data?.description} components={components} />
                 </div>
-                <button className="button">{data?.button}</button>
+                <a
+                    href={data?.button?.url}
+                    target={data?.button?.openInNewWindow ? "_blank" : undefined}
+                    rel={data?.button?.openInNewWindow ? "noopener noreferrer" : undefined}
+                    className='button flex align-center fade--in delay-100'
+                    data-sal
+                >
+                    <FaPlay className="icon" />
+                    <p>{data?.button?.title}</p>
+                </a>
             </div>
         </div>
     )

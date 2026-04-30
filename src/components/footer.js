@@ -1,7 +1,7 @@
 "use client"
 
 import { PortableText } from "next-sanity"
-import React, { useRef, useEffect } from "react"
+import { useRef, useEffect } from "react"
 import gsap from "gsap"
 
 export default function Footer({ data }) {
@@ -86,18 +86,18 @@ export default function Footer({ data }) {
     }, [])
 
     return (
-        <div className='p15 h-100vh text-dark-grey'>
+        <div className='p15 h-100vh text-grey-6'>
             <div ref={containerRef} className='bg-black radius-15 h-100' style={{ position: "relative", overflow: "hidden" }}>
                 <div ref={glowRef} className="footer-glow" style={{ opacity: 0 }} />
                 <div className='p35 h-100 flex flex-col space-between'>
-                    <div className='h3 text-grey'>
+                    <div className='h3 text-footer'>
                         <PortableText value={data.caption} />
                     </div>
                     <div className='flex gap-100'>
                         {data.details.map((detail, index) => (
                             <div className='flex flex-col gap-30' key={index}>
                                 <p className='h5'>{detail.title}</p>
-                                <div className='text-light-grey'>
+                                <div className='text-grey-4'>
                                     <PortableText value={detail.detail} />
                                 </div>
                             </div>

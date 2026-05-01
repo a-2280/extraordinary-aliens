@@ -16,7 +16,9 @@ import mission from './types/mission'
 import missionCard from './types/missionCard'
 import specialProjects from './types/specialProjects'
 import contactCta from './types/contactCta'
+import section from './types/section'
+import imageComponent from './types/components/imageComponent'
 
 export const schema = {
-  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail, colorSwatch, projects, tag, mission, missionCard, specialProjects, contactCta],
+  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail, colorSwatch, projects, tag, mission, missionCard, specialProjects, contactCta, section, imageComponent],
 }

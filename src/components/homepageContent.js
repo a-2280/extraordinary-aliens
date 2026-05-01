@@ -59,22 +59,18 @@ function Header({ active, setActive, tags, selected, setSelected }) {
                 </div>
                 <div ref={tagsRef} style={{ visibility: "hidden", opacity: 0 }} className='flex gap-15'>
                     {tags.map(tag => (
-                        <button
-                            className={`hover--grey-6 ${selected.includes(tag) ? "text-grey-6" : "text-grey-5"}`}
-                            key={tag}
-                            onClick={() => toggle(tag)}
-                        >
+                        <button className={`hover--grey-6 hover--background p5 radius-5 ${selected.includes(tag) ? "text-grey-6 bg-grey" : "text-grey-5"}`} key={tag} onClick={() => toggle(tag)}>
                             {tag}
                         </button>
                     ))}
                     <button
+                    className="hover--background radius-5 p5"
                         style={{
                             opacity: selected.length > 0 ? 1 : 0,
                             pointerEvents: selected.length > 0 ? "auto" : "none",
                             transition: "opacity 0.3s ease",
                         }}
-                        onClick={() => setSelected([])}
-                    >
+                        onClick={() => setSelected([])}>
                         Clear
                     </button>
                 </div>

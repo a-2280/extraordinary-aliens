@@ -4,6 +4,7 @@ import { useRef, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin"
+import Link from "next/link"
 
 gsap.registerPlugin(useGSAP, MorphSVGPlugin)
 
@@ -53,10 +54,10 @@ function ButtonList({ open, data }) {
     return (
         <div ref={containerRef} className='overflow w-100 flex gap-3 pl3'>
             {data?.links?.map((link, index) => (
-                <div className='flex-1 h5 button-nav flex align-center space-between' key={index} style={{ zIndex: data.links.length - index }}>
+                <Link href={link.url} className='flex-1 h5 button-nav flex align-center space-between' key={index} style={{ zIndex: data.links.length - index }}>
                     <p>{link.title}</p>
                     <div className='dot' />
-                </div>
+                </Link>
             ))}
         </div>
     )

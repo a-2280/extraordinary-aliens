@@ -49,6 +49,13 @@
 	&.sal-animate .bg-image { transform: none; }
 }
 
+/* ------------ Blur Styles ------------ */
+
+.image--blur {
+	filter: blur(8px);
+	will-change: filter, transform;
+}
+
 /* ------------ Page Transition ------------ */
 
 .page--transition {
@@ -65,3 +72,8 @@
 /* ------------ Hover Color Styles ------------ */
 
 .hover--grey-6     { transition: color .3s ease; &:hover { color: var(--grey-6); } }
+
+.hover--background {
+	transition: color .3s ease;
+	&:hover {background-color: #dadada73};
+}

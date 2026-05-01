@@ -27,6 +27,8 @@ export const LAYOUT_QUERY = `*[_type == "layout"][0]{
 
 export const PROJECTS_QUERY = `*[_type == "projects"] | order(orderRank asc){ title, slug, description, "tags": tags[]->{ name }, "image": images[0].asset->url }`
 
+export const PROJECT_SLUGS_QUERY = `*[_type == "projects" && defined(slug.current)][].slug.current`
+
 export const FEATURED_QUERY = `*[_type == "projects" && featured == true] | order(orderRank asc){ title, slug, description, "tags": tags[]->{ name }, "images": images[].asset->url }`
 
 export const MISSION_QUERY = `*[_type == "layout"][0].homepage->.components[_type == "mission"][0]{

@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { useLayoutEffect, useRef, useState } from "react"
 import { PortableText } from "@portabletext/react"
+import { useRouter } from "next/router"
 
 export default function FeaturedProjects({ projects }) {
     const cursorRef = useRef(null)
@@ -41,23 +42,24 @@ function Project({ project, cursorRef }) {
                         ))}
                     </div>
                 </div>
-                <div className='flex flex-col gap-15'>
+                <div className='flex flex-col gap-15 max-full'>
                     <div className='index fade--in' data-sal>
                         {activeIndex + 1} / {project.images.length}
                     </div>
-                    <ProjectSlider images={project.images} cursorRef={cursorRef} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
+                    <ProjectSlider images={project.images} slug={project.slug.current} cursorRef={cursorRef} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
                 </div>
             </div>
         </div>
     )
 }
 
-function ProjectSlider({ images, cursorRef, activeIndex, setActiveIndex }) {
+function ProjectSlider({ images, slug, cursorRef, activeIndex, setActiveIndex }) {
+    const router = useRouter()
     const trackRef = useRef(null)
     const isHoveringRightRef = useRef(false)
 
     const restingTransform = `translateX(-${activeIndex * 100}%)`
-    const leakTransform = `translateX(calc(-${activeIndex * 100}% - 10%))`
+    const leakTransform = `translateX(calc(-${activeIndex * 100}% - 5%))`
 
     useLayoutEffect(() => {
         if (isHoveringRightRef.current && trackRef.current) {
@@ -85,12 +87,15 @@ function ProjectSlider({ images, cursorRef, activeIndex, setActiveIndex }) {
     const handleClick = e => {
         const { left, width } = e.currentTarget.getBoundingClientRect()
         const isLeft = e.clientX - left < width / 2
-        if (isLeft) return
+        if (isLeft) {
+            router.push(`/case-study/${slug}`)
+            return
+        }
         setActiveIndex(i => (i + 1) % images.length)
     }
 
     return (
-        <div className='slider-wrap pos-rel ratio-8-5 w-100 mr15 max-full overflow'>
+        <div className='slider-wrap pos-rel ratio-8-5 w-100 mr15 overflow'>
             <div ref={trackRef} className='slider-track' style={{ transform: restingTransform }}>
                 {[...images, ...(images.length > 1 ? [images[0]] : [])].map((src, i) => (
                     <div className='slide bg-grey' key={i} aria-hidden={i === images.length ? true : undefined}>

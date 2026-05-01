@@ -36,7 +36,7 @@ export default function ContactCta({ contactCta }) {
     }, { dependencies: [formOpen] })
 
     return (
-        <div className='p30 h-full flex align-center'>
+        <div className='p30 h-80vh flex align-center gap-20'>
             <div className='flex-1 flex flex-col gap-20'>
                 <div className='h1'>
                     <PortableText value={contactCta?.description} components={components} />

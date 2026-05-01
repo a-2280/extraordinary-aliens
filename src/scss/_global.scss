@@ -74,7 +74,7 @@ a {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .col-4 {
@@ -187,6 +187,10 @@ a {
 
 .p0 {
     padding: 0px;
+}
+
+.p5 {
+    padding: 5px;
 }
 
 .p15 {
@@ -390,8 +394,20 @@ div.bg-image,
     height: 100%;
 }
 
+.h-650px {
+    height: 650px;
+}
+
+.h-60vh {
+    height: 60vh;
+}
+
 .h-75vh {
     height: 75vh;
+}
+
+.h-80vh {
+    height: 80vh;
 }
 
 .h-100vh {
@@ -424,8 +440,12 @@ div.bg-image,
     max-width: 1600px;
 }
 
+.max-90vh {
+    max-height: 90vh;
+}
+
 .max-full {
-    max-height: calc(80vh - 61px);
+    max-height: calc(100vh - 61px);
 }
 
 /* ------------ Mobile Styles ------------ */

@@ -28,7 +28,7 @@ export default function Mission({ mission }) {
                 const onEnter = () => {
                     activeTl?.kill()
                     activeTl = gsap
-                        .timeline({ defaults: { duration: 0.3, ease: "power2.out" } })
+                        .timeline({ defaults: { duration: 0.6, ease: "power2.out" } })
                         .to(card, { maxWidth: 350 }, 0)
                         .to(image, { filter: "blur(0px)", scale: 1 }, 0)
                 }
@@ -36,7 +36,7 @@ export default function Mission({ mission }) {
                 const onLeave = () => {
                     activeTl?.kill()
                     activeTl = gsap
-                        .timeline({ defaults: { duration: 0.3, ease: "power2.out" } })
+                        .timeline({ defaults: { duration: 0.6, ease: "power2.out" } })
                         .to(card, { maxWidth: originalMaxWidth }, 0)
                         .to(image, { filter: "blur(8px)", scale: 1.1 }, 0)
                 }
@@ -51,7 +51,7 @@ export default function Mission({ mission }) {
     return (
         <div className='p15'>
             <Spacer />
-            <div className='h-100vh'>
+            <div>
                 <div className='b-1' data-sal />
                 <div className='p15 flex flex-col gap-30 max-450'>
                     <p className='h5'>{mission?.title}</p>
@@ -63,7 +63,7 @@ export default function Mission({ mission }) {
                         <p>{mission?.button?.title}</p>
                     </a>
                 </div>
-                <div className='flex justify-center pt60'>
+                <div className='h-650px flex justify-center pt60'>
                     <div ref={cardsRef} className='flex align-center justify-center gap-15 fade--in' data-sal>
                         {mission?.missionCards?.map((card, index) => (
                             <div className='mission-card bg-grey radius-15 p20 max-300 flex flex-col gap-30' key={index} onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
@@ -72,7 +72,7 @@ export default function Mission({ mission }) {
                                 </div>
                                 <div className='flex flex-col gap-20'>
                                     <p className='h4'>{card.title}</p>
-                                    <p className={`h3 ${hoveredIndex === index ? "text-grey-6" : "text-grey-5"}`}>{hoveredIndex === index ? card.description : card.caption}</p>
+                                    <p className={`h3 swap-text ${hoveredIndex === index ? "is-hovered text-grey-6" : "text-grey-5"}`}>{hoveredIndex === index ? card.description : card.caption}</p>
                                 </div>
                             </div>
                         ))}

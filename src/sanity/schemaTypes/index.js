@@ -17,8 +17,14 @@ import missionCard from './types/missionCard'
 import specialProjects from './types/specialProjects'
 import contactCta from './types/contactCta'
 import section from './types/section'
-import imageComponent from './types/components/imageComponent'
+import imageCard from './types/components/carousel'
+import imageCarousel from './types/components/imageCarousel'
+import captionCarousel from './types/components/captionCarousel'
+import annotationImage from './types/components/annotationImage'
+import imageHotspot from './types/components/imageHotspot'
+import imageExpandableCaption from './types/components/imageExpandableCaption'
+import spot from './types/components/spot'
 
 export const schema = {
-  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail, colorSwatch, projects, tag, mission, missionCard, specialProjects, contactCta, section, imageComponent],
+  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail, colorSwatch, projects, tag, mission, missionCard, specialProjects, contactCta, section, imageCard, imageCarousel, captionCarousel, annotationImage, imageHotspot, imageExpandableCaption, spot],
 }

@@ -14,7 +14,7 @@
 import { ImageIcon } from "@sanity/icons"
 
 export default {
-    name: "imageComponent",
+    name: "imageCard",
     title: "Image",
     icon: ImageIcon,
     type: "object",
@@ -23,14 +23,6 @@ export default {
             name: "image",
             title: "Image",
             type: "image",
-            options: { hotspot: true },
-            validation: Rule => Rule.required(),
-        },
-        {
-            name: "alt",
-            title: "Alt Text",
-            type: "string",
-            description: "Alt text for accessibility. Leave empty only if the image is decorative.",
             validation: Rule => Rule.required(),
         },
         {
@@ -39,7 +31,7 @@ export default {
             type: "string",
             options: {
                 list: [
-                    { title: "100vw (full bleed)", value: "100vw" },
+                    { title: "Full Width", value: "fullWidth" },
                     { title: "Normal", value: "normal" },
                     { title: "Cut", value: "cut" },
                 ],
@@ -48,17 +40,10 @@ export default {
             initialValue: "normal",
             validation: Rule => Rule.required(),
         },
-        {
-            name: "caption",
-            title: "Caption",
-            type: "string",
-            description: "Optional short caption rendered under the image.",
-        },
     ],
     preview: {
         select: {
             media: "image",
-            alt: "alt",
             variant: "variant",
         },
         prepare({ media, alt, variant }) {

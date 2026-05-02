@@ -1,17 +1,22 @@
 import { defineField, defineType } from "sanity"
 import { orderRankField } from "@sanity/orderable-document-list"
-import { sectionComponents } from "./section"
+import { makeBackButtonItem } from "../../components/BackButtonItem"
 
 export default defineType({
     name: "projects",
     title: "Projects",
     type: "document",
     fieldsets: [
-        { name: "listing", title: "Listing card", options: { collapsible: true, collapsed: false } },
-        { name: "caseStudy", title: "Case study page", options: { collapsible: true, collapsed: false } },
+        { name: "listing", title: "Listing card", options: { collapsible: true } },
+        { name: "caseStudy", title: "Case study page", options: { collapsible: true } },
     ],
     fields: [
         orderRankField({ type: "projects" }),
+        defineField({
+            name: "featured",
+            title: "Featured",
+            type: "boolean",
+        }),
         defineField({
             name: "title",
             title: "Title",
@@ -50,47 +55,43 @@ export default defineType({
             fieldset: "listing",
         }),
         defineField({
-            name: "featured",
-            title: "Featured",
-            type: "boolean",
-            fieldset: "listing",
-        }),
-        defineField({
-            name: "caseStudyClient",
-            title: "Client",
-            type: "string",
-            description: "Optional eyebrow / client credit shown above the title on the case study page.",
-            fieldset: "caseStudy",
-        }),
-        defineField({
-            name: "caseStudyHeroImage",
+            name: "heroImage",
             title: "Hero Image",
             type: "image",
-            options: { hotspot: true },
             fieldset: "caseStudy",
             validation: Rule => Rule.required(),
         }),
         defineField({
-            name: "caseStudyHeroAlt",
-            title: "Hero Alt Text",
+            name: "client",
+            title: "Client",
             type: "string",
             fieldset: "caseStudy",
             validation: Rule => Rule.required(),
+        }),
+        defineField({
+            name: "liveWebsite",
+            title: "Live Website",
+            type: "link",
+            fieldset: "caseStudy",
         }),
         defineField({
             name: "caseStudyIntro",
-            title: "Intro",
+            title: "Introduction",
             type: "array",
             of: [{ type: "block" }],
-            description: "Long intro / overview shown in the case study header (separate from the listing description).",
             fieldset: "caseStudy",
-            validation: Rule => Rule.required().min(1),
+        }),
+        defineField({
+            name: "year",
+            title: "Year",
+            type: "string",
+            fieldset: "caseStudy",
         }),
         defineField({
             name: "caseStudySections",
             title: "Case Study Sections",
             type: "array",
-            of: [...sectionComponents, { type: "section" }],
+            of: [{ type: "section", components: { item: makeBackButtonItem("Case Study") } }],
             fieldset: "caseStudy",
             validation: Rule => Rule.max(50),
         }),

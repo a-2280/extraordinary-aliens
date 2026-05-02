@@ -66,6 +66,35 @@
     }
 }
 
+.custom-cursor-secondary {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    .label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        background: #dadada;
+        color: var(--black);
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+        white-space: nowrap;
+        transition: opacity 0.1s ease-in-out;
+    }
+    .label-right { opacity: 0; }
+    &.is-right {
+        .label-left  { opacity: 0; }
+        .label-right { opacity: 1; }
+    }
+}
+
 .featured-projects .index {
     padding: 4px 7px;
     border-radius: 5px;

@@ -29,6 +29,93 @@ export const PROJECTS_QUERY = `*[_type == "projects"] | order(orderRank asc){ ti
 
 export const PROJECT_SLUGS_QUERY = `*[_type == "projects" && defined(slug.current)][].slug.current`
 
+export const PROJECT_BY_SLUG_QUERY = `*[_type == "projects" && slug.current == $slug][0]{
+  title,
+  client,
+  year,
+  caseStudyIntro,
+  liveWebsite{ title, url, openInNewWindow },
+  "tags": tags[]->{ name },
+  "heroImage": heroImage.asset->url,
+  caseStudySections[]{
+    _key,
+    left[]{
+      _key, _type,
+      _type == "imageCard" => {
+        variant,
+        "image": image.asset->url
+      },
+      _type == "carousel" => {
+        variant,
+        "images": images[].asset->url
+      },
+      _type == "captionCarousel" => {
+        variant,
+        "images": images[].asset->url,
+        caption
+      },
+      _type == "annotationImage" => {
+        variant,
+        title,
+        annotation,
+        "image": image.asset->url
+      },
+      _type == "imageHotspot" => {
+        variant,
+        "image": image.asset->url,
+        spots[]{
+          _key,
+          title,
+          description,
+          point
+        }
+      },
+      _type == "imageExpandableCaption" => {
+        variant,
+        "image": image.asset->url,
+        caption
+      }
+    },
+    right[]{
+      _key, _type,
+      _type == "imageCard" => {
+        variant,
+        "image": image.asset->url
+      },
+      _type == "carousel" => {
+        variant,
+        "images": images[].asset->url
+      },
+      _type == "captionCarousel" => {
+        variant,
+        "images": images[].asset->url,
+        caption
+      },
+      _type == "annotationImage" => {
+        variant,
+        title,
+        annotation,
+        "image": image.asset->url
+      },
+      _type == "imageHotspot" => {
+        variant,
+        "image": image.asset->url,
+        spots[]{
+          _key,
+          title,
+          description,
+          point
+        }
+      },
+      _type == "imageExpandableCaption" => {
+        variant,
+        "image": image.asset->url,
+        caption
+      }
+    }
+  }
+}`
+
 export const FEATURED_QUERY = `*[_type == "projects" && featured == true] | order(orderRank asc){ title, slug, description, "tags": tags[]->{ name }, "images": images[].asset->url }`
 
 export const MISSION_QUERY = `*[_type == "layout"][0].homepage->.components[_type == "mission"][0]{

@@ -28,6 +28,17 @@
     padding-right: 6px;
 }
 
+.button-secondary {
+    color: var(--grey-4);
+    border-radius: 5px;
+    padding: 5;
+    transition: all .3s ease;
+    &:hover {
+        background-color: #dadada;
+        color: var(--black);
+    }
+}
+
 .button-nav {
     height: 100%;
     padding: 8px 15px;

@@ -33,7 +33,7 @@ function Header({ project }) {
                 <div>
                     <Spacer />
                     <div className='pos-rel ratio-16-9 max-100vh radius-15 overflow'>
-                        <Image className='bg-image' src={heroImage} alt={title || ""} width={1920} height={1080} priority />
+                        <Image className='bg-image' src={heroImage} alt={title || ""} width={1920} height={1080} loading="eager" />
                     </div>
                 </div>
             )}

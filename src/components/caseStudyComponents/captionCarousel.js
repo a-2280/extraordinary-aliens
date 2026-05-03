@@ -41,7 +41,7 @@ export default function CaptionCarousel({ images, caption, variant = "normal" })
             </div>
             <div className={`variant-${variant}`}>
                 <Swiper
-                    className={`variant-${variant} pos-rel ratio-3-4 max-full radius-15 overflow`}
+                    className={`variant-${variant} pos-rel radius-15 overflow`}
                     slidesPerView={1}
                     loop={images.length > 1}
                     speed={500}
@@ -50,8 +50,8 @@ export default function CaptionCarousel({ images, caption, variant = "normal" })
                     onSlideChange={s => setCurrentIndex(s.realIndex)}
                 >
                     {images.map((src, i) => (
-                        <SwiperSlide key={i} className='pos-rel'>
-                            <Image className='bg-image radius-15' src={src} alt='' width={1600} height={1000} />
+                        <SwiperSlide key={i} className='pos-rel ratio-3-4 max-full'>
+                            <Image className='radius-15' src={src} alt='' fill sizes='(max-width: 768px) 100vw, 50vw' style={{ objectFit: "cover", objectPosition: "center" }} />
                         </SwiperSlide>
                     ))}
                     <div className="p5 radius-5 text-black pos-abs z-2 bg-grey top-30 right-30">{currentIndex + 1} / {images.length}</div>

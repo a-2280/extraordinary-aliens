@@ -39,21 +39,15 @@ export default function Carousel({ images, variant = "normal" }) {
                 <span className='label label-right'>Next</span>
             </div>
             <div className={`variant-${variant}`}>
-                <Swiper
-                    className={`variant-${variant} pos-rel ratio-3-4 max-full radius-15 overflow`}
-                    slidesPerView={1}
-                    loop={images.length > 1}
-                    speed={500}
-                    spaceBetween={15}
-                    onSwiper={s => (swiperRef.current = s)}
-                    onSlideChange={s => setCurrentIndex(s.realIndex)}
-                >
+                <Swiper className={`variant-${variant} pos-rel radius-15 overflow`} slidesPerView={1} loop={images.length > 1} speed={500} spaceBetween={15} onSwiper={s => (swiperRef.current = s)} onSlideChange={s => setCurrentIndex(s.realIndex)}>
                     {images.map((src, i) => (
-                        <SwiperSlide key={i} className='pos-rel'>
-                            <Image className='bg-image radius-15' src={src} alt='' width={1600} height={1000} />
+                        <SwiperSlide key={i} className='pos-rel ratio-3-4 max-full'>
+                            <Image className='radius-15' src={src} alt='' fill sizes='(max-width: 768px) 100vw, 50vw' style={{ objectFit: "cover", objectPosition: "center" }} />
                         </SwiperSlide>
                     ))}
-                    <div className="p5 radius-5 text-black pos-abs z-2 bg-grey top-30 right-30">{currentIndex + 1} / {images.length}</div>
+                    <div className='p5 radius-5 text-black pos-abs z-2 bg-grey top-30 right-30'>
+                        {currentIndex + 1} / {images.length}
+                    </div>
                     <div className='pos-abs top-0 left-0 w-100 h-100 cursor-none z-2' onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onClick={handleClick} />
                 </Swiper>
             </div>

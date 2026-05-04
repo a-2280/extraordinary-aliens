@@ -5,12 +5,14 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
 import { PortableText } from "next-sanity"
 
-export default function CaptionCarousel({ images, caption, variant = "normal" }) {
+export default function CaptionCarousel({ slides, variant = "normal" }) {
     const swiperRef = useRef(null)
     const cursorRef = useRef(null)
     const [currentIndex, setCurrentIndex] = useState(0)
 
-    if (!images?.length) return null
+    if (!slides?.length) return null
+
+    const activeCaption = slides[currentIndex]?.caption
 
     const handleMouseMove = e => {
         const { left, width } = e.currentTarget.getBoundingClientRect()
@@ -43,22 +45,22 @@ export default function CaptionCarousel({ images, caption, variant = "normal" })
                 <Swiper
                     className={`variant-${variant} pos-rel radius-15 overflow`}
                     slidesPerView={1}
-                    loop={images.length > 1}
+                    loop={slides.length > 1}
                     speed={500}
                     spaceBetween={15}
                     onSwiper={s => (swiperRef.current = s)}
                     onSlideChange={s => setCurrentIndex(s.realIndex)}
                 >
-                    {images.map((src, i) => (
+                    {slides.map((slide, i) => (
                         <SwiperSlide key={i} className='pos-rel ratio-3-4 max-full'>
-                            <Image className='radius-15' src={src} alt='' fill sizes='(max-width: 768px) 100vw, 50vw' style={{ objectFit: "cover", objectPosition: "center" }} />
+                            <Image className='radius-15' src={slide.image} alt='' fill sizes='(max-width: 768px) 100vw, 50vw' style={{ objectFit: "cover", objectPosition: "center" }} />
                         </SwiperSlide>
                     ))}
-                    <div className="p5 radius-5 text-black pos-abs z-2 bg-grey top-30 right-30">{currentIndex + 1} / {images.length}</div>
+                    <div className="p5 radius-5 text-black pos-abs z-2 bg-grey top-30 right-30">{currentIndex + 1} / {slides.length}</div>
                     <div className='pos-abs top-0 left-0 w-100 h-100 cursor-none z-2' onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onClick={handleClick} />
                 </Swiper>
-                {caption?.length > 0 && (
-                    <div className="h4 text-grey-4 p15"><PortableText value={caption} /></div>
+                {activeCaption?.length > 0 && (
+                    <div className="h4 text-grey-4 p15 pb0 fade--in" data-sal><PortableText value={activeCaption} /></div>
                 )}
             </div>
         </>

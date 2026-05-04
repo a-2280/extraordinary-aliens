@@ -53,6 +53,10 @@ function ButtonList({ open, data }) {
 
     return (
         <div ref={containerRef} className='overflow w-100 flex gap-3 pl3'>
+            <div className='flex-1 h5 button-nav flex align-center space-between'>
+                <p>test</p>
+                <div className='dot' />
+            </div>
             {data?.links?.map((link, index) => (
                 <Link href={link.url} className='flex-1 h5 button-nav flex align-center space-between' key={index} style={{ zIndex: data.links.length - index }}>
                     <p>{link.title}</p>

@@ -4,6 +4,9 @@ import CaptionCarousel from "./captionCarousel"
 import AnnotationImageCard from "./annotationImageCard"
 import ImageHotspot from "./imageHotspot"
 import ImageExpandableCaption from "./imageExpandableCaption"
+import ImageCaptionHover from "./imageCaptionHover"
+import AudioPlayer from "./audioPlayer"
+import TextBlock from "./textBlock"
 
 const REGISTRY = {
     imageCard: ImageCard,
@@ -12,9 +15,11 @@ const REGISTRY = {
     annotationImage: AnnotationImageCard,
     imageHotspot: ImageHotspot,
     imageExpandableCaption: ImageExpandableCaption,
+    imageCaptionHover: ImageCaptionHover,
+    audioPlayer: AudioPlayer,
+    textBlock: TextBlock,
     // Add new component types here, keyed by their schema `name`:
     // credits: Credits,
-    // textBlock: TextBlock,
 }
 
 export default function renderComponent(component) {

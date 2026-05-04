@@ -17,14 +17,24 @@ import missionCard from './types/missionCard'
 import specialProjects from './types/specialProjects'
 import contactCta from './types/contactCta'
 import section from './types/section'
+import textLarge from './types/sections/textLarge'
+import quote from './types/sections/quote'
+import list from './types/sections/list'
+import credits from './types/sections/credits'
 import imageCard from './types/components/carousel'
 import imageCarousel from './types/components/imageCarousel'
 import captionCarousel from './types/components/captionCarousel'
 import annotationImage from './types/components/annotationImage'
 import imageHotspot from './types/components/imageHotspot'
 import imageExpandableCaption from './types/components/imageExpandableCaption'
+import imageCaptionHover from './types/components/imageCaptionHover'
 import spot from './types/components/spot'
+import audioPlayer from './types/components/audioPlayer'
+import textBlock from './types/components/textBlock'
+import listItem from './types/components/listItem'
+import credit from './types/components/credit'
+import creditInfo from './types/components/creditInfo'
 
 export const schema = {
-  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail, colorSwatch, projects, tag, mission, missionCard, specialProjects, contactCta, section, imageCard, imageCarousel, captionCarousel, annotationImage, imageHotspot, imageExpandableCaption, spot],
+  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail, colorSwatch, projects, tag, mission, missionCard, specialProjects, contactCta, section, textLarge, quote, list, credits, imageCard, imageCarousel, captionCarousel, annotationImage, imageHotspot, imageExpandableCaption, imageCaptionHover, spot, audioPlayer, textBlock, listItem, credit, creditInfo],
 }

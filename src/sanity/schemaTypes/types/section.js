@@ -10,6 +10,9 @@ export const sectionComponents = [
     { type: "annotationImage", title: "Annotation Image" },
     { type: "imageHotspot", title: "Hotspot Image" },
     { type: "imageExpandableCaption", title: "Image with expandable caption" },
+    { type: "imageCaptionHover", title: "Image with hover caption" },
+    { type: "audioPlayer", title: "Audio Player"},
+    { type: "textBlock", title: "Text" },
 ]
 
 const withBack = (label) =>

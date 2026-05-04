@@ -61,7 +61,7 @@ export default function ImageExpandableCaption({ image, caption, variant = "norm
             <div className={`variant-${variant} pos-rel ratio-3-4 max-full radius-15 overflow`}>
                 <Image className='bg-image' src={image} alt='' width={1600} height={1000} />
             </div>
-            <div className='p15 flex gap-40 space-between'>
+            <div className='p15 flex gap-40 space-between caption-row'>
                 <div
                     ref={captionRef}
                     className={`h4 text-grey-4 max-600${showClamp && !isExpanded ? ' line-clamp-2' : ''}`}

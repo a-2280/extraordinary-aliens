@@ -1,5 +1,5 @@
 import { client } from "./client"
-import { LAYOUT_QUERY, HERO_QUERY, PROJECTS_QUERY, PROJECT_SLUGS_QUERY, PROJECT_BY_SLUG_QUERY, FEATURED_QUERY, MISSION_QUERY, SPECIAL_PROJECTS_QUERY, CONTACT_CTA_QUERY } from "./queries"
+import { LAYOUT_QUERY, HERO_QUERY, PROJECTS_QUERY, PROJECT_SLUGS_QUERY, PROJECT_NAV_QUERY, PROJECT_BY_SLUG_QUERY, FEATURED_QUERY, MISSION_QUERY, SPECIAL_PROJECTS_QUERY, CONTACT_CTA_QUERY } from "./queries"
 
 export async function fetchLayout() {
     return client.fetch(LAYOUT_QUERY)
@@ -15,6 +15,10 @@ export async function fetchProjects() {
 
 export async function fetchProjectSlugs() {
     return client.fetch(PROJECT_SLUGS_QUERY)
+}
+
+export async function fetchProjectNav() {
+    return client.fetch(PROJECT_NAV_QUERY)
 }
 
 export async function fetchProjectBySlug(slug) {

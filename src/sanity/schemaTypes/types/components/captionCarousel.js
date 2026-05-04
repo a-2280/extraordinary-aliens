@@ -1,4 +1,5 @@
 import { ImageIcon } from "@sanity/icons"
+import { makeBackButtonItem } from "../../../components/BackButtonItem"
 
 export default {
     name: "captionCarousel",
@@ -7,18 +8,28 @@ export default {
     type: "object",
     fields: [
         {
-            name: "images",
-            title: "Images",
+            name: "slides",
+            title: "Slides",
             type: "array",
-            of: [{ type: "image" }],
-            validation: Rule => Rule.required(),
-        },
-        {
-            name: "caption",
-            title: "Caption",
-            type: "array",
-            of: [{ type: "block" }],
-            validation: Rule => Rule.required(),
+            of: [
+                {
+                    type: "object",
+                    name: "captionSlide",
+                    components: { item: makeBackButtonItem("Caption Carousel") },
+                    fields: [
+                        { name: "image", title: "Image", type: "image", validation: Rule => Rule.required() },
+                        { name: "caption", title: "Caption", type: "array", of: [{ type: "block" }] },
+                    ],
+                    preview: {
+                        select: { media: "image", caption: "caption" },
+                        prepare({ media, caption }) {
+                            const text = caption?.[0]?.children?.[0]?.text || "Slide"
+                            return { title: text, media }
+                        },
+                    },
+                },
+            ],
+            validation: Rule => Rule.required().min(1),
         },
         {
             name: "variant",
@@ -38,7 +49,7 @@ export default {
     ],
     preview: {
         select: {
-            media: "images.0",
+            media: "slides.0.image",
             variant: "variant",
         },
         prepare({ media, variant }) {

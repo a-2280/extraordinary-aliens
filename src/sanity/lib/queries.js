@@ -29,6 +29,12 @@ export const PROJECTS_QUERY = `*[_type == "projects"] | order(orderRank asc){ ti
 
 export const PROJECT_SLUGS_QUERY = `*[_type == "projects" && defined(slug.current)][].slug.current`
 
+export const PROJECT_NAV_QUERY = `*[_type == "projects" && defined(slug.current)] | order(orderRank asc){
+  title,
+  "slug": slug.current,
+  "image": images[0].asset->url
+}`
+
 export const PROJECT_BY_SLUG_QUERY = `*[_type == "projects" && slug.current == $slug][0]{
   title,
   client,
@@ -38,79 +44,139 @@ export const PROJECT_BY_SLUG_QUERY = `*[_type == "projects" && slug.current == $
   "tags": tags[]->{ name },
   "heroImage": heroImage.asset->url,
   caseStudySections[]{
-    _key,
-    left[]{
-      _key, _type,
-      _type == "imageCard" => {
-        variant,
-        "image": image.asset->url
-      },
-      _type == "carousel" => {
-        variant,
-        "images": images[].asset->url
-      },
-      _type == "captionCarousel" => {
-        variant,
-        "images": images[].asset->url,
-        caption
-      },
-      _type == "annotationImage" => {
-        variant,
+    _key, _type,
+    _type == "textLarge" => {
+      title,
+      description
+    },
+    _type == "quote" => {
+      quote
+    },
+    _type == "list" => {
+      title,
+      list[]{
+        _key,
         title,
-        annotation,
-        "image": image.asset->url
-      },
-      _type == "imageHotspot" => {
-        variant,
-        "image": image.asset->url,
-        spots[]{
-          _key,
-          title,
-          description,
-          point
-        }
-      },
-      _type == "imageExpandableCaption" => {
-        variant,
-        "image": image.asset->url,
-        caption
+        description
       }
     },
-    right[]{
-      _key, _type,
-      _type == "imageCard" => {
-        variant,
-        "image": image.asset->url
-      },
-      _type == "carousel" => {
-        variant,
-        "images": images[].asset->url
-      },
-      _type == "captionCarousel" => {
-        variant,
-        "images": images[].asset->url,
-        caption
-      },
-      _type == "annotationImage" => {
-        variant,
+    _type == "credits" => {
+      title,
+      description,
+      credits[]{
+        _key,
         title,
-        annotation,
-        "image": image.asset->url
-      },
-      _type == "imageHotspot" => {
-        variant,
         "image": image.asset->url,
-        spots[]{
+        creditInfo[]{
           _key,
+          credit
+        }
+      }
+    },
+    _type == "section" => {
+      left[]{
+        _key, _type,
+        _type == "imageCard" => {
+          variant,
+          "image": image.asset->url
+        },
+        _type == "carousel" => {
+          variant,
+          "images": images[].asset->url
+        },
+        _type == "captionCarousel" => {
+          variant,
+          slides[]{
+            "image": image.asset->url,
+            caption
+          }
+        },
+        _type == "annotationImage" => {
+          variant,
           title,
-          description,
-          point
+          annotation,
+          "image": image.asset->url
+        },
+        _type == "imageHotspot" => {
+          variant,
+          "image": image.asset->url,
+          spots[]{
+            _key,
+            title,
+            description,
+            point
+          }
+        },
+        _type == "imageExpandableCaption" => {
+          variant,
+          "image": image.asset->url,
+          caption
+        },
+        _type == "imageCaptionHover" => {
+          variant,
+          "image": image.asset->url,
+          caption
+        },
+        _type == "audioPlayer" => {
+          title,
+          description
+        },
+        _type == "textBlock" => {
+          title,
+          description
         }
       },
-      _type == "imageExpandableCaption" => {
-        variant,
-        "image": image.asset->url,
-        caption
+      right[]{
+        _key, _type,
+        _type == "imageCard" => {
+          variant,
+          "image": image.asset->url
+        },
+        _type == "carousel" => {
+          variant,
+          "images": images[].asset->url
+        },
+        _type == "captionCarousel" => {
+          variant,
+          slides[]{
+            "image": image.asset->url,
+            caption
+          }
+        },
+        _type == "annotationImage" => {
+          variant,
+          title,
+          annotation,
+          "image": image.asset->url
+        },
+        _type == "imageHotspot" => {
+          variant,
+          "image": image.asset->url,
+          spots[]{
+            _key,
+            title,
+            description,
+            point
+          }
+        },
+        _type == "imageExpandableCaption" => {
+          variant,
+          "image": image.asset->url,
+          caption
+        },
+        _type == "imageCaptionHover" => {
+          variant,
+          "image": image.asset->url,
+          caption
+        },
+        _type == "audioPlayer" => {
+          title,
+          description
+        },
+        _type == "textBlock" => {
+          title,
+          description
+        }
       }
     }
   }

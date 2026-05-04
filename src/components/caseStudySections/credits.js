@@ -1,0 +1,95 @@
+'use client'
+import { useRef, useState } from "react"
+import Image from "next/image"
+import { useGSAP } from "@gsap/react"
+import gsap from "gsap"
+import Spacer from "../spacer"
+
+export default function Credits({ title, description, credits, tags }) {
+    const [open, setOpen] = useState(false)
+    const [hoveredKey, setHoveredKey] = useState(null)
+    const [lastImage, setLastImage] = useState(null)
+    const verticalRef = useRef(null)
+    const creditsRef = useRef(null)
+    const imageRef = useRef(null)
+
+    useGSAP(() => {
+        gsap.to(verticalRef.current, {
+            scaleY: open ? 0 : 1,
+            duration: 0.3,
+            ease: "power2.inOut",
+            transformOrigin: "center center",
+        })
+        gsap.to(creditsRef.current, {
+            autoAlpha: open ? 1 : 0,
+            duration: 0.4,
+            ease: "power2.inOut",
+        })
+    }, [open])
+
+    useGSAP(() => {
+        if (!imageRef.current) return
+        gsap.to(imageRef.current, {
+            autoAlpha: hoveredKey ? 1 : 0,
+            duration: 0.4,
+            ease: "power2.inOut",
+        })
+    }, [hoveredKey, lastImage])
+
+    return (
+        <div>
+            <Spacer />
+            <div className='flex'>
+                <div className='flex-1 flex flex-col gap-20'>
+                    <p className='h5 fade--in' data-sal>
+                        {title}
+                    </p>
+                    <p className='f-20 text-grey-4 max-400 fade--in delay-100' data-sal>
+                        {description}
+                    </p>
+                </div>
+                <div className='flex-1 flex space-between'>
+                    <div className='flex gap-100'>
+                        <div className='flex flex-col gap-30'>
+                            <div className='flex flex-col gap-15 fade--in' data-sal>
+                                {tags?.length > 0 && <p className='h4 w-100 max-200'>{tags.map(tag => tag.name).join(", ")}</p>}
+                                <p className='h4 text-grey-4'>Extraordinary Aliens</p>
+                            </div>
+                            <button className='bg-grey-2 w-fit p5 radius-5' onClick={() => setOpen(!open)}>
+                                <svg width='15' height='15' viewBox='0 0 15 15'>
+                                    <line x1='1' y1='7.5' x2='14' y2='7.5' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' />
+                                    <line ref={verticalRef} x1='7.5' y1='1' x2='7.5' y2='14' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' />
+                                </svg>
+                            </button>
+                        </div>
+                        <div ref={creditsRef} className='flex flex-col gap-40' style={{ opacity: 0, visibility: "hidden" }}>
+                            {credits?.map(credit => (
+                                <div
+                                    className='h4 flex flex-col gap-10 pointer'
+                                    key={credit._key}
+                                    onMouseEnter={() => {
+                                        setHoveredKey(credit._key)
+                                        if (credit.image) setLastImage(credit.image)
+                                    }}
+                                    onMouseLeave={() => setHoveredKey(null)}>
+                                    <p>{credit.title}</p>
+                                    <div>
+                                        {credit.creditInfo?.map(info => (
+                                            <p className='text-grey-4' key={info._key}>
+                                                {info.credit}
+                                            </p>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div ref={imageRef} className='ratio-3-4 bg-grey radius-5 max-100 self-start pos-rel overflow' style={{ opacity: 0, visibility: "hidden" }}>
+                        {lastImage && <Image className='bg-image' src={lastImage} alt='' width={1600} height={1000} />}
+                    </div>
+                </div>
+            </div>
+            <Spacer />
+        </div>
+    )
+}

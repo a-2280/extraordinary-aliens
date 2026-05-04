@@ -99,6 +99,10 @@ a {
     flex: 1;
 }
 
+.flex-2 {
+    flex: 2;
+}
+
 .flex-wrap {
     flex-wrap: wrap;
 }
@@ -109,6 +113,10 @@ a {
 
 .align-center {
     align-items: center;
+}
+
+.self-start {
+    align-self: flex-start;
 }
 
 .justify-center {
@@ -129,12 +137,20 @@ a {
     gap: 5px;
 }
 
+.gap-10 {
+    gap: 10px;
+}
+
 .gap-15 {
     gap: 15px;
 }
 
 .gap-20 {
     gap: 20px;
+}
+
+.gap-25 {
+    gap: 25px;
 }
 
 .gap-30 {
@@ -227,6 +243,10 @@ a {
 
 .pr30 {
     padding-right: 30px;
+}
+
+.pb0 {
+    padding-bottom: 0;
 }
 
 .pb60 {
@@ -422,6 +442,11 @@ div.bg-image,
     aspect-ratio: 16 / 9;
 }
 
+.ratio-16-10 {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+}
+
 .ratio-16-18 {
     width: 100%;
     aspect-ratio: 16 / 18;
@@ -450,6 +475,11 @@ div.bg-image,
     aspect-ratio: 3 / 2;
 }
 
+.variant-fullWidth .caption-row {
+    width: 50%;
+    margin-left: auto;
+}
+
 .flex-1 > div:has(> .variant-cut) {
     height: 100%;
 }
@@ -462,6 +492,10 @@ div.bg-image,
 
 .w-100 {
     width: 100%;
+}
+
+.w-fit {
+    width: fit-content;
 }
 
 /* ------------ Height Styles ------------ */
@@ -510,6 +544,14 @@ div.bg-image,
     max-height: 100%;
 }
 
+.max-100 {
+    max-width: 100px;
+}
+
+.max-200 {
+    max-width: 200px;
+}
+
 .max-300 {
     max-width: 300px;
 }
@@ -532,6 +574,14 @@ div.bg-image,
 
 .max-600 {
     max-width: 600px;
+}
+
+.max-700 {
+    max-width: 700px;
+}
+
+.max-750 {
+    max-width: 750px;
 }
 
 .line-clamp-2 {

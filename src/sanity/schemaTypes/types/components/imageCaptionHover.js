@@ -1,22 +1,22 @@
-import { ImageIcon } from "@sanity/icons"
-import { makeBackButtonItem } from "../../../components/BackButtonItem"
+import { TextIcon } from "@sanity/icons"
 
 export default {
-    name: "carousel",
-    title: "Image Carousel",
-    icon: ImageIcon,
+    name: "imageCaptionHover",
+    title: "Image with hover caption",
+    icon: TextIcon,
     type: "object",
     fields: [
         {
-            name: "images",
-            title: "Images",
+            name: "image",
+            title: "Image",
+            type: "image",
+            validation: Rule => Rule.required(),
+        },
+        {
+            name: "caption",
+            title: "Caption",
             type: "array",
-            of: [
-                {
-                    type: "image",
-                    components: { item: makeBackButtonItem("Image Carousel") },
-                },
-            ],
+            of: [{ type: "block" }],
             validation: Rule => Rule.required(),
         },
         {
@@ -37,13 +37,15 @@ export default {
     ],
     preview: {
         select: {
-            media: "images.0",
+            media: "image",
+            caption: "caption",
             variant: "variant",
         },
-        prepare({ media, variant }) {
+        prepare({ media, caption, variant }) {
+            const text = caption?.[0]?.children?.[0]?.text || "Image"
             return {
-                title: "Carousel",
-                subtitle: `Carousel — ${variant || "normal"}`,
+                title: text,
+                subtitle: `Image — ${variant || "normal"}`,
                 media,
             }
         },

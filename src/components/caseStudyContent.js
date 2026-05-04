@@ -1,6 +1,10 @@
 import Image from "next/image"
 import { PortableText } from "@portabletext/react"
 import Section from "./caseStudyComponents/section"
+import TextLarge from "./caseStudySections/textLarge"
+import Quote from "./caseStudySections/quote"
+import List from "./caseStudySections/list"
+import Credits from "./caseStudySections/credits"
 import Spacer from "./spacer"
 import { TfiArrowTopRight } from "react-icons/tfi"
 
@@ -15,9 +19,13 @@ export default function CaseStudyContent({ project }) {
             <Spacer className="x2" />
             {caseStudySections?.length > 0 && (
                 <div className='p15 flex flex-col gap-15'>
-                    {caseStudySections.map(section => (
-                        <Section key={section._key} {...section} />
-                    ))}
+                    {caseStudySections.map(section => {
+                        if (section._type === "textLarge") return <TextLarge key={section._key} {...section} />
+                        if (section._type === "quote") return <Quote key={section._key} {...section} />
+                        if (section._type === "list") return <List key={section._key} {...section} />
+                        if (section._type === "credits") return <Credits key={section._key} tags={project.tags} {...section} />
+                        return <Section key={section._key} {...section} />
+                    })}
                 </div>
             )}
         </div>
@@ -33,11 +41,11 @@ function Header({ project }) {
                 <div>
                     <Spacer />
                     <div className='pos-rel ratio-16-9 max-100vh radius-15 overflow'>
-                        <Image className='bg-image' src={heroImage} alt={title || ""} width={1920} height={1080} loading="eager" />
+                        <Image className='bg-image' src={heroImage} alt={title || ""} width={1920} height={1080} loading='eager' />
                     </div>
                 </div>
             )}
-            <div className='p15 flex gap-15'>
+            <div className='p15 flex gap-15 fade--in' data-sal>
                 <p className='flex-1 h1'>{client}</p>
                 <div className='flex-1 flex gap-20 space-between'>
                     <div className='flex flex-col gap-40'>

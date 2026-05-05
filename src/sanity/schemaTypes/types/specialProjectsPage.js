@@ -3,20 +3,15 @@ import { orderRankField } from "@sanity/orderable-document-list"
 import { makeBackButtonItem } from "../../components/BackButtonItem"
 
 export default defineType({
-    name: "projects",
-    title: "Projects",
+    name: "specialProjectsPage",
+    title: "Special Projects Page",
     type: "document",
     fieldsets: [
         { name: "listing", title: "Listing card", options: { collapsible: true } },
         { name: "caseStudy", title: "Case study page", options: { collapsible: true } },
     ],
     fields: [
-        orderRankField({ type: "projects" }),
-        defineField({
-            name: "featured",
-            title: "Featured",
-            type: "boolean",
-        }),
+        orderRankField({ type: "specialProjectsPage" }),
         defineField({
             name: "title",
             title: "Title",
@@ -41,18 +36,18 @@ export default defineType({
             validation: Rule => Rule.required(),
         }),
         defineField({
-            name: "tags",
-            title: "Tags",
-            type: "array",
-            of: [{ type: "reference", to: [{ type: "tag" }] }],
-            fieldset: "listing",
-        }),
-        defineField({
             name: "images",
             title: "Images",
             type: "array",
             of: [{ type: "image" }],
             fieldset: "listing",
+        }),
+        defineField({
+            name: "tags",
+            title: "Tags",
+            type: "array",
+            of: [{ type: "reference", to: [{ type: "tag" }] }],
+            fieldset: "caseStudy",
         }),
         defineField({
             name: "heroImage",

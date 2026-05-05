@@ -8,4 +8,68 @@
     top: 0;
     width: 100%;
     z-index: 100;
+
+    .button-nav,
+    .button-case-study {
+        backdrop-filter: blur(8px);
+    }
+}
+
+.case-study-nav {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    z-index: 4;
+    width: fit-content;
+    display: flex;
+
+    > a {
+        display: grid;
+        grid-template-columns: 1fr;
+        align-items: center;
+        backdrop-filter: blur(8px);
+        overflow: hidden;
+        white-space: nowrap;
+
+        > * {
+            min-width: 0;
+        }
+    }
+
+    .button-nav {
+        transition:
+            color 0.3s ease,
+            background-color 0.3s ease;
+
+        &:hover {
+            background-color: #dadada73;
+            color: var(--black);
+        }
+    }
+
+    &:not(:hover) {
+        gap: 0;
+
+        > .button-nav {
+            grid-template-columns: 0fr;
+            padding-inline: 0;
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+
+    &:hover,
+    &.animate {
+        transition: gap 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+
+        .button-nav {
+            transition:
+                color 0.3s ease,
+                background-color 0.3s ease,
+                grid-template-columns 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.25s ease-out;
+        }
+    }
 }

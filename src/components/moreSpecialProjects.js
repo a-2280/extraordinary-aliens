@@ -10,7 +10,7 @@ import { FaArrowRight } from "react-icons/fa6"
 
 gsap.registerPlugin(useGSAP)
 
-export default function MoreProjects({ nextProject }) {
+export default function MoreSpecialProjects({ nextProject }) {
     const rowRef = useRef()
     const imageRef = useRef()
     const titleRef = useRef()
@@ -55,7 +55,7 @@ export default function MoreProjects({ nextProject }) {
     )
 
     if (!nextProject) return null
-    const href = `/case-study/${nextProject.slug}`
+    const href = `/special-projects/${nextProject.slug}`
     return (
         <div className='p15'>
             <div className='b-1' data-sal />

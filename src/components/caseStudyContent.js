@@ -6,7 +6,16 @@ import Quote from "./caseStudySections/quote"
 import List from "./caseStudySections/list"
 import Credits from "./caseStudySections/credits"
 import Spacer from "./spacer"
+import CaseStudyNav from "./caseStudyNav"
 import { TfiArrowTopRight } from "react-icons/tfi"
+
+function renderItem(item, project) {
+    if (item._type === "textLarge") return <TextLarge key={item._key} {...item} />
+    if (item._type === "quote") return <Quote key={item._key} {...item} />
+    if (item._type === "list") return <List key={item._key} {...item} />
+    if (item._type === "credits") return <Credits key={item._key} tags={project.tags} {...item} />
+    return <Section key={item._key} {...item} />
+}
 
 export default function CaseStudyContent({ project }) {
     if (!project) return null
@@ -19,15 +28,19 @@ export default function CaseStudyContent({ project }) {
             <Spacer className="x2" />
             {caseStudySections?.length > 0 && (
                 <div className='p15 flex flex-col gap-15'>
-                    {caseStudySections.map(section => {
-                        if (section._type === "textLarge") return <TextLarge key={section._key} {...section} />
-                        if (section._type === "quote") return <Quote key={section._key} {...section} />
-                        if (section._type === "list") return <List key={section._key} {...section} />
-                        if (section._type === "credits") return <Credits key={section._key} tags={project.tags} {...section} />
-                        return <Section key={section._key} {...section} />
+                    {caseStudySections.map(entry => {
+                        if (entry._type === "sectionGroup") {
+                            return (
+                                <section key={entry._key} id={entry.slug} aria-label={entry.title} className='flex flex-col gap-15'>
+                                    {entry.items?.map(item => renderItem(item, project))}
+                                </section>
+                            )
+                        }
+                        return renderItem(entry, project)
                     })}
                 </div>
             )}
+            <CaseStudyNav sections={caseStudySections} />
         </div>
     )
 }
@@ -36,7 +49,7 @@ function Header({ project }) {
     const { title, client, year, caseStudyIntro, tags, heroImage, liveWebsite } = project
 
     return (
-        <div className='p15 flex flex-col gap-15'>
+        <div id="introduction" className='p15 flex flex-col gap-15'>
             {heroImage && (
                 <div>
                     <Spacer />

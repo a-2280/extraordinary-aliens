@@ -7,6 +7,13 @@ export default {
     type: "object",
     fields: [
         {
+            name: "audio",
+            title: "Audio File",
+            type: "file",
+            options: { accept: "audio/*" },
+            validation: Rule => Rule.required(),
+        },
+        {
             name: "description",
             title: "Description",
             type: "text",

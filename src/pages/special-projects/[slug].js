@@ -1,11 +1,11 @@
 import "../../scss/site.scss"
 import Layout from "@/layouts/layout"
-import { fetchLayout, fetchContactCta, fetchProjectSlugs, fetchProjectBySlug, fetchProjectNav } from "@/sanity/lib/fetch"
+import { fetchLayout, fetchContactCta, fetchSpecialProjectPageSlugs, fetchSpecialProjectPageBySlug, fetchSpecialProjectPageNav } from "@/sanity/lib/fetch"
 import CaseStudyContent from "@/components/caseStudyContent"
-import MoreProjects from "@/components/moreProjects"
+import MoreSpecialProjects from "@/components/moreSpecialProjects"
 
 export async function getStaticPaths() {
-    const slugs = await fetchProjectSlugs()
+    const slugs = await fetchSpecialProjectPageSlugs()
     return {
         paths: (slugs ?? []).map(slug => ({ params: { slug } })),
         fallback: "blocking",
@@ -16,8 +16,8 @@ export async function getStaticProps({ params }) {
     const [layout, contactCta, project, projectNav] = await Promise.all([
         fetchLayout(),
         fetchContactCta(),
-        fetchProjectBySlug(params.slug),
-        fetchProjectNav(),
+        fetchSpecialProjectPageBySlug(params.slug),
+        fetchSpecialProjectPageNav(),
     ])
     if (!project) return { notFound: true, revalidate: 60 }
     const list = projectNav ?? []
@@ -29,11 +29,11 @@ export async function getStaticProps({ params }) {
     }
 }
 
-export default function CaseStudy({ layout, contactCta, project, nextProject }) {
+export default function SpecialProjectCaseStudy({ layout, contactCta, project, nextProject }) {
     return (
-        <Layout headerData={layout?.header} footerData={layout?.footer} contactCta={contactCta} currentTitle={project?.title}>
+        <Layout headerData={layout?.header} footerData={layout?.footer} contactCta={contactCta} currentTitle={project?.title} theme="dark">
             <CaseStudyContent project={project} />
-            <MoreProjects nextProject={nextProject} />
+            <MoreSpecialProjects nextProject={nextProject} />
         </Layout>
     )
 }

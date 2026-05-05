@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { useRef } from "react"
 
 export default function SpecialProjects({ specialProjects }) {
@@ -24,7 +25,7 @@ export default function SpecialProjects({ specialProjects }) {
             <div className='bg-grey pos-rel ratio-16-9 max-full radius-15 overflow'>
                 <p className='f-20 max-450 text-center text-white pos-abs top-half left-half z-2 fade--in' data-sal>{specialProjects?.description}</p>
                 <Image className='bg-image' width={1184} height={740} src={specialProjects?.image} alt='' />
-                <a href={specialProjects?.url} className='pos-abs top-0 left-0 w-100 h-100 cursor-none z-2' onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} />
+                <Link href='/special-projects' className='pos-abs top-0 left-0 w-100 h-100 cursor-none z-2' onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} />
             </div>
         </div>
     )

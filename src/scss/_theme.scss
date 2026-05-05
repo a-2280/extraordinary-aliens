@@ -1,0 +1,55 @@
+/*--------------------------------------------------------------
+## Dark theme overrides
+
+Activated by `.theme-dark` on <html> (toggled in src/layouts/layout.js).
+Scoped overrides only — no light-mode rules belong here.
+--------------------------------------------------------------*/
+
+.theme-dark {
+    background-color: #000;
+
+    body {
+        color: var(--grey-5);
+    }
+
+    ::selection {
+        background: var(--grey-3);
+        color: var(--black);
+    }
+
+    .masthead {
+        color: var(--grey-1);
+    }
+
+    .button-nav {
+        background-color: rgba(244, 244, 244, 0.10);
+
+        &:hover {
+            background-color: rgba(244, 244, 244, 0.18);
+        }
+    }
+
+    .case-study-nav .button-nav:hover {
+        color: var(--grey-1);
+    }
+
+    .button-case-study {
+        background-color: rgba(244, 244, 244, 0.10);
+
+        &::before {
+            background-color: rgba(244, 244, 244, 0.22);
+        }
+    }
+
+    .dot {
+        background-color: var(--grey-1);
+    }
+
+    .scrubber {
+        background-color: rgba(244, 244, 244, 0.18);
+    }
+
+    .scrubber-fill {
+        background-color: var(--grey-1);
+    }
+}

@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { PortableText } from "@portabletext/react"
 import { useRouter } from "next/router"
 
-export default function FeaturedProjects({ projects }) {
+export default function AllSpecialProjects({ projects }) {
     const cursorRef = useRef(null)
 
     return (
@@ -33,13 +33,6 @@ function Project({ project, cursorRef }) {
                 <div className='flex gap-20 space-between pr30 fade--in' data-sal>
                     <div className='f-20 text-grey-5 max-500'>
                         <PortableText value={project.description} />
-                    </div>
-                    <div className='flex gap-5'>
-                        {project.tags.map((tag, index) => (
-                            <p className='tag nowrap' key={index}>
-                                {tag.name}
-                            </p>
-                        ))}
                     </div>
                 </div>
                 <div className='flex flex-col gap-15 max-full'>
@@ -100,7 +93,7 @@ function ProjectSlider({ images, slug, cursorRef, activeIndex, setActiveIndex })
         const { left, width } = e.currentTarget.getBoundingClientRect()
         const isLeft = e.clientX - left < width / 2
         if (isLeft) {
-            router.push(`/case-study/${slug}`)
+            router.push(`/special-projects/${slug}`)
             return
         }
         setActiveIndex(i => (i + 1) % images.length)

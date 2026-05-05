@@ -7,6 +7,11 @@ export const structure = (S, context) =>
             S.listItem().title("Pages").schemaType("page").child(S.documentTypeList("page").title("Pages")),
             S.listItem().title("Layouts").schemaType("layout").child(S.documentTypeList("layout").title("Layouts")),
             orderableDocumentListDeskItem({ type: "projects", title: "Projects", S, context }),
+            orderableDocumentListDeskItem({ type: "specialProjectsPage", title: "Special Projects", S, context }),
+            S.listItem()
+                .title("Featured Special Project")
+                .schemaType("specialProjectsSettings")
+                .child(S.document().schemaType("specialProjectsSettings").documentId("specialProjectsSettings")),
 
             S.divider(),
 

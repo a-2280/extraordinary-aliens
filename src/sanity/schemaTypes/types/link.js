@@ -28,6 +28,13 @@ export default {
             type: "boolean",
             layout: "checkbox",
         },
+        {
+            name: "copyOnClick",
+            title: "Copy URL On Click",
+            description: "When enabled, clicking the link copies its URL to the clipboard instead of navigating.",
+            type: "boolean",
+            layout: "checkbox",
+        },
     ],
     preview: {
         select: {

@@ -18,16 +18,6 @@ export default defineType({
             validation: Rule => Rule.required(),
         }),
         defineField({
-            name: "url",
-            title: "URL",
-            type: "url",
-            validation: Rule =>
-                Rule.required().uri({
-                    allowRelative: true,
-                    scheme: ["http", "https", "tel", "sms", "mailto"],
-                }),
-        }),
-        defineField({
             name: "image",
             title: "Image",
             type: "image",

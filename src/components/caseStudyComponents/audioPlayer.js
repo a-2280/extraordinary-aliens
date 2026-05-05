@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin"
@@ -10,9 +10,19 @@ gsap.registerPlugin(useGSAP, MorphSVGPlugin)
 const PLAY_D = "M3 2 L22 12 L3 22 Z"
 const PAUSE_D = "M3 2 H9 V22 H3 Z M15 2 H21 V22 H15 Z"
 
-export default function AudioPlayer({ title, description }) {
+function formatTime(seconds) {
+    if (!Number.isFinite(seconds)) return "0:00"
+    const m = Math.floor(seconds / 60)
+    const s = Math.floor(seconds % 60)
+    return `${m}:${s.toString().padStart(2, "0")}`
+}
+
+export default function AudioPlayer({ title, description, audio }) {
     const [isPlaying, setIsPlaying] = useState(false)
+    const [currentTime, setCurrentTime] = useState(0)
+    const [duration, setDuration] = useState(0)
     const pathRef = useRef()
+    const audioRef = useRef()
 
     useGSAP(() => {
         gsap.to(pathRef.current, {
@@ -22,6 +32,42 @@ export default function AudioPlayer({ title, description }) {
         })
     }, { dependencies: [isPlaying] })
 
+    useEffect(() => {
+        const el = audioRef.current
+        if (!el) return
+        el.volume = 0.5
+        const onPlay = () => setIsPlaying(true)
+        const onPause = () => setIsPlaying(false)
+        const onTime = () => setCurrentTime(el.currentTime)
+        const onMeta = () => setDuration(el.duration)
+        if (el.readyState >= 1 && Number.isFinite(el.duration)) {
+            setDuration(el.duration)
+        }
+        el.addEventListener("play", onPlay)
+        el.addEventListener("pause", onPause)
+        el.addEventListener("ended", onPause)
+        el.addEventListener("timeupdate", onTime)
+        el.addEventListener("loadedmetadata", onMeta)
+        el.addEventListener("durationchange", onMeta)
+        return () => {
+            el.removeEventListener("play", onPlay)
+            el.removeEventListener("pause", onPause)
+            el.removeEventListener("ended", onPause)
+            el.removeEventListener("timeupdate", onTime)
+            el.removeEventListener("loadedmetadata", onMeta)
+            el.removeEventListener("durationchange", onMeta)
+        }
+    }, [])
+
+    const toggle = () => {
+        const el = audioRef.current
+        if (!el) return
+        if (el.paused) el.play()
+        else el.pause()
+    }
+
+    const progress = duration > 0 ? (currentTime / duration) * 100 : 0
+
     return (
         <div className="ratio-3-4 max-full flex flex-col space-between">
             <p className="f-20 text-grey-4 max-450">{description}</p>
@@ -29,16 +75,19 @@ export default function AudioPlayer({ title, description }) {
                 <div className='flex align-center gap-20 space-between'>
                     <p className='uppercase'>{title}</p>
                     <div className='flex gap-15 align-center'>
-                        <p>0:35 / 2:17</p>
-                        <button className='audio-button' onClick={() => setIsPlaying(p => !p)}>
+                        <p>{formatTime(currentTime)} / {formatTime(duration)}</p>
+                        <button className='audio-button' onClick={toggle}>
                             <svg width='10' height='10' viewBox='0 0 24 24' fill='currentColor'>
                                 <path ref={pathRef} d={PLAY_D} />
                             </svg>
                         </button>
                     </div>
                 </div>
-                <div className='scrubber' />
+                <div className='scrubber'>
+                    <div className='scrubber-fill' style={{ width: `${progress}%` }} />
+                </div>
             </div>
+            <audio ref={audioRef} src={audio} preload="metadata" />
         </div>
     )
 }

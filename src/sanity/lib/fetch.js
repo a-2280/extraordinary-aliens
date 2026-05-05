@@ -1,5 +1,5 @@
 import { client } from "./client"
-import { LAYOUT_QUERY, HERO_QUERY, PROJECTS_QUERY, PROJECT_SLUGS_QUERY, PROJECT_NAV_QUERY, PROJECT_BY_SLUG_QUERY, FEATURED_QUERY, MISSION_QUERY, SPECIAL_PROJECTS_QUERY, CONTACT_CTA_QUERY } from "./queries"
+import { LAYOUT_QUERY, HERO_QUERY, PROJECTS_QUERY, PROJECT_SLUGS_QUERY, PROJECT_NAV_QUERY, PROJECT_BY_SLUG_QUERY, FEATURED_QUERY, MISSION_QUERY, SPECIAL_PROJECTS_QUERY, SPECIAL_PROJECT_PAGES_QUERY, SPECIAL_PROJECT_PAGE_SLUGS_QUERY, SPECIAL_PROJECT_PAGE_NAV_QUERY, SPECIAL_PROJECT_PAGE_BY_SLUG_QUERY, CONTACT_CTA_QUERY } from "./queries"
 
 export async function fetchLayout() {
     return client.fetch(LAYOUT_QUERY)
@@ -35,6 +35,22 @@ export async function fetchMission() {
 
 export async function fetchSpecialProjects() {
     return client.fetch(SPECIAL_PROJECTS_QUERY)
+}
+
+export async function fetchSpecialProjectPages() {
+    return client.fetch(SPECIAL_PROJECT_PAGES_QUERY)
+}
+
+export async function fetchSpecialProjectPageSlugs() {
+    return client.fetch(SPECIAL_PROJECT_PAGE_SLUGS_QUERY)
+}
+
+export async function fetchSpecialProjectPageNav() {
+    return client.fetch(SPECIAL_PROJECT_PAGE_NAV_QUERY)
+}
+
+export async function fetchSpecialProjectPageBySlug(slug) {
+    return client.fetch(SPECIAL_PROJECT_PAGE_BY_SLUG_QUERY, { slug })
 }
 
 export async function fetchContactCta() {

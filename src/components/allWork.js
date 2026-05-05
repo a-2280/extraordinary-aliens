@@ -14,10 +14,13 @@ export default function AllWork({ projects }) {
     useGSAP(
         () => {
             const cards = gsap.utils.toArray(gridRef.current.querySelectorAll(".work-card"))
+            const bound = []
 
             cards.forEach(card => {
                 const tags = card.querySelector(".tags")
+                const image = card.querySelector(".image")
                 gsap.set(tags, { autoAlpha: 0 })
+                gsap.set(image, { filter: "blur(0px)", scale: 1 })
 
                 const others = cards.filter(c => c !== card).map(c => c.querySelector(".image"))
                 let activeTl
@@ -40,15 +43,23 @@ export default function AllWork({ projects }) {
 
                 card.addEventListener("mouseenter", onEnter)
                 card.addEventListener("mouseleave", onLeave)
+                bound.push([card, onEnter, onLeave])
             })
+
+            return () => {
+                bound.forEach(([card, onEnter, onLeave]) => {
+                    card.removeEventListener("mouseenter", onEnter)
+                    card.removeEventListener("mouseleave", onLeave)
+                })
+            }
         },
-        { scope: gridRef },
+        { scope: gridRef, dependencies: [projects] },
     )
 
     return (
         <div ref={gridRef} className='p15 grid gap-90'>
-            {projects.map((project, index) => (
-                <Link href={`/case-study/${project.slug.current}`} className='work-card max-full flex flex-col fade--in' data-sal key={index}>
+            {projects.map(project => (
+                <Link href={`/case-study/${project.slug.current}`} className='work-card max-full flex flex-col fade--in' data-sal key={project.slug.current}>
                     <div className='bg-grey pos-rel ratio-16-18 overflow radius-15'>
                         <Image className='image bg-image' src={project.image} alt='' width={435} height={515} />
                     </div>

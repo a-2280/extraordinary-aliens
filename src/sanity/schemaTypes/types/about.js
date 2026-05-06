@@ -1,14 +1,14 @@
-import { ColorWheelIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { ColorWheelIcon } from "@sanity/icons"
+import { defineField, defineType } from "sanity"
 
 export default defineType({
-    name: "hero",
-    title: "Hero",
+    name: "about",
+    title: "About",
     type: "document",
     fields: [
         defineField({
-            name: "description",
-            title: "Description",
+            name: "title",
+            title: "Title",
             type: "array",
             of: [
                 {
@@ -36,17 +36,15 @@ export default defineType({
             validation: Rule => Rule.required(),
         }),
         defineField({
-            name: "button",
-            title: "CTA Button",
-            type: "link",
-            validation: Rule => Rule.required(),
+            type: "aboutComponentList",
+            name: "components",
+            title: "Components",
         }),
         defineField({
-            name: "videoModal",
-            title: "Video Modal (optional)",
-            description: "When set, the CTA opens a video lightbox instead of navigating to the URL.",
-            type: "videoModal",
+            name: "image",
+            title: "image",
+            type: 'image',
         }),
     ],
-    preview: { select: { title: "title" } },
+    preview: { prepare: () => ({ title: "About" }) },
 })

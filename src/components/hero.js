@@ -1,5 +1,9 @@
+"use client"
+
+import { useState } from "react"
 import { PortableText } from "@portabletext/react";
 import { FaPlay } from "react-icons/fa"
+import VideoModal from "@/components/videoModal"
 
 const components = {
     marks: {
@@ -9,7 +13,11 @@ const components = {
     },
 }
 
-export default function Hero({ data }) {
+export default function Hero({ data, headerLinks }) {
+    const [open, setOpen] = useState(false)
+    const videoSrc = data?.videoModal?.video
+    const hasVideo = Boolean(videoSrc)
+
     return (
         <div className='px30 pth h-75vh'>
             <div className='h-100  flex flex-col justify-center gap-20'>
@@ -20,6 +28,7 @@ export default function Hero({ data }) {
                     href={data?.button?.url}
                     target={data?.button?.openInNewWindow ? "_blank" : undefined}
                     rel={data?.button?.openInNewWindow ? "noopener noreferrer" : undefined}
+                    onClick={hasVideo ? (e) => { e.preventDefault(); setOpen(true) } : undefined}
                     className='button flex align-center fade--in delay-100'
                     data-sal
                 >
@@ -27,6 +36,16 @@ export default function Hero({ data }) {
                     <p>{data?.button?.title}</p>
                 </a>
             </div>
+            {hasVideo && (
+                <VideoModal
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    src={videoSrc}
+                    title={data?.videoModal?.title}
+                    description={data?.videoModal?.description}
+                    headerLinks={headerLinks}
+                />
+            )}
         </div>
     )
 }

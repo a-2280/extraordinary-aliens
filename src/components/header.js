@@ -30,7 +30,7 @@ export default function Header({ data, currentTitle }) {
             <button className='button-nav f-nav flex gap-20 align-center shrink-0' onClick={handleClick}>
                 Extraordinary Aliens
                 <svg width='6' height='9' viewBox='0 0 6 9' fill='none'>
-                    <path ref={pathRef} d={LEFT} stroke='rgba(15,15,15,1)' strokeWidth='1.16' strokeLinecap='round' strokeLinejoin='round' />
+                    <path ref={pathRef} d={LEFT} stroke='currentColor' strokeWidth='1.16' strokeLinecap='round' strokeLinejoin='round' />
                 </svg>
             </button>
             <ButtonList open={open} data={data} currentTitle={currentTitle} />

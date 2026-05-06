@@ -1,0 +1,61 @@
+.image-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-modal__frame {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    height: 80vh;
+    max-width: calc(100vw - 200px);
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.image-modal__caption {
+    position: absolute;
+    left: 15px;
+    bottom: 15px;
+    max-width: 600px;
+}
+
+.image-modal__nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 7px 10px;
+    background-color: rgba(255, 255, 255, 0.47);
+    color: var(--black);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+        background-color: var(--grey-6);
+        color: var(--grey-1);
+    }
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: default;
+    }
+}
+
+.image-modal__nav--prev {
+    left: 15px;
+}
+
+.image-modal__nav--next {
+    right: 15px;
+}

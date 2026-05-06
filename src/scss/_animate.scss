@@ -56,6 +56,11 @@
 	will-change: filter, transform;
 }
 
+.hover--unblur {
+	.image--blur { transition: 0.65s ease filter; }
+	&:hover .image--blur { filter: blur(0); }
+}
+
 /* ------------ Page Transition ------------ */
 
 .page--transition {

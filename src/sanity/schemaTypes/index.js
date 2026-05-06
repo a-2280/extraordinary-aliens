@@ -33,11 +33,19 @@ import imageExpandableCaption from './types/components/imageExpandableCaption'
 import imageCaptionHover from './types/components/imageCaptionHover'
 import spot from './types/components/spot'
 import audioPlayer from './types/components/audioPlayer'
+import videoModal from './types/components/videoModal'
 import textBlock from './types/components/textBlock'
 import listItem from './types/components/listItem'
 import credit from './types/components/credit'
 import creditInfo from './types/components/creditInfo'
+import about from './types/about'
+import aboutComponentList from './types/aboutComponentList'
+import studio from './types/studio'
+import approach from './types/approach'
+import capabilities from './types/capabilities'
+import clientsAndPress from './types/clientsAndPress'
+import name from './types/name'
 
 export const schema = {
-  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail, colorSwatch, projects, tag, mission, missionCard, specialProjects, specialProjectsPage, specialProjectsSettings, contactCta, section, textLarge, quote, list, credits, sectionGroup, imageCard, imageCarousel, captionCarousel, annotationImage, imageHotspot, imageExpandableCaption, imageCaptionHover, spot, audioPlayer, textBlock, listItem, credit, creditInfo],
+  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail, colorSwatch, projects, tag, mission, missionCard, specialProjects, specialProjectsPage, specialProjectsSettings, contactCta, section, textLarge, quote, list, credits, sectionGroup, imageCard, imageCarousel, captionCarousel, annotationImage, imageHotspot, imageExpandableCaption, imageCaptionHover, spot, audioPlayer, videoModal, textBlock, listItem, credit, creditInfo, about, aboutComponentList, studio, approach, capabilities, clientsAndPress, name],
 }

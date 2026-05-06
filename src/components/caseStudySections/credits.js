@@ -44,7 +44,7 @@ export default function Credits({ title, description, credits, tags }) {
                     <p className='h5 fade--in' data-sal>
                         {title}
                     </p>
-                    <p className='f-20 text-grey-4 max-400 fade--in delay-100' data-sal>
+                    <p className='f-20 text-grey-4 max-400 fade--in delay-100 credits-text' data-sal>
                         {description}
                     </p>
                 </div>
@@ -53,9 +53,9 @@ export default function Credits({ title, description, credits, tags }) {
                         <div className='flex flex-col gap-30'>
                             <div className='flex flex-col gap-15 fade--in' data-sal>
                                 {tags?.length > 0 && <p className='h4 w-100 max-200'>{tags.map(tag => tag.name).join(", ")}</p>}
-                                <p className='h4 text-grey-4'>Extraordinary Aliens</p>
+                                <p className='h4 text-grey-4 credits-text'>Extraordinary Aliens</p>
                             </div>
-                            <button className='bg-grey-2 w-fit p5 radius-5' onClick={() => setOpen(!open)}>
+                            <button className='bg-grey-2 w-fit p5 radius-5 credits-toggle' onClick={() => setOpen(!open)}>
                                 <svg width='15' height='15' viewBox='0 0 15 15'>
                                     <line x1='1' y1='7.5' x2='14' y2='7.5' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' />
                                     <line ref={verticalRef} x1='7.5' y1='1' x2='7.5' y2='14' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' />
@@ -75,7 +75,7 @@ export default function Credits({ title, description, credits, tags }) {
                                     <p>{credit.title}</p>
                                     <div>
                                         {credit.creditInfo?.map(info => (
-                                            <p className='text-grey-4' key={info._key}>
+                                            <p className='text-grey-4 credits-text' key={info._key}>
                                                 {info.credit}
                                             </p>
                                         ))}

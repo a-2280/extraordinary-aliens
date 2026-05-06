@@ -72,7 +72,7 @@ export default function ImageExpandableCaption({ image, caption, variant = "norm
                 </div>
                 {isOverflowing && (
                     <div
-                        className='bg-grey-2 p5 radius-5 shrink-0 h-fit'
+                        className='bg-grey-2 p5 radius-5 shrink-0 h-fit caption-toggle'
                         style={{ cursor: 'pointer' }}
                         onClick={handleClick}
                     >

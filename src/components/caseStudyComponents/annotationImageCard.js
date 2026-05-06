@@ -38,7 +38,7 @@ export default function AnnotationImage({ image, title, annotation, variant = "n
         <div className={`variant-${variant} pos-rel ratio-3-4 max-full radius-15 overflow`}>
             <Image className='bg-image' src={image} alt='' width={1600} height={1000} />
             <div
-                className='z-4 bg-solid-grey pos-abs top-30 right-30 radius-5 p5 text-black flex align-center justify-center'
+                className='z-4 bg-solid-grey pos-abs top-30 right-30 radius-5 p5 text-black flex align-center justify-center annotation-toggle'
                 style={{ cursor: 'pointer' }}
                 onClick={() => setIsOpen(prev => !prev)}
             >
@@ -48,7 +48,7 @@ export default function AnnotationImage({ image, title, annotation, variant = "n
             </div>
             <div
                 ref={popupRef}
-                className='p15 z-3 bg-solid-grey pos-abs top-30 right-30 radius-5 text-black flex flex-col gap-40'
+                className='p15 z-3 bg-solid-grey pos-abs top-30 right-30 radius-5 text-black flex flex-col gap-40 annotation-popup'
             >
                 <p className='h5'>{title}</p>
                 <div className='h4 max-300'>

@@ -8,7 +8,12 @@ export const HERO_QUERY = `*[_type == "layout"][0].homepage->.components[_type =
       }
     }
   },
-  button{ title, url, openInNewWindow }
+  button{ title, url, openInNewWindow },
+  videoModal{
+    title,
+    description,
+    "video": video.asset->url
+  }
 }`
 
 export const LAYOUT_QUERY = `*[_type == "layout"][0]{
@@ -38,6 +43,7 @@ export const PROJECT_NAV_QUERY = `*[_type == "projects" && defined(slug.current)
 const SECTION_CHILD_PROJECTION = `_key, _type,
   _type == "imageCard" => {
     variant,
+    description,
     "image": image.asset->url
   },
   _type == "carousel" => {
@@ -197,6 +203,55 @@ export const SPECIAL_PROJECT_PAGE_BY_SLUG_QUERY = `*[_type == "specialProjectsPa
       }
     }
   }
+}`
+
+export const SPECIAL_PROJECTS_LANDING_QUERY = `*[_type == "specialProjectsSettings"][0]{
+  title,
+  description,
+  "featured": featured->{ title, "slug": slug.current, "heroImage": heroImage.asset->url }
+}`
+
+export const ABOUT_QUERY = `*[_type == "about"][0]{
+  title[]{
+    ...,
+    markDefs[]{
+      ...,
+      _type == "textColor" => {
+        "color": swatch->color.hex
+      }
+    }
+  },
+  components[]{
+    _key,
+    _type,
+    _type == "studio" => {
+      title,
+      founderAndDirector[]{ name },
+      aboutTitle,
+      about
+    },
+    _type == "approach" => {
+      items[]{
+        _key,
+        "image": image.asset->url,
+        title,
+        description
+      }
+    },
+    _type == "capabilities" => {
+      title,
+      "capabilities": capabilities[]->{ name },
+      industriesTitle,
+      "industries": industries[]->{ name }
+    },
+    _type == "clientsAndPress" => {
+      title,
+      clients,
+      pressTitle,
+      press
+    }
+  },
+  "image": image.asset->url
 }`
 
 export const CONTACT_CTA_QUERY = `*[_type == "contactCta"][0]{

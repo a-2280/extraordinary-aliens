@@ -18,23 +18,45 @@ Scoped overrides only — no light-mode rules belong here.
     }
 
     .masthead {
-        color: var(--grey-1);
+        color: var(--grey-3);
     }
 
     .button-nav {
-        background-color: rgba(244, 244, 244, 0.10);
+        background-color: rgba(218, 218, 218, 0.15);
 
         &:hover {
-            background-color: rgba(244, 244, 244, 0.18);
+            background-color: rgba(218, 218, 218, 0.25);
         }
     }
 
-    .case-study-nav .button-nav:hover {
+    .caption-toggle,
+    .annotation-toggle,
+    .annotation-popup,
+    .credits-toggle {
+        background-color: var(--grey-6);
         color: var(--grey-1);
     }
 
+    .audio-player {
+        background-color: rgba(218, 218, 218, 0.08);
+    }
+
+    .audio-button {
+        background-color: var(--grey-6);
+        color: var(--grey-1);
+    }
+
+    .text-block-body,
+    .credits-text {
+        color: var(--grey-5);
+    }
+
+    .case-study-nav .button-nav:hover {
+        color: var(--grey-3);
+    }
+
     .button-case-study {
-        background-color: rgba(244, 244, 244, 0.10);
+        background-color: rgba(218, 218, 218, 0.15);
 
         &::before {
             background-color: rgba(244, 244, 244, 0.22);
@@ -42,14 +64,33 @@ Scoped overrides only — no light-mode rules belong here.
     }
 
     .dot {
-        background-color: var(--grey-1);
+        background-color: var(--grey-3);
     }
 
     .scrubber {
-        background-color: rgba(244, 244, 244, 0.18);
+        background-color: rgba(218, 218, 218, 0.15);
     }
 
     .scrubber-fill {
+        background-color: rgba(218, 218, 218, 0.25);
+    }
+
+    .b-1::before {
+        background-color: var(--grey-6);
+    }
+
+    .h5, .h4 {
+        color: var(--grey-4);
+    }
+
+    .index {
+        color: var(--grey-5);
+    }
+
+    .label {
         background-color: var(--grey-1);
+        color: var(--black);
     }
 }
+
+

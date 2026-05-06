@@ -26,6 +26,10 @@ a {
     border-radius: 5px;
 }
 
+.radius-10 {
+    border-radius: 10px;
+}
+
 .radius-15 {
     border-radius: 15px;
 }
@@ -173,6 +177,10 @@ a {
     gap: 100px;
 }
 
+.gap-200 {
+    gap: 200px;
+}
+
 /* ------------ Margin Styles ------------ */
 
 .m0 {
@@ -211,6 +219,10 @@ a {
 
 .p5 {
     padding: 5px;
+}
+
+.p10 {
+    padding: 10px;
 }
 
 .p15 {
@@ -269,9 +281,18 @@ a {
     padding-left: 30px;
 }
 
+.pl80 {
+    padding-left: 80px;
+}
+
 .py8 {
     padding-top: 8px;
     padding-bottom: 8px;
+}
+
+.py15 {
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .px15 {
@@ -284,8 +305,23 @@ a {
     padding-right: 30px;
 }
 
+.px200 {
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
 .pth {
     padding-top: 61px;
+}
+
+.py30 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.px80 {
+    padding-left: 80px;
+    padding-right: 80px;
 }
 
 /* ------------ Position Styles ------------ */
@@ -319,12 +355,24 @@ a {
     top: 30px;
 }
 
+.top-60 {
+    top: 60px;
+}
+
+.top-h-100 {
+    top: 161px;
+}
+
 .left-30 {
     left: 30px;
 }
 
 .right-15 {
     right: 15px;
+}
+
+.right-20 {
+    right: 20px;
 }
 
 .right-30 {
@@ -447,6 +495,13 @@ div.bg-image,
     aspect-ratio: 16 / 10;
 }
 
+.ratio-16-10.fit {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
 .ratio-16-18 {
     width: 100%;
     aspect-ratio: 16 / 18;
@@ -538,6 +593,10 @@ div.bg-image,
     min-width: 0;
 }
 
+.min-h-0 {
+    min-height: 0;
+}
+
 /* ------------ Max Styles ------------ */
 
 .max-100h {
@@ -584,6 +643,10 @@ div.bg-image,
     max-width: 750px;
 }
 
+.max-850 {
+    max-width: 850px;
+}
+
 .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -594,6 +657,10 @@ div.bg-image,
 
 .max-950 {
     max-width: 950px;
+}
+
+.max-1000 {
+    max-width: 1000px;
 }
 
 .max-1600 {

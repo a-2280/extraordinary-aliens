@@ -26,6 +26,11 @@ export default {
             validation: Rule => Rule.required(),
         },
         {
+            name: "description",
+            title: "Description",
+            type: "text",
+        },
+        {
             name: "variant",
             title: "Variant",
             type: "string",

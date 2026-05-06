@@ -9,9 +9,13 @@ export const structure = (S, context) =>
             orderableDocumentListDeskItem({ type: "projects", title: "Projects", S, context }),
             orderableDocumentListDeskItem({ type: "specialProjectsPage", title: "Special Projects", S, context }),
             S.listItem()
-                .title("Featured Special Project")
+                .title("Special Projects Landing")
                 .schemaType("specialProjectsSettings")
                 .child(S.document().schemaType("specialProjectsSettings").documentId("specialProjectsSettings")),
+            S.listItem()
+                .title("About")
+                .schemaType("about")
+                .child(S.document().schemaType("about").documentId("about")),
 
             S.divider(),
 
@@ -24,5 +28,7 @@ export const structure = (S, context) =>
                 ),
 
             S.listItem().title("Tags").schemaType("tag").child(S.documentTypeList("tag").title("Tags")),
+            S.listItem().title("Names").schemaType("name").child(S.documentTypeList("name").title("Names")),
+            S.listItem().title("Capabilities").schemaType("capabilities").child(S.documentTypeList("capabilities").title("Capabilities")),
             S.listItem().title("Color Swatches").schemaType("colorSwatch").child(S.documentTypeList("colorSwatch").title("Color Swatches")),
         ])

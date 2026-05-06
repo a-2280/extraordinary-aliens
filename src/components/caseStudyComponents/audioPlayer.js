@@ -71,7 +71,7 @@ export default function AudioPlayer({ title, description, audio }) {
     return (
         <div className="ratio-3-4 max-full flex flex-col space-between">
             <p className="f-20 text-grey-4 max-450">{description}</p>
-            <div className='bg-grey-2 radius-15 p30 flex flex-col gap-40'>
+            <div className='bg-grey-2 radius-15 p30 flex flex-col gap-40 audio-player'>
                 <div className='flex align-center gap-20 space-between'>
                     <p className='uppercase'>{title}</p>
                     <div className='flex gap-15 align-center'>

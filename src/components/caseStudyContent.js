@@ -7,6 +7,8 @@ import List from "./caseStudySections/list"
 import Credits from "./caseStudySections/credits"
 import Spacer from "./spacer"
 import CaseStudyNav from "./caseStudyNav"
+import { ImageModalProvider } from "./imageModalContext"
+import ImageModal from "./imageModal"
 import { TfiArrowTopRight } from "react-icons/tfi"
 
 function renderItem(item, project) {
@@ -23,25 +25,28 @@ export default function CaseStudyContent({ project }) {
     const { caseStudySections } = project
 
     return (
-        <div>
-            <Header project={project} />
-            <Spacer className="x2" />
-            {caseStudySections?.length > 0 && (
-                <div className='p15 flex flex-col gap-15'>
-                    {caseStudySections.map(entry => {
-                        if (entry._type === "sectionGroup") {
-                            return (
-                                <section key={entry._key} id={entry.slug} aria-label={entry.title} className='flex flex-col gap-15'>
-                                    {entry.items?.map(item => renderItem(item, project))}
-                                </section>
-                            )
-                        }
-                        return renderItem(entry, project)
-                    })}
-                </div>
-            )}
-            <CaseStudyNav sections={caseStudySections} />
-        </div>
+        <ImageModalProvider sections={caseStudySections}>
+            <div>
+                <Header project={project} />
+                <Spacer className="x2" />
+                {caseStudySections?.length > 0 && (
+                    <div className='p15 flex flex-col gap-15'>
+                        {caseStudySections.map(entry => {
+                            if (entry._type === "sectionGroup") {
+                                return (
+                                    <section key={entry._key} id={entry.slug} aria-label={entry.title} className='flex flex-col gap-15'>
+                                        {entry.items?.map(item => renderItem(item, project))}
+                                    </section>
+                                )
+                            }
+                            return renderItem(entry, project)
+                        })}
+                    </div>
+                )}
+                <CaseStudyNav sections={caseStudySections} />
+            </div>
+            <ImageModal />
+        </ImageModalProvider>
     )
 }
 

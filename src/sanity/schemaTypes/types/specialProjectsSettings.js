@@ -2,9 +2,20 @@ import { defineField, defineType } from "sanity"
 
 export default defineType({
     name: "specialProjectsSettings",
-    title: "Special Projects Settings",
+    title: "Special Projects Landing",
     type: "document",
     fields: [
+        defineField({
+            name: "title",
+            title: "Hero Title",
+            type: "string",
+            validation: Rule => Rule.required(),
+        }),
+        defineField({
+            name: "description",
+            title: "Description",
+            type: "text",
+        }),
         defineField({
             name: "featured",
             title: "Featured Project",
@@ -13,11 +24,11 @@ export default defineType({
         }),
     ],
     preview: {
-        select: { title: "featured.title" },
-        prepare({ title }) {
+        select: { title: "title", featured: "featured.title" },
+        prepare({ title, featured }) {
             return {
-                title: "Special Projects Settings",
-                subtitle: title ? `Featured: ${title}` : "No featured project",
+                title: "Special Projects Landing",
+                subtitle: featured ? `Featured: ${featured}` : title || "No featured project",
             }
         },
     },

@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { createContext, useEffect, useMemo, useRef, useState } from "react";
 import { ReactLenis } from "lenis/react";
 import gsap from "gsap";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { initSal } from "@/utils/sal";
 import ContactCta from "@/components/contactCta";
+import PageTransition from "@/components/pageTransition";
 
 const lenisOptions = {
     duration: 1.2,
@@ -16,8 +17,11 @@ const lenisOptions = {
     autoRaf: false,
 };
 
+export const HeaderTitleContext = createContext({ setOverride: () => {} })
+
 export default function Layout({ children, headerData, footerData, contactCta, currentTitle, theme }) {
     const lenisRef = useRef(null)
+    const [overrideTitle, setOverrideTitle] = useState(null)
 
     useEffect(() => {
         function update(time) {
@@ -41,12 +45,18 @@ export default function Layout({ children, headerData, footerData, contactCta, c
         }
     }, [theme])
 
+    const headerCtx = useMemo(() => ({ setOverride: setOverrideTitle }), [])
+
     return (
         <ReactLenis ref={lenisRef} root options={lenisOptions}>
-            <Header data={headerData} currentTitle={currentTitle} />
-            <main>{children}</main>
-            <ContactCta contactCta={contactCta} />
-            <Footer data={footerData} />
+            <HeaderTitleContext.Provider value={headerCtx}>
+                <Header data={headerData} currentTitle={overrideTitle ?? currentTitle} />
+                <PageTransition>
+                    <main>{children}</main>
+                    <ContactCta contactCta={contactCta} />
+                </PageTransition>
+                <Footer data={footerData} />
+            </HeaderTitleContext.Provider>
         </ReactLenis>
     )
 }

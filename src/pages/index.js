@@ -17,7 +17,7 @@ export async function getStaticProps() {
 export default function Homepage({ layout, hero, projects, featuredProjects, mission, specialProjects, contactCta }) {
     return (
         <Layout headerData={layout?.header} footerData={layout?.footer} contactCta={contactCta}>
-            <Hero data={hero} />
+            <Hero data={hero} headerLinks={layout?.header?.links} />
             <HomepageContent projects={projects} featuredProjects={featuredProjects} mission={mission} />
             <Mission mission={mission} />
             <SpecialProjects specialProjects={specialProjects} />

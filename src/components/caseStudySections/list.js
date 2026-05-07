@@ -4,8 +4,8 @@ export default function List({ title, list }) {
     return (
         <div>
             <Spacer />
-            <div className='flex gap-15'>
-                {title && <p className='flex-1 h5 fade--in' data-sal>{title}</p>}
+            <div className='flex gap-15 m-flex-col'>
+                {title && <p className='flex-1 h5 fade--in m-pl15' data-sal>{title}</p>}
                 {list?.length > 0 && (
                     <div className='flex-1 p15 max-750 flex flex-col gap-25'>
                         {list.map((item, i) => (

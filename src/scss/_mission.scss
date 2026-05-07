@@ -10,3 +10,14 @@
         width: 310px;
     }
 }
+
+@media (max-width: 768px) {
+    .swiper-slide .mission-card {
+        transform-origin: left center;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .swiper-slide-next .mission-card {
+        transform: scale(0.85);
+    }
+}

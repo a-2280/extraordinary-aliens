@@ -9,6 +9,7 @@ import { useImageModal } from "./imageModalContext"
 export default function ImageModal() {
     const ctx = useImageModal()
     const [mounted, setMounted] = useState(false)
+    const touchStartRef = useRef(null)
 
     useEffect(() => { setMounted(true) }, [])
 
@@ -51,9 +52,30 @@ export default function ImageModal() {
     const showNav = images.length > 1
     const stop = e => e.stopPropagation()
 
+    const onTouchStart = e => {
+        const t = e.touches[0]
+        touchStartRef.current = { x: t.clientX, y: t.clientY }
+    }
+    const onTouchEnd = e => {
+        const start = touchStartRef.current
+        if (!start) return
+        touchStartRef.current = null
+        const t = e.changedTouches[0]
+        const dx = t.clientX - start.x
+        const dy = t.clientY - start.y
+        if (Math.abs(dx) < 50 || Math.abs(dx) <= Math.abs(dy)) return
+        if (dx < 0) next?.()
+        else prev?.()
+    }
+
     return createPortal(
         <div className='image-modal' onClick={close}>
-            <div className='image-modal__frame radius-15 overflow' onClick={stop}>
+            <div
+                className='image-modal__frame radius-15 overflow'
+                onClick={stop}
+                onTouchStart={onTouchStart}
+                onTouchEnd={onTouchEnd}
+            >
                 <Image
                     key={current._key}
                     className='bg-image'
@@ -67,7 +89,7 @@ export default function ImageModal() {
             {showNav && (
                 <>
                     <button
-                        className='image-modal__nav image-modal__nav--prev'
+                        className='image-modal__nav image-modal__nav--prev m-hide'
                         onClick={e => { stop(e); prev() }}
                         disabled={!hasPrev}
                         aria-label='Previous image'
@@ -75,7 +97,7 @@ export default function ImageModal() {
                         Prev
                     </button>
                     <button
-                        className='image-modal__nav image-modal__nav--next'
+                        className='image-modal__nav image-modal__nav--next m-hide'
                         onClick={e => { stop(e); next() }}
                         disabled={!hasNext}
                         aria-label='Next image'

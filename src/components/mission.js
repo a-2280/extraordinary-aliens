@@ -4,6 +4,8 @@ import { useRef, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { PortableText } from "@portabletext/react"
+import { Swiper, SwiperSlide } from "swiper/react"
+import "swiper/css"
 import Spacer from "./spacer"
 import { FaArrowRight } from "react-icons/fa6"
 
@@ -49,7 +51,7 @@ export default function Mission({ mission }) {
     )
 
     return (
-        <div className='p15'>
+        <div className='p15 m-pr0'>
             <Spacer />
             <div>
                 <div className='b-1' data-sal />
@@ -63,7 +65,7 @@ export default function Mission({ mission }) {
                         <p>{mission?.button?.title}</p>
                     </a>
                 </div>
-                <div className='h-650px flex justify-center pt60'>
+                <div className='h-650px flex justify-center pt60 m-hide'>
                     <div ref={cardsRef} className='flex align-center justify-center gap-15 fade--in' data-sal>
                         {mission?.missionCards?.map((card, index) => (
                             <div className='mission-card bg-grey radius-15 p20 max-300 flex flex-col gap-30' key={index} onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
@@ -77,6 +79,23 @@ export default function Mission({ mission }) {
                             </div>
                         ))}
                     </div>
+                </div>
+                <div className='m-show pt60 fade--in' data-sal>
+                    <Swiper slidesPerView={1.1} spaceBetween={15} snapToSlideEdge={true}>
+                        {mission?.missionCards?.map((card, index) => (
+                            <SwiperSlide key={index}>
+                                <div className='mission-card bg-grey radius-15 p20 flex flex-col gap-30'>
+                                    <div className='pos-rel ratio-1-1 overflow radius-5'>
+                                        <img className='image bg-image' src={card.image} alt={card.title} />
+                                    </div>
+                                    <div className='flex flex-col gap-20'>
+                                        <p className='h4'>{card.title}</p>
+                                        <p className='h3 text-grey-5'>{card.description}</p>
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </div>
             </div>
             <Spacer />

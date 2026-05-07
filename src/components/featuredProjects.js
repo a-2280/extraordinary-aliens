@@ -25,16 +25,16 @@ function Project({ project, cursorRef }) {
     const [activeIndex, setActiveIndex] = useState(0)
 
     return (
-        <div className='grid col-4 pb150'>
-            <p className='h1 text-grey-6 pl30 fade--in' data-sal>
+        <div className='grid col-4 pb150 m-flex m-flex-col'>
+            <p className='h1 text-grey-6 pl30 fade--in m-pb15' data-sal>
                 {project.title}
             </p>
             <div className='span-3 flex flex-col gap-40'>
                 <div className='flex gap-20 space-between pr30 fade--in' data-sal>
-                    <div className='f-20 text-grey-5 max-500'>
+                    <div className='f-20 text-grey-5 max-500 m-px30'>
                         <PortableText value={project.description} />
                     </div>
-                    <div className='flex gap-5'>
+                    <div className='flex gap-5 m-hide'>
                         {project.tags.map((tag, index) => (
                             <p className='tag nowrap' key={index}>
                                 {tag.name}
@@ -43,7 +43,7 @@ function Project({ project, cursorRef }) {
                     </div>
                 </div>
                 <div className='flex flex-col gap-15 max-full'>
-                    <div className='index fade--in' data-sal>
+                    <div className='index fade--in m-hide' data-sal>
                         {activeIndex + 1} / {project.images.length}
                     </div>
                     <ProjectSlider images={project.images} slug={project.slug.current} cursorRef={cursorRef} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
@@ -107,7 +107,7 @@ function ProjectSlider({ images, slug, cursorRef, activeIndex, setActiveIndex })
     }
 
     return (
-        <div className='slider-wrap pos-rel ratio-8-5 w-100 mr15 overflow'>
+        <div className='slider-wrap pos-rel ratio-8-5 w-100 mr15 overflow m-pl15'>
             <div ref={trackRef} className='slider-track' style={{ transform: restingTransform }}>
                 {[...images, ...(images.length > 1 ? [images[0]] : [])].map((src, i) => (
                     <div className='slide bg-grey' key={i} aria-hidden={i === images.length ? true : undefined}>

@@ -13,6 +13,27 @@
     .button-case-study {
         backdrop-filter: blur(8px);
     }
+
+    .scrubber-chevron {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .button-nav svg {
+            transform: rotate(90deg);
+        }
+
+        &.is-case-study {
+            .f-nav {
+                display: none;
+            }
+
+            .scrubber-chevron {
+                display: block;
+                transform: rotate(90deg);
+            }
+        }
+    }
 }
 
 .case-study-nav {
@@ -70,6 +91,59 @@
                 grid-template-columns 0.45s cubic-bezier(0.4, 0, 0.2, 1),
                 padding 0.45s cubic-bezier(0.4, 0, 0.2, 1),
                 opacity 0.25s ease-out;
+        }
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: stretch;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        width: auto;
+        max-width: calc(100vw - 30px);
+        transform: none;
+        padding: 0;
+        transition: gap 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+
+        > a {
+            width: 100%;
+            justify-content: flex-start;
+            grid-template-columns: 1fr;
+        }
+
+        &:not(.animate) > .button-nav,
+        &.animate > .button-nav {
+            transition:
+                color 0.3s ease,
+                background-color 0.3s ease,
+                max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.25s ease-out;
+        }
+
+        &:not(.animate) {
+            gap: 0;
+
+            > .button-nav {
+                grid-template-columns: 1fr;
+                max-height: 0;
+                padding: 0 15px;
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+
+        &.animate {
+            gap: 3px;
+
+            > .button-nav {
+                grid-template-columns: 1fr;
+                max-height: 40px;
+                padding: 8px 15px;
+                opacity: 1;
+                pointer-events: auto;
+            }
         }
     }
 }

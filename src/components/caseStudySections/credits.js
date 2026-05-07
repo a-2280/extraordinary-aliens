@@ -11,6 +11,7 @@ export default function Credits({ title, description, credits, tags }) {
     const [lastImage, setLastImage] = useState(null)
     const verticalRef = useRef(null)
     const creditsRef = useRef(null)
+    const mobileCreditsRef = useRef(null)
     const imageRef = useRef(null)
 
     useGSAP(() => {
@@ -21,6 +22,12 @@ export default function Credits({ title, description, credits, tags }) {
             transformOrigin: "center center",
         })
         gsap.to(creditsRef.current, {
+            autoAlpha: open ? 1 : 0,
+            duration: 0.4,
+            ease: "power2.inOut",
+        })
+        gsap.to(mobileCreditsRef.current, {
+            height: open ? "auto" : 0,
             autoAlpha: open ? 1 : 0,
             duration: 0.4,
             ease: "power2.inOut",
@@ -39,7 +46,7 @@ export default function Credits({ title, description, credits, tags }) {
     return (
         <div>
             <Spacer />
-            <div className='flex'>
+            <div className='flex m-flex-col m-gap-50'>
                 <div className='flex-1 flex flex-col gap-20'>
                     <p className='h5 fade--in' data-sal>
                         {title}
@@ -55,6 +62,27 @@ export default function Credits({ title, description, credits, tags }) {
                                 {tags?.length > 0 && <p className='h4 w-100 max-200'>{tags.map(tag => tag.name).join(", ")}</p>}
                                 <p className='h4 text-grey-4 credits-text'>Extraordinary Aliens</p>
                             </div>
+                            <div ref={mobileCreditsRef} className='flex flex-col gap-40 m-show' style={{ height: 0, overflow: "hidden", opacity: 0, visibility: "hidden" }}>
+                                {credits?.map(credit => (
+                                    <div
+                                        className='h4 flex flex-col gap-10 pointer'
+                                        key={credit._key}
+                                        onMouseEnter={() => {
+                                            setHoveredKey(credit._key)
+                                            if (credit.image) setLastImage(credit.image)
+                                        }}
+                                        onMouseLeave={() => setHoveredKey(null)}>
+                                        <p>{credit.title}</p>
+                                        <div>
+                                            {credit.creditInfo?.map(info => (
+                                                <p className='text-grey-4 credits-text' key={info._key}>
+                                                    {info.credit}
+                                                </p>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                             <button className='bg-grey-2 w-fit p5 radius-5 credits-toggle' onClick={() => setOpen(!open)}>
                                 <svg width='15' height='15' viewBox='0 0 15 15'>
                                     <line x1='1' y1='7.5' x2='14' y2='7.5' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' />
@@ -62,7 +90,7 @@ export default function Credits({ title, description, credits, tags }) {
                                 </svg>
                             </button>
                         </div>
-                        <div ref={creditsRef} className='flex flex-col gap-40' style={{ opacity: 0, visibility: "hidden" }}>
+                        <div ref={creditsRef} className='flex flex-col gap-40 m-hide' style={{ opacity: 0, visibility: "hidden" }}>
                             {credits?.map(credit => (
                                 <div
                                     className='h4 flex flex-col gap-10 pointer'

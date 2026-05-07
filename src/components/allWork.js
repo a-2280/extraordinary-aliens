@@ -57,7 +57,7 @@ export default function AllWork({ projects }) {
     )
 
     return (
-        <div ref={gridRef} className='p15 grid gap-90'>
+        <div ref={gridRef} className='p15 grid gap-90 m-flex m-flex-col'>
             {projects.map(project => (
                 <Link href={`/case-study/${project.slug.current}`} className='work-card max-full flex flex-col fade--in' data-sal key={project.slug.current}>
                     <div className='bg-grey pos-rel ratio-16-18 overflow radius-15'>

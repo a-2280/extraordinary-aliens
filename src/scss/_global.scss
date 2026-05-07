@@ -393,6 +393,12 @@ a {
     transform: translateX(-50%);
 }
 
+.center-abs {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 /* ------------ Z-Index Styles ------------ */
 
 .z-2 {
@@ -703,6 +709,139 @@ div.bg-image,
 .m-100 {
     @media (max-width: 768px) {
         width: 100%;
+    }
+}
+
+.m-flex {
+    @media (max-width: 768px) {
+        display: flex;
+    }
+}
+
+.m-flex-col {
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+}
+
+.m-gap-3 {
+    @media (max-width: 768px) {
+        gap: 3px;
+    }
+}
+
+.m-w-100 {
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+}
+
+.m-pl0 {
+    @media (max-width: 768px) {
+        padding-left: 0;
+    }
+}
+
+.m-pr0 {
+    @media (max-width: 768px) {
+        padding-right: 0;
+    }
+}
+
+.m-pl15 {
+    @media (max-width: 768px) {
+        padding-left: 15px;
+    }
+}
+
+.m-pt0 {
+    @media (max-width: 768px) {
+        padding-top: 0;
+    }
+}
+
+.m-pb15 {
+    @media (max-width: 768px) {
+        padding-bottom: 15px;
+    }
+}
+
+.m-pb50 {
+    @media (max-width: 768px) {
+        padding-bottom: 50px;
+    }
+}
+
+.m-px30 {
+    @media (max-width: 768px) {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+.m-space-between {
+    @media (max-width: 768px) {
+        justify-content: space-between;
+    }
+}
+
+.m-h4 {
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
+}
+
+.m-justify-center {
+    @media (max-width: 768px) {
+        justify-content: center;
+    }
+}
+
+.m-p0 {
+    @media (max-width: 768px) {
+        padding: 0;
+    }
+}
+
+.m-flex-wrap {
+    @media (max-width: 768px) {
+        flex-wrap: wrap;
+    }
+}
+
+.m-gap-15 {
+    @media (max-width: 768px) {
+        gap: 15px;
+    }
+}
+
+.m-gap-30 {
+    @media (max-width: 768px) {
+        gap: 30px;
+    }
+}
+
+.m-gap-50 {
+    @media (max-width: 768px) {
+        gap: 50px;
+    }
+}
+
+.m-gap-100 {
+    @media (max-width: 768px) {
+        gap: 100px;
+    }
+}
+
+.m-pt15 {
+    @media (max-width: 768px) {
+        padding-top: 15px;
+    }
+}
+
+.m-flex-row {
+    @media (max-width: 768px) {
+        flex-direction: row;
     }
 }
 

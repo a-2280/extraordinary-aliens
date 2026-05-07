@@ -25,3 +25,18 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+    .contact-cta {
+        align-items: stretch;
+    }
+
+    .contact-form {
+        width: 100%;
+        max-width: none;
+    }
+
+    .contact-cta-intro {
+        justify-content: center;
+    }
+}

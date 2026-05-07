@@ -4,7 +4,7 @@ export default function TextLarge({ title, description }) {
     return (
         <div>
         <Spacer />
-            <div className='flex gap-15'>
+            <div className='flex gap-15 m-flex-col'>
                 <div className='flex-1'>
                     <p className='h5 fade--in' data-sal>{title}</p>
                 </div>

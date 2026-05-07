@@ -7,9 +7,17 @@ export default function CaseStudyNav({ sections }) {
     const sectionGroups = sections?.filter(s => s._type === "sectionGroup" && s.slug) ?? []
     const groups = [{ _key: "introduction", title: "Introduction", slug: "introduction" }, ...sectionGroups]
     const [activeSlug, setActiveSlug] = useState("introduction")
-    const [animateNav, setAnimateNav] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
+    const [isTouch, setIsTouch] = useState(false)
     const leaveTimeoutRef = useRef(null)
+    const navRef = useRef(null)
     const lenis = useLenis()
+
+    useEffect(() => {
+        if (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches) {
+            setIsTouch(true)
+        }
+    }, [])
 
     useEffect(() => {
         if (groups.length === 0) return
@@ -33,37 +41,59 @@ export default function CaseStudyNav({ sections }) {
         if (leaveTimeoutRef.current) clearTimeout(leaveTimeoutRef.current)
     }, [])
 
+    useEffect(() => {
+        if (!isTouch || !isOpen) return
+        function handleOutside(e) {
+            if (navRef.current && !navRef.current.contains(e.target)) setIsOpen(false)
+        }
+        document.addEventListener("pointerdown", handleOutside)
+        return () => document.removeEventListener("pointerdown", handleOutside)
+    }, [isTouch, isOpen])
+
     if (sectionGroups.length === 0) return null
 
-    function handleClick(e, slug) {
+    function handleClick(e, slug, isActive) {
+        if (isTouch) {
+            e.preventDefault()
+            if (isActive) {
+                setIsOpen(o => !o)
+                return
+            }
+            if (lenis) lenis.scrollTo(`#${slug}`)
+            setIsOpen(false)
+            return
+        }
         if (!lenis) return
         e.preventDefault()
         lenis.scrollTo(`#${slug}`)
     }
 
     function handleMouseEnter() {
+        if (isTouch) return
         if (leaveTimeoutRef.current) {
             clearTimeout(leaveTimeoutRef.current)
             leaveTimeoutRef.current = null
         }
-        setAnimateNav(true)
+        setIsOpen(true)
     }
 
     function handleMouseLeave() {
+        if (isTouch) return
         if (leaveTimeoutRef.current) clearTimeout(leaveTimeoutRef.current)
-        leaveTimeoutRef.current = setTimeout(() => setAnimateNav(false), 450)
+        leaveTimeoutRef.current = setTimeout(() => setIsOpen(false), 450)
     }
 
     return (
         <nav
-            className={`case-study-nav p15 flex gap-3${animateNav ? " animate" : ""}`}
+            ref={navRef}
+            className={`case-study-nav p15 flex gap-3${isOpen ? " animate" : ""}`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
             {groups.map((g, i) => {
                 const isActive = g.slug === activeSlug
                 return (
-                    <a key={g._key} href={`#${g.slug}`} onClick={e => handleClick(e, g.slug)} className={`f-nav ${isActive ? "button-case-study text-black" : "button-nav text-grey-5"}`}>
+                    <a key={g._key} href={`#${g.slug}`} onClick={e => handleClick(e, g.slug, isActive)} className={`f-nav ${isActive ? "button-case-study text-black" : "button-nav text-grey-5"}`}>
                         <span className="flex align-center gap-15">
                             <span>{i + 1}</span>
                             <span>{g.title}</span>

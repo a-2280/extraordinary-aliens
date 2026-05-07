@@ -36,8 +36,8 @@ export default function ContactCta({ contactCta }) {
     }, { dependencies: [formOpen] })
 
     return (
-        <div className='p30 h-80vh flex align-center gap-20 fade--in' data-sal>
-            <div className='flex-1 flex flex-col gap-20'>
+        <div className='contact-cta p30 h-80vh flex align-center gap-20 fade--in m-flex-col' data-sal>
+            <div className={`contact-cta-intro flex-1 flex flex-col gap-20 m-justify-center${formOpen ? " m-hide" : ""}`}>
                 <div className='h1'>
                     <PortableText value={contactCta?.description} components={components} />
                 </div>
@@ -45,11 +45,18 @@ export default function ContactCta({ contactCta }) {
                     <FaPhoneAlt className='icon' />
                     <p>{contactCta?.button}</p>
                 </button>
-                <Spacer />
+                <Spacer className="m-hide" />
             </div>
-            <div className='flex-1'>
-                <form ref={formRef} style={{ visibility: 'hidden', opacity: 0 }} className='contact-form flex flex-col gap-50 max-500' onSubmit={(e) => { e.preventDefault(); setFormOpen(false) }}>
-                    <div className="flex flex-col gap-20">
+            <div className={`flex-1 ${formOpen ? "m-flex align-center m-w-100" : "m-hide"}`}>
+                <form
+                    ref={formRef}
+                    style={{ visibility: "hidden", opacity: 0 }}
+                    className='contact-form flex flex-col gap-50 max-500'
+                    onSubmit={e => {
+                        e.preventDefault()
+                        setFormOpen(false)
+                    }}>
+                    <div className='flex flex-col gap-20'>
                         <label className='contact-field flex flex-col'>
                             <input placeholder='Name*' type='text' name='name' className='contact-input' required />
                         </label>

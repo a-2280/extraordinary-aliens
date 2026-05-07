@@ -41,7 +41,7 @@ export default function FeaturedSpecialProject({ description, title, slug, heroI
                     className='pos-rel ratio-16-10 overflow radius-15 fit hover--unblur'
                 >
                     {heroImage && <img className='bg-image image--blur' src={heroImage} alt={title} />}
-                    {title && <p className='h1 pos-abs left-half top-half'>{title}</p>}
+                    {title && <p className='h1 pos-abs center-abs'>{title}</p>}
                     {description && <p ref={descriptionRef} className='py15 pos-abs left-half bottom-30 max-350 text-center text-grey-4'>{description}</p>}
                     <Link ref={buttonRef} href={`/special-projects/${slug}`} className='view-button pos-abs top-60 right-20 f-10 radius-5 bg-grey-2 p10 text-grey-6'>View Case Study</Link>
                 </div>

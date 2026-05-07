@@ -18,7 +18,7 @@ export default function Section({ left, right }) {
         )
     }
     return (
-        <div className='flex gap-15'>
+        <div className='flex gap-15 m-flex-col'>
             <div className='flex-1 min-w-0'>
                 {left?.map(c => <div key={c._key}>{renderComponent(c)}</div>)}
             </div>

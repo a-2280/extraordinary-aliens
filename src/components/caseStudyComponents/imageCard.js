@@ -4,7 +4,7 @@ import Image from "next/image"
 import { RiExpandDiagonalSLine } from "react-icons/ri"
 import { useImageModal } from "../imageModalContext"
 
-export default function ImageCard({ _key, image, variant = "normal" }) {
+export default function ImageCard({ _key, image, video, variant = "normal" }) {
     const ctx = useImageModal()
     if (!image) return null
     const handleOpen = () => ctx?.open(_key)
@@ -14,6 +14,7 @@ export default function ImageCard({ _key, image, variant = "normal" }) {
                 <RiExpandDiagonalSLine size={15} strokeWidth={.01} />
             </button>
             <Image className='bg-image' src={image} alt='' width={1600} height={1000} />
+            {video && <video className='bg-image' src={video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
         </div>
     )
 }

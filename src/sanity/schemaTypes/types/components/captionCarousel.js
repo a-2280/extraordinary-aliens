@@ -18,6 +18,7 @@ export default {
                     components: { item: makeBackButtonItem("Caption Carousel") },
                     fields: [
                         { name: "image", title: "Image", type: "image", validation: Rule => Rule.required() },
+                        { name: "video", title: "Video (optional, plays over image)", type: "file", options: { accept: "video/*" } },
                         { name: "caption", title: "Caption", type: "array", of: [{ type: "block" }] },
                     ],
                     preview: {

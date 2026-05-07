@@ -19,6 +19,22 @@ export default defineType({
             to: [{ type: "page" }],
             validation: Rule => Rule.required(),
         }),
+        defineField({
+            name: "aboutPage",
+            title: "About Page",
+            description: "Select the About variant you want to render at /about.",
+            type: "reference",
+            to: [{ type: "about" }],
+            validation: Rule => Rule.required(),
+        }),
+        defineField({
+            name: "specialProjectsLanding",
+            title: "Special Projects Landing",
+            description: "Select the Special Projects Landing variant you want to render at /special-projects.",
+            type: "reference",
+            to: [{ type: "specialProjectsSettings" }],
+            validation: Rule => Rule.required(),
+        }),
         // defineField({
         //     name: "notFoundPage",
         //     title: "Not Found Page",

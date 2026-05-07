@@ -84,6 +84,15 @@ export default function ImageModal() {
                     width={1600}
                     height={2000}
                 />
+                {current.video && (
+                    <video
+                        key={`${current._key}-video`}
+                        className='bg-image'
+                        src={current.video}
+                        autoPlay muted loop playsInline preload='auto'
+                        aria-hidden='true'
+                    />
+                )}
             </div>
 
             {showNav && (

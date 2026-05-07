@@ -18,7 +18,7 @@ export default function AboutIndex({ layout, contactCta, about }) {
         <Layout headerData={layout?.header} footerData={layout?.footer} contactCta={contactCta}>
             <AboutHero title={about.title} />
             <AboutContent components={about?.components} />
-            <AboutImage image={about?.image} />
+            <AboutImage image={about?.image} video={about?.video} />
         </Layout>
     )
 }

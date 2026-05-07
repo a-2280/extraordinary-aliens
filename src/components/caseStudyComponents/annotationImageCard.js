@@ -9,7 +9,7 @@ import { useGSAP } from "@gsap/react"
 
 gsap.registerPlugin(useGSAP)
 
-export default function AnnotationImage({ image, title, annotation, variant = "normal" }) {
+export default function AnnotationImage({ image, video, title, annotation, variant = "normal" }) {
     const [isOpen, setIsOpen] = useState(false)
     const popupRef = useRef()
     const iconRef = useRef()
@@ -37,6 +37,7 @@ export default function AnnotationImage({ image, title, annotation, variant = "n
     return (
         <div className={`variant-${variant} pos-rel ratio-3-4 max-full radius-15 overflow`}>
             <Image className='bg-image' src={image} alt='' width={1600} height={1000} />
+            {video && <video className='bg-image' src={video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
             <div
                 className='z-4 bg-solid-grey pos-abs top-30 right-30 radius-5 p5 text-black flex align-center justify-center annotation-toggle'
                 style={{ cursor: 'pointer' }}

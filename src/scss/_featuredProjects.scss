@@ -102,3 +102,13 @@
     color: var(--grey-5);
     width: fit-content;
 }
+
+@media (max-width: 768px) {
+    .custom-cursor,
+    .custom-cursor-secondary {
+        display: none;
+    }
+    .cursor-none {
+        cursor: auto;
+    }
+}

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { PortableText } from "next-sanity"
 
-export default function ImageHotspot({ image, spots, variant = "normal" }) {
+export default function ImageHotspot({ image, video, spots, variant = "normal" }) {
     const [openIndex, setOpenIndex] = useState(null)
     const [renderedIndex, setRenderedIndex] = useState(null)
 
@@ -21,6 +21,7 @@ export default function ImageHotspot({ image, spots, variant = "normal" }) {
     return (
         <div className={`variant-${variant} pos-rel ratio-3-4 max-full radius-15 overflow`}>
             <Image className='bg-image' src={image} alt='' width={1600} height={1000} />
+            {video && <video className='bg-image' src={video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
             {placedSpots.map((spot, i) => (
                 <button
                     key={spot._key || i}

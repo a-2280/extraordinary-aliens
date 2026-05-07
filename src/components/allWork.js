@@ -61,7 +61,8 @@ export default function AllWork({ projects }) {
             {projects.map(project => (
                 <Link href={`/case-study/${project.slug.current}`} className='work-card max-full flex flex-col fade--in' data-sal key={project.slug.current}>
                     <div className='bg-grey pos-rel ratio-16-18 overflow radius-15'>
-                        <Image className='image bg-image' src={project.image} alt='' width={435} height={515} />
+                        {project.image && <Image className='image bg-image' src={project.image} alt='' width={435} height={515} />}
+                        {project.video && <video className='bg-image' src={project.video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
                     </div>
                     <div className='p15 flex flex-col gap-15'>
                         <p className='h3'>{project.title}</p>

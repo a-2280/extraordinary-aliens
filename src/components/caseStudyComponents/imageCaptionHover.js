@@ -5,7 +5,7 @@ import Image from "next/image"
 import { GrAdd } from "react-icons/gr"
 import { PortableText } from "next-sanity"
 
-export default function ImageCaptionHover({ image, caption, variant = "normal" }) {
+export default function ImageCaptionHover({ image, video, caption, variant = "normal" }) {
     const [isExpanded, setIsExpanded] = useState(false)
     const [showClamp, setShowClamp] = useState(true)
     const [collapsedHeight, setCollapsedHeight] = useState(0)
@@ -64,6 +64,7 @@ export default function ImageCaptionHover({ image, caption, variant = "normal" }
         <div className={`variant-${variant}`} {...hoverHandlers}>
             <div className={`variant-${variant} pos-rel ratio-3-4 max-full radius-15 overflow`}>
                 <Image className='bg-image' src={image} alt='' width={1600} height={1000} />
+                {video && <video className='bg-image' src={video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
             </div>
             <div className='p15 flex gap-40 space-between caption-row'>
                 <div

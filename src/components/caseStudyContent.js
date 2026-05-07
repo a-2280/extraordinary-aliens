@@ -52,7 +52,7 @@ export default function CaseStudyContent({ project }) {
 }
 
 function Header({ project }) {
-    const { title, client, year, caseStudyIntro, tags, heroImage, liveWebsite } = project
+    const { title, client, year, caseStudyIntro, tags, heroImage, heroVideo, liveWebsite } = project
 
     return (
         <div id='introduction' className='p15 flex flex-col gap-15'>
@@ -61,6 +61,7 @@ function Header({ project }) {
                     <Spacer />
                     <div className='pos-rel ratio-16-9 max-100vh radius-15 overflow'>
                         <Image className='bg-image' src={heroImage} alt={title || ""} width={1920} height={1080} loading='eager' />
+                        {heroVideo && <video className='bg-image' src={heroVideo} autoPlay muted loop playsInline preload='auto' aria-hidden='true' />}
                     </div>
                 </div>
             )}

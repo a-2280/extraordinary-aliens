@@ -48,5 +48,5 @@ export default defineType({
             type: "videoModal",
         }),
     ],
-    preview: { select: { title: "title" } },
+    preview: { prepare: () => ({ title: "Hero" }) },
 })

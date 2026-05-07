@@ -39,7 +39,7 @@ export default defineType({
             name: "images",
             title: "Images",
             type: "array",
-            of: [{ type: "image" }],
+            of: [{ type: "mediaSlide" }],
             fieldset: "listing",
         }),
         defineField({
@@ -55,6 +55,13 @@ export default defineType({
             type: "image",
             fieldset: "caseStudy",
             validation: Rule => Rule.required(),
+        }),
+        defineField({
+            name: "heroVideo",
+            title: "Hero Video (optional, plays over hero image)",
+            type: "file",
+            options: { accept: "video/*" },
+            fieldset: "caseStudy",
         }),
         defineField({
             name: "client",

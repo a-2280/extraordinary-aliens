@@ -23,6 +23,12 @@ export default defineType({
             type: "image",
             validation: Rule => Rule.required(),
         }),
+        defineField({
+            name: "video",
+            title: "Video (optional, plays over image)",
+            type: "file",
+            options: { accept: "video/*" },
+        }),
     ],
     preview: { select: { title: "title" } },
 })

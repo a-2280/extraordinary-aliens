@@ -4,18 +4,20 @@ export const structure = (S, context) =>
     S.list()
         .title("Content")
         .items([
-            S.listItem().title("Pages").schemaType("page").child(S.documentTypeList("page").title("Pages")),
+            S.listItem()
+                .title("Pages")
+                .child(
+                    S.list()
+                        .title("Pages")
+                        .items([
+                            S.documentTypeListItem("about").title("About"),
+                            S.documentTypeListItem("specialProjectsSettings").title("Special Projects Landing"),
+                            S.documentTypeListItem("page").title("Other Pages"),
+                        ]),
+                ),
             S.listItem().title("Layouts").schemaType("layout").child(S.documentTypeList("layout").title("Layouts")),
             orderableDocumentListDeskItem({ type: "projects", title: "Projects", S, context }),
             orderableDocumentListDeskItem({ type: "specialProjectsPage", title: "Special Projects", S, context }),
-            S.listItem()
-                .title("Special Projects Landing")
-                .schemaType("specialProjectsSettings")
-                .child(S.document().schemaType("specialProjectsSettings").documentId("specialProjectsSettings")),
-            S.listItem()
-                .title("About")
-                .schemaType("about")
-                .child(S.document().schemaType("about").documentId("about")),
 
             S.divider(),
 

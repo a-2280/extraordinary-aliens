@@ -6,6 +6,13 @@ export default defineType({
     type: "document",
     fields: [
         defineField({
+            name: "name",
+            title: "Name",
+            description: "Label for internal use.",
+            type: "string",
+            validation: Rule => Rule.required(),
+        }),
+        defineField({
             name: "title",
             title: "Hero Title",
             type: "string",
@@ -24,11 +31,11 @@ export default defineType({
         }),
     ],
     preview: {
-        select: { title: "title", featured: "featured.title" },
+        select: { title: "name", featured: "featured.title" },
         prepare({ title, featured }) {
             return {
-                title: "Special Projects Landing",
-                subtitle: featured ? `Featured: ${featured}` : title || "No featured project",
+                title,
+                subtitle: featured ? `Featured: ${featured}` : "No featured project",
             }
         },
     },

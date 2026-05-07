@@ -14,6 +14,12 @@ export default {
             validation: Rule => Rule.required(),
         },
         {
+            name: "video",
+            title: "Video (optional, plays over image)",
+            type: "file",
+            options: { accept: "video/*" },
+        },
+        {
             name: "spots",
             title: "Spots",
             type: "array",

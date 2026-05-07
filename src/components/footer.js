@@ -93,7 +93,7 @@ export default function Footer({ data }) {
                     <div className='h3 text-footer max-500'>
                         <PortableText value={data.caption} />
                     </div>
-                    <div className='flex gap-100 m-flex-wrap'>
+                    <div className='flex gap-100 m-flex-wrap m-gap-50 footer-detail-row'>
                         {data.details.map((detail, index) => (
                             <div className='flex flex-col gap-30 m-gap-15' key={index}>
                                 <p className='h5'>{detail.title}</p>

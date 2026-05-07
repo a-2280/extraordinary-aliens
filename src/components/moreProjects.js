@@ -63,7 +63,10 @@ export default function MoreProjects({ nextProject }) {
             <Spacer className="m-hide" />
             <div ref={rowRef} className='flex m-hide'>
                 <div className='p15 flex-2'>
-                    <div className='pos-rel ratio-16-10 max-full radius-15'>{nextProject.image && <Image ref={imageRef} className='bg-image radius-15' src={nextProject.image} alt='' width={435} height={515} />}</div>
+                    <div ref={imageRef} className='pos-rel ratio-16-10 max-full radius-15 overflow'>
+                        {nextProject.image && <Image className='bg-image radius-15' src={nextProject.image} alt='' width={435} height={515} />}
+                        {nextProject.video && <video className='bg-image radius-15' src={nextProject.video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
+                    </div>
                     <p ref={titleRef} className='h3 p15'>
                         {nextProject.title}
                     </p>
@@ -76,7 +79,10 @@ export default function MoreProjects({ nextProject }) {
                 </div>
             </div>
             <Link href={href} className='flex m-show'>
-                    <div className='pos-rel ratio-16-10 max-full radius-15'>{nextProject.image && <Image className='bg-image radius-15' src={nextProject.image} alt='' width={435} height={515} />}</div>
+                    <div className='pos-rel ratio-16-10 max-full radius-15 overflow'>
+                        {nextProject.image && <Image className='bg-image radius-15' src={nextProject.image} alt='' width={435} height={515} />}
+                        {nextProject.video && <video className='bg-image radius-15' src={nextProject.video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
+                    </div>
                     <p className='h3 p15'>
                         {nextProject.title}
                     </p>

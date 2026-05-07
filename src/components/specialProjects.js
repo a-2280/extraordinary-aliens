@@ -24,7 +24,8 @@ export default function SpecialProjects({ specialProjects }) {
             <p className='p15 pb60 h5'>{specialProjects?.title}</p>
             <div className='bg-grey pos-rel ratio-16-9 max-full radius-15 overflow'>
                 <p className='f-20 max-450 text-center text-white pos-abs center-abs z-2 fade--in m-h4' data-sal>{specialProjects?.description}</p>
-                <Image className='bg-image' width={1184} height={740} src={specialProjects?.image} alt='' />
+                {specialProjects?.image && <Image className='bg-image' width={1184} height={740} src={specialProjects.image} alt='' />}
+                {specialProjects?.video && <video className='bg-image' src={specialProjects.video} autoPlay muted loop playsInline preload='auto' aria-hidden='true' />}
                 <Link href='/special-projects' className='pos-abs top-0 left-0 w-100 h-100 cursor-none z-2' onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} />
             </div>
         </div>

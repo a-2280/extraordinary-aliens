@@ -4,12 +4,12 @@ import { useRef, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
 
-export default function Carousel({ images, variant = "normal" }) {
+export default function Carousel({ slides, variant = "normal" }) {
     const swiperRef = useRef(null)
     const cursorRef = useRef(null)
     const [currentIndex, setCurrentIndex] = useState(0)
 
-    if (!images?.length) return null
+    if (!slides?.length) return null
 
     const handleMouseMove = e => {
         const { left, width } = e.currentTarget.getBoundingClientRect()
@@ -39,14 +39,22 @@ export default function Carousel({ images, variant = "normal" }) {
                 <span className='label label-right'>Next</span>
             </div>
             <div className={`variant-${variant}`}>
-                <Swiper className={`variant-${variant} pos-rel radius-15 overflow`} slidesPerView={1} loop={images.length > 1} speed={500} spaceBetween={15} onSwiper={s => (swiperRef.current = s)} onSlideChange={s => setCurrentIndex(s.realIndex)}>
-                    {images.map((src, i) => (
+                <Swiper className={`variant-${variant} pos-rel radius-15 overflow`} slidesPerView={1} loop={slides.length > 1} speed={500} spaceBetween={15} onSwiper={s => (swiperRef.current = s)} onSlideChange={s => setCurrentIndex(s.realIndex)}>
+                    {slides.map((slide, i) => (
                         <SwiperSlide key={i} className='pos-rel ratio-3-4 max-full'>
-                            <Image className='radius-15' src={src} alt='' fill sizes='(max-width: 768px) 100vw, 50vw' style={{ objectFit: "cover", objectPosition: "center" }} />
+                            {slide?.image && <Image className='radius-15' src={slide.image} alt='' fill sizes='(max-width: 768px) 100vw, 50vw' style={{ objectFit: "cover", objectPosition: "center" }} />}
+                            {slide?.video && (
+                                <video
+                                    className='radius-15'
+                                    src={slide.video}
+                                    autoPlay muted loop playsInline preload='metadata' aria-hidden='true'
+                                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+                                />
+                            )}
                         </SwiperSlide>
                     ))}
                     <div className='p5 radius-5 text-black pos-abs z-2 bg-grey top-30 right-30'>
-                        {currentIndex + 1} / {images.length}
+                        {currentIndex + 1} / {slides.length}
                     </div>
                     <div className='pos-abs top-0 left-0 w-100 h-100 cursor-none z-2' onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onClick={handleClick} />
                 </Swiper>

@@ -7,6 +7,13 @@ export default defineType({
     type: "document",
     fields: [
         defineField({
+            name: "name",
+            title: "Name",
+            description: "Label for internal use.",
+            type: "string",
+            validation: Rule => Rule.required(),
+        }),
+        defineField({
             name: "title",
             title: "Title",
             type: "array",
@@ -45,6 +52,12 @@ export default defineType({
             title: "image",
             type: 'image',
         }),
+        defineField({
+            name: "video",
+            title: "Video (optional, plays over image)",
+            type: "file",
+            options: { accept: "video/*" },
+        }),
     ],
-    preview: { prepare: () => ({ title: "About" }) },
+    preview: { select: { title: "name" } },
 })

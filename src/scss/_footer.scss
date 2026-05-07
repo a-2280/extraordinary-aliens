@@ -29,3 +29,11 @@
     background-position: center;
     background-size: contain;
 }
+
+.footer-detail-row {
+    flex-wrap: wrap;
+
+    > div:last-child {
+        flex-basis: 100%;
+    }
+}

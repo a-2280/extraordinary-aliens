@@ -13,7 +13,7 @@ export default {
             type: "array",
             of: [
                 {
-                    type: "image",
+                    type: "mediaSlide",
                     components: { item: makeBackButtonItem("Image Carousel") },
                 },
             ],
@@ -37,7 +37,7 @@ export default {
     ],
     preview: {
         select: {
-            media: "images.0",
+            media: "images.0.image",
             variant: "variant",
         },
         prepare({ media, variant }) {

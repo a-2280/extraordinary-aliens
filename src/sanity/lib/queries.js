@@ -30,30 +30,33 @@ export const LAYOUT_QUERY = `*[_type == "layout"][0]{
   }
 }`
 
-export const PROJECTS_QUERY = `*[_type == "projects"] | order(orderRank asc){ title, slug, description, "tags": tags[]->{ name }, "image": images[0].asset->url }`
+export const PROJECTS_QUERY = `*[_type == "projects"] | order(orderRank asc){ title, slug, description, "tags": tags[]->{ name }, "image": images[0].image.asset->url, "video": images[0].video.asset->url }`
 
 export const PROJECT_SLUGS_QUERY = `*[_type == "projects" && defined(slug.current)][].slug.current`
 
 export const PROJECT_NAV_QUERY = `*[_type == "projects" && defined(slug.current)] | order(orderRank asc){
   title,
   "slug": slug.current,
-  "image": images[0].asset->url
+  "image": images[0].image.asset->url,
+  "video": images[0].video.asset->url
 }`
 
 const SECTION_CHILD_PROJECTION = `_key, _type,
   _type == "imageCard" => {
     variant,
     description,
-    "image": image.asset->url
+    "image": image.asset->url,
+    "video": video.asset->url
   },
   _type == "carousel" => {
     variant,
-    "images": images[].asset->url
+    "slides": images[]{ "image": image.asset->url, "video": video.asset->url }
   },
   _type == "captionCarousel" => {
     variant,
     slides[]{
       "image": image.asset->url,
+      "video": video.asset->url,
       caption
     }
   },
@@ -61,11 +64,13 @@ const SECTION_CHILD_PROJECTION = `_key, _type,
     variant,
     title,
     annotation,
-    "image": image.asset->url
+    "image": image.asset->url,
+    "video": video.asset->url
   },
   _type == "imageHotspot" => {
     variant,
     "image": image.asset->url,
+    "video": video.asset->url,
     spots[]{
       _key,
       title,
@@ -76,11 +81,13 @@ const SECTION_CHILD_PROJECTION = `_key, _type,
   _type == "imageExpandableCaption" => {
     variant,
     "image": image.asset->url,
+    "video": video.asset->url,
     caption
   },
   _type == "imageCaptionHover" => {
     variant,
     "image": image.asset->url,
+    "video": video.asset->url,
     caption
   },
   _type == "audioPlayer" => {
@@ -134,6 +141,7 @@ export const PROJECT_BY_SLUG_QUERY = `*[_type == "projects" && slug.current == $
   liveWebsite{ title, url, openInNewWindow },
   "tags": tags[]->{ name },
   "heroImage": heroImage.asset->url,
+  "heroVideo": heroVideo.asset->url,
   caseStudySections[]{
     _key, _type,
     ${CASE_STUDY_ITEM_PROJECTION},
@@ -148,7 +156,7 @@ export const PROJECT_BY_SLUG_QUERY = `*[_type == "projects" && slug.current == $
   }
 }`
 
-export const FEATURED_QUERY = `*[_type == "projects" && featured == true] | order(orderRank asc){ title, slug, description, "tags": tags[]->{ name }, "images": images[].asset->url }`
+export const FEATURED_QUERY = `*[_type == "projects" && featured == true] | order(orderRank asc){ title, slug, description, "tags": tags[]->{ name }, "images": images[]{ "image": image.asset->url, "video": video.asset->url } }`
 
 export const MISSION_QUERY = `*[_type == "layout"][0].homepage->.components[_type == "mission"][0]{
   title,
@@ -165,14 +173,15 @@ export const MISSION_QUERY = `*[_type == "layout"][0].homepage->.components[_typ
 export const SPECIAL_PROJECTS_QUERY = `*[_type == "layout"][0].homepage->.components[_type == "specialProjects"][0]{
   title,
   description,
-  "image": image.asset->url
+  "image": image.asset->url,
+  "video": video.asset->url
 }`
 
 export const SPECIAL_PROJECT_PAGES_QUERY = `*[_type == "specialProjectsPage"] | order(orderRank asc){
   title,
   slug,
   description,
-  "images": images[].asset->url
+  "images": images[]{ "image": image.asset->url, "video": video.asset->url }
 }`
 
 export const SPECIAL_PROJECT_PAGE_SLUGS_QUERY = `*[_type == "specialProjectsPage" && defined(slug.current)][].slug.current`
@@ -180,7 +189,8 @@ export const SPECIAL_PROJECT_PAGE_SLUGS_QUERY = `*[_type == "specialProjectsPage
 export const SPECIAL_PROJECT_PAGE_NAV_QUERY = `*[_type == "specialProjectsPage" && defined(slug.current)] | order(orderRank asc){
   title,
   "slug": slug.current,
-  "image": images[0].asset->url
+  "image": images[0].image.asset->url,
+  "video": images[0].video.asset->url
 }`
 
 export const SPECIAL_PROJECT_PAGE_BY_SLUG_QUERY = `*[_type == "specialProjectsPage" && slug.current == $slug][0]{
@@ -191,6 +201,7 @@ export const SPECIAL_PROJECT_PAGE_BY_SLUG_QUERY = `*[_type == "specialProjectsPa
   liveWebsite{ title, url, openInNewWindow },
   "tags": tags[]->{ name },
   "heroImage": heroImage.asset->url,
+  "heroVideo": heroVideo.asset->url,
   caseStudySections[]{
     _key, _type,
     ${CASE_STUDY_ITEM_PROJECTION},
@@ -205,13 +216,13 @@ export const SPECIAL_PROJECT_PAGE_BY_SLUG_QUERY = `*[_type == "specialProjectsPa
   }
 }`
 
-export const SPECIAL_PROJECTS_LANDING_QUERY = `*[_type == "specialProjectsSettings"][0]{
+export const SPECIAL_PROJECTS_LANDING_QUERY = `*[_type == "layout"][0].specialProjectsLanding->{
   title,
   description,
-  "featured": featured->{ title, "slug": slug.current, "heroImage": heroImage.asset->url }
+  "featured": featured->{ title, "slug": slug.current, "heroImage": heroImage.asset->url, "heroVideo": heroVideo.asset->url }
 }`
 
-export const ABOUT_QUERY = `*[_type == "about"][0]{
+export const ABOUT_QUERY = `*[_type == "layout"][0].aboutPage->{
   title[]{
     ...,
     markDefs[]{
@@ -254,7 +265,8 @@ export const ABOUT_QUERY = `*[_type == "about"][0]{
       press
     }
   },
-  "image": image.asset->url
+  "image": image.asset->url,
+  "video": video.asset->url
 }`
 
 export const CONTACT_CTA_QUERY = `*[_type == "contactCta"][0]{

@@ -53,7 +53,15 @@ export default function CaptionCarousel({ slides, variant = "normal" }) {
                 >
                     {slides.map((slide, i) => (
                         <SwiperSlide key={i} className='pos-rel ratio-3-4 max-full'>
-                            <Image className='radius-15' src={slide.image} alt='' fill sizes='(max-width: 768px) 100vw, 50vw' style={{ objectFit: "cover", objectPosition: "center" }} />
+                            {slide?.image && <Image className='radius-15' src={slide.image} alt='' fill sizes='(max-width: 768px) 100vw, 50vw' style={{ objectFit: "cover", objectPosition: "center" }} />}
+                            {slide?.video && (
+                                <video
+                                    className='radius-15'
+                                    src={slide.video}
+                                    autoPlay muted loop playsInline preload='metadata' aria-hidden='true'
+                                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+                                />
+                            )}
                         </SwiperSlide>
                     ))}
                     <div className="p5 radius-5 text-black pos-abs z-2 bg-grey top-30 right-30">{currentIndex + 1} / {slides.length}</div>

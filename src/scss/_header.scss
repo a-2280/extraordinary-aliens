@@ -8,10 +8,12 @@
     top: 0;
     width: 100%;
     z-index: 100;
+    pointer-events: none;
 
     .button-nav,
     .button-case-study {
         backdrop-filter: blur(8px);
+        pointer-events: auto;
     }
 
     .scrubber-chevron {

@@ -6,8 +6,8 @@ export default function AboutImage({ image }) {
     return (
         <>
             <Spacer />
-            <div className='h-100vh pth px200'>
-                <div className='pos-rel ratio-16-10 overflow radius-15 bg-grey'>
+            <div className='pth px200 m-px30'>
+                <div className='pos-rel ratio-16-10 max-full overflow radius-15 bg-grey'>
                     <Image className='bg-image' src={image} alt="About Image" width={1600} height={1000} />
                 </div>
             </div>

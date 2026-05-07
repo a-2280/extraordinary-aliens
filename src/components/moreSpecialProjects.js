@@ -59,9 +59,9 @@ export default function MoreSpecialProjects({ nextProject }) {
     return (
         <div className='p15'>
             <div className='b-1' data-sal />
-            <p className='h5 p15'>More Projects</p>
-            <Spacer />
-            <div ref={rowRef} className='flex'>
+            <p className='h5 p15 m-pb50'>More Projects</p>
+            <Spacer className="m-hide" />
+            <div ref={rowRef} className='flex m-hide'>
                 <div className='p15 flex-2'>
                     <div className='pos-rel ratio-16-10 max-full radius-15'>{nextProject.image && <Image ref={imageRef} className='bg-image radius-15' src={nextProject.image} alt='' width={435} height={515} />}</div>
                     <p ref={titleRef} className='h3 p15'>
@@ -75,6 +75,12 @@ export default function MoreSpecialProjects({ nextProject }) {
                     </Link>
                 </div>
             </div>
+            <Link href={href} className='flex m-show'>
+                    <div className='pos-rel ratio-16-10 max-full radius-15'>{nextProject.image && <Image className='bg-image radius-15' src={nextProject.image} alt='' width={435} height={515} />}</div>
+                    <p className='h3 p15'>
+                        {nextProject.title}
+                    </p>
+            </Link>
         </div>
     )
 }

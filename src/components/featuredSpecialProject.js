@@ -34,18 +34,25 @@ export default function FeaturedSpecialProject({ description, title, slug, heroI
             <p className='h5 py15'>Featured Project</p>
             <Spacer />
             <div className='flex-1 min-h-0 flex align-center justify-center'>
-                <div
-                    ref={containerRef}
-                    onMouseEnter={() => setHovered(true)}
-                    onMouseLeave={() => setHovered(false)}
-                    className='pos-rel ratio-16-10 overflow radius-15 fit hover--unblur'
-                >
+                <div ref={containerRef} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className='pos-rel ratio-16-10 overflow radius-15 fit hover--unblur'>
                     {heroImage && <img className='bg-image image--blur' src={heroImage} alt={title} />}
                     {title && <p className='h1 pos-abs center-abs'>{title}</p>}
-                    {description && <p ref={descriptionRef} className='py15 pos-abs left-half bottom-30 max-350 text-center text-grey-4'>{description}</p>}
-                    <Link ref={buttonRef} href={`/special-projects/${slug}`} className='view-button pos-abs top-60 right-20 f-10 radius-5 bg-grey-2 p10 text-grey-6'>View Case Study</Link>
+                    {description && (
+                        <p ref={descriptionRef} className='py15 pos-abs left-half bottom-30 max-350 text-center text-grey-4 m-hide'>
+                            {description}
+                        </p>
+                    )}
+                    <Link ref={buttonRef} href={`/special-projects/${slug}`} className='view-button pos-abs top-60 right-20 f-10 radius-5 bg-grey-2 p10 text-grey-6 m-hide'>
+                        View Case Study
+                    </Link>
+                    <Link href={`/special-projects/${slug}`} className='m-show pos-abs top-0 left-0 w-100 h-100' aria-label={title} />
                 </div>
             </div>
+            {description && (
+                <div className='m-show flex justify-center p30'>
+                    <p className='h4 max-350 text-center text-grey-4'>{description}</p>
+                </div>
+            )}
             <Spacer />
         </div>
     )

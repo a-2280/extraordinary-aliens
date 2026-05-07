@@ -82,11 +82,30 @@ export default function AboutContent({ components }) {
         }
 
         lenis.on("scroll", onScroll)
-        window.addEventListener("wheel", onWheel, { passive: false })
+
+        const mql = window.matchMedia("(max-width: 768px)")
+        let wheelAttached = false
+        const syncWheel = () => {
+            if (mql.matches) {
+                if (wheelAttached) {
+                    window.removeEventListener("wheel", onWheel)
+                    wheelAttached = false
+                }
+                clearTimeout(cooldown)
+                isSnapping = false
+            } else if (!wheelAttached) {
+                window.addEventListener("wheel", onWheel, { passive: false })
+                wheelAttached = true
+            }
+        }
+        syncWheel()
+        mql.addEventListener("change", syncWheel)
+
         return () => {
             clearTimeout(cooldown)
             lenis.off("scroll", onScroll)
-            window.removeEventListener("wheel", onWheel)
+            mql.removeEventListener("change", syncWheel)
+            if (wheelAttached) window.removeEventListener("wheel", onWheel)
         }
     }, [lenis])
 
@@ -114,7 +133,7 @@ export default function AboutContent({ components }) {
                 <div className='b-1' data-sal />
             </div>
             <div className='flex'>
-                <div className='flex-1'>
+                <div className='flex-1 m-hide'>
                     <div className='p30 sticky top-h-100 h1 text-grey-4'>
                         {components.map((item, i) => {
                             if (!item) return null

@@ -803,6 +803,12 @@ div.bg-image,
     }
 }
 
+.m-p30 {
+    @media (max-width: 768px) {
+        padding: 30px;
+    }
+}
+
 .m-flex-wrap {
     @media (max-width: 768px) {
         flex-wrap: wrap;
@@ -842,6 +848,52 @@ div.bg-image,
 .m-flex-row {
     @media (max-width: 768px) {
         flex-direction: row;
+    }
+}
+
+.m-ratio-3-4 {
+    @media (max-width: 768px) {
+        width: 100%;
+        aspect-ratio: 3 / 4;
+    }
+}
+
+.m-w-100 {
+    @media (max-width: 768px) {
+        max-width: 100%;
+    }
+}
+
+.m-gap-40 {
+    @media (max-width: 768px) {
+        gap: 40px;
+    }
+}
+
+.m-px30 {
+    @media (max-width: 768px) {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+.approach-card-image {
+    @media (max-width: 768px) {
+        max-width: none;
+    }
+}
+
+.swiper-slide.approach-card-slide {
+    @media (max-width: 768px) {
+        width: calc(100vw - 90px);
+        aspect-ratio: 3 / 4;
+    }
+}
+
+.approach-section {
+    @media (max-width: 768px) {
+        max-width: 100vw;
+        overflow-x: hidden;
     }
 }
 

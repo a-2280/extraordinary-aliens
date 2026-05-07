@@ -228,7 +228,10 @@ export const ABOUT_QUERY = `*[_type == "about"][0]{
       title,
       founderAndDirector[]{ name },
       aboutTitle,
-      about
+      about,
+      showCollaborators,
+      collaboratorsTitle,
+      collaborators[]{ name }
     },
     _type == "approach" => {
       items[]{

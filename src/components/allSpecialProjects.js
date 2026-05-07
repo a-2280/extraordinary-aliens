@@ -12,9 +12,9 @@ export default function AllSpecialProjects({ projects }) {
             <Spacer />
             <div className='p15'>
                 <div className='b-1' data-sal />
-                <p className='h5 py15'>All Projects</p>
+                <p className='h5 py15 m-pb50'>All Projects</p>
             </div>
-            <Spacer />
+            <Spacer className='m-hide' />
             <div ref={cursorRef} className='custom-cursor'>
                 <span className='label label-left'>View Case Study</span>
                 <span className='label label-right'>Next</span>
@@ -32,16 +32,16 @@ function Project({ project, cursorRef }) {
     const [activeIndex, setActiveIndex] = useState(0)
 
     return (
-        <div className='grid col-4 pb150'>
+        <div className='grid col-4 pb150 m-flex m-flex-col m-gap-30'>
             <p className='h4 text-grey-6 pl30 fade--in' data-sal>
                 {project.title}
             </p>
-            <div className='span-3 flex flex-col gap-40'>
+            <div className='span-3 flex flex-col gap-40 m-px30'>
                 <div className='flex gap-20 space-between pr30 fade--in' data-sal>
                     <div className='h2 text-grey-5 max-500'>
                         <PortableText value={project.description} />
                     </div>
-                    <div className='h-fit index fade--in' data-sal>
+                    <div className='h-fit index fade--in m-hide' data-sal>
                         {activeIndex + 1} / {project.images.length}
                     </div>
                 </div>

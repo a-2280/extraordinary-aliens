@@ -21,7 +21,8 @@ export default function Approach({ items }) {
 
     return (
         <>
-            <div className='py30 pl80 flex flex-col gap-15'>
+            <div className='approach-section py30 pl80 flex flex-col gap-15 m-p0 m-px30'>
+                <p className='m-show h2 m-pb50'>Approach</p>
                 <Swiper
                     slidesPerView='auto'
                     slidesPerGroup={1}
@@ -40,10 +41,10 @@ export default function Approach({ items }) {
                         setIsEnd(s.isEnd)
                     }}>
                     {items.map(item => (
-                        <SwiperSlide className='max-750' key={item._key}>
-                            <div className='p10 flex gap-30 bg-grey-2 radius-15'>
+                        <SwiperSlide className='approach-card-slide max-750' key={item._key}>
+                            <div className='p10 flex m-flex-col gap-30 bg-grey-2 radius-15 h-100 m-p30 m-w-100'>
                                 {item.image && (
-                                    <div className='pos-rel ratio-1-1 max-200 overflow radius-10'>
+                                    <div className='approach-card-image pos-rel ratio-1-1 max-200 overflow radius-10'>
                                         <Image className='bg-image' src={item.image} alt={item.title || ""} width={600} height={600} />
                                     </div>
                                 )}
@@ -55,7 +56,7 @@ export default function Approach({ items }) {
                         </SwiperSlide>
                     ))}
                 </Swiper>
-                <div className='flex gap-10 mt30'>
+                <div className='flex gap-10 mt30 m-hide'>
                     <button className={`p10 ${isBeginning ? "text-grey-4" : "text-grey-6"} bg-grey-2 radius-15`} aria-label='Previous' onClick={() => swiperRef.current?.slidePrev()}>
                         <BsChevronLeft size={15} />
                     </button>
@@ -64,7 +65,8 @@ export default function Approach({ items }) {
                     </button>
                 </div>
             </div>
-            <Spacer className='x2' />
+            <Spacer className='x2 m-hide' />
+            <Spacer className='m-show' />
         </>
     )
 }

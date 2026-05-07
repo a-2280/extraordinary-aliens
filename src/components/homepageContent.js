@@ -57,9 +57,9 @@ function Header({ active, setActive, tags, selected, setSelected }) {
                         All Work
                     </button>
                 </div>
-                <div ref={tagsRef} style={{ visibility: "hidden", opacity: 0 }} className='flex gap-15'>
+                <div ref={tagsRef} style={{ visibility: "hidden", opacity: 0 }} className='flex flex-wrap gap-15'>
                     {tags.map(tag => (
-                        <button className={`hover--grey-6 hover--background p5 radius-5 ${selected.includes(tag) ? "text-grey-6 bg-grey" : "text-grey-5"}`} key={tag} onClick={() => toggle(tag)}>
+                        <button className={`hover--grey-6 hover--background p5 radius-5 nowrap ${selected.includes(tag) ? "text-grey-6 bg-grey" : "text-grey-5"}`} key={tag} onClick={() => toggle(tag)}>
                             {tag}
                         </button>
                     ))}

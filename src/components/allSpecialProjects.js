@@ -110,7 +110,7 @@ function ProjectSlider({ images, slug, cursorRef, activeIndex, setActiveIndex })
         <div className='slider-wrap pos-rel ratio-8-5 w-100 mr15 overflow'>
             <div ref={trackRef} className='slider-track' style={{ transform: restingTransform }}>
                 {[...images, ...(images.length > 1 ? [images[0]] : [])].map((slide, i) => (
-                    <div className='slide bg-grey' key={i} aria-hidden={i === images.length ? true : undefined}>
+                    <div className='slide bg-grey pos-rel ratio-8-5 max-full' key={i} aria-hidden={i === images.length ? true : undefined}>
                         {slide?.image && <Image className='bg-image' width={1184} height={740} src={slide.image} alt='' />}
                         {slide?.video && <video className='bg-image' src={slide.video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
                     </div>

@@ -44,7 +44,7 @@ export default function Credits({ title, description, credits, tags }) {
     }, [hoveredKey, lastImage])
 
     return (
-        <div>
+        <div className='case-study-credits'>
             <Spacer />
             <div className='flex m-flex-col m-gap-50'>
                 <div className='flex-1 flex flex-col gap-20'>

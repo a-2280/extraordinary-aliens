@@ -91,10 +91,13 @@
     &::before {
         content: "";
         position: absolute;
-        inset: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: calc(var(--scroll-progress, 0) * 100%);
         background-color: #D2D2D2;
-        transform-origin: left center;
-        transform: scaleX(var(--scroll-progress, 0));
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
         z-index: 0;
         pointer-events: none;
     }

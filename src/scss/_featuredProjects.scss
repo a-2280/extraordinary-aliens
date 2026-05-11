@@ -7,6 +7,7 @@
     background-color: #dadada73;
     border-radius: 5px;
     padding: 5px 10px;
+    cursor: pointer;
 }
 
 .featured-projects .slider-wrap {
@@ -53,6 +54,7 @@
         left: 0;
         transform: translate(-50%, -50%);
         background: #dadada99;
+        backdrop-filter: blur(8px);
         padding: 5px 10px;
         border-radius: 5px;
         font-size: 14px;

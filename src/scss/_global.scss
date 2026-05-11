@@ -131,6 +131,10 @@ a {
     justify-content: space-between;
 }
 
+.justify-end {
+    justify-content: flex-end;
+}
+
 /* ------------ Gap Styles ------------ */
 
 .gap-3 {
@@ -794,6 +798,12 @@ div.bg-image,
 .m-justify-center {
     @media (max-width: 768px) {
         justify-content: center;
+    }
+}
+
+.m-justify-start {
+    @media (max-width: 768px) {
+        justify-content: flex-start;
     }
 }
 

@@ -42,7 +42,7 @@ function Project({ project, cursorRef }) {
                         <PortableText value={project.description} />
                     </div>
                     <div className='h-fit index fade--in m-hide' data-sal>
-                        {activeIndex + 1} / {project.images.length}
+                        {(activeIndex % project.images.length) + 1} / {project.images.length}
                     </div>
                 </div>
                 <div className='max-full'>
@@ -69,10 +69,22 @@ function ProjectSlider({ images, slug, cursorRef, activeIndex, setActiveIndex })
     }, [activeIndex, leakTransform])
 
     useEffect(() => {
+        if (activeIndex !== images.length) return
+        const el = trackRef.current
+        const onEnd = () => {
+            el.style.transition = "none"
+            setActiveIndex(0)
+            requestAnimationFrame(() => requestAnimationFrame(() => { el.style.transition = "" }))
+        }
+        el.addEventListener("transitionend", onEnd, { once: true })
+        return () => el.removeEventListener("transitionend", onEnd)
+    }, [activeIndex, images.length, setActiveIndex])
+
+    useEffect(() => {
         if (images.length <= 1) return
         const id = setInterval(() => {
             if (isHoveringRef.current) return
-            setActiveIndex(i => (i + 1) % images.length)
+            setActiveIndex(i => i >= images.length ? i : i + 1)
         }, 4000)
         return () => clearInterval(id)
     }, [images.length, setActiveIndex])
@@ -103,14 +115,15 @@ function ProjectSlider({ images, slug, cursorRef, activeIndex, setActiveIndex })
             router.push(`/special-projects/${slug}`)
             return
         }
-        setActiveIndex(i => (i + 1) % images.length)
+        if (images.length <= 1) return
+        setActiveIndex(i => i >= images.length ? i : i + 1)
     }
 
     return (
         <div className='slider-wrap pos-rel ratio-8-5 w-100 mr15 overflow'>
             <div ref={trackRef} className='slider-track' style={{ transform: restingTransform }}>
-                {[...images, ...(images.length > 1 ? [images[0]] : [])].map((slide, i) => (
-                    <div className='slide bg-grey pos-rel ratio-8-5 max-full' key={i} aria-hidden={i === images.length ? true : undefined}>
+                {[...images, ...(images.length > 1 ? [images[0], images[1]] : [])].map((slide, i) => (
+                    <div className='slide bg-grey pos-rel ratio-8-5 max-full' key={i} aria-hidden={i >= images.length ? true : undefined}>
                         {slide?.image && <Image className='bg-image' width={1184} height={740} src={slide.image} alt='' />}
                         {slide?.video && <video className='bg-image' src={slide.video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
                     </div>

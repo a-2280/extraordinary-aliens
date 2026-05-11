@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { PortableText } from "@portabletext/react"
 import { useRouter } from "next/router"
 
-export default function FeaturedProjects({ projects }) {
+export default function FeaturedProjects({ projects, onTagClick }) {
     const cursorRef = useRef(null)
 
     return (
@@ -14,14 +14,14 @@ export default function FeaturedProjects({ projects }) {
             </div>
             <div className='featured-projects'>
                 {projects.map((project, index) => (
-                    <Project key={index} project={project} cursorRef={cursorRef} />
+                    <Project key={index} project={project} cursorRef={cursorRef} onTagClick={onTagClick} />
                 ))}
             </div>
         </>
     )
 }
 
-function Project({ project, cursorRef }) {
+function Project({ project, cursorRef, onTagClick }) {
     const [activeIndex, setActiveIndex] = useState(0)
 
     return (
@@ -36,7 +36,7 @@ function Project({ project, cursorRef }) {
                     </div>
                     <div className='flex gap-5 m-hide'>
                         {project.tags.map((tag, index) => (
-                            <p className='tag nowrap' key={index}>
+                            <p className='tag nowrap' key={index} onClick={() => onTagClick(tag.name)}>
                                 {tag.name}
                             </p>
                         ))}
@@ -44,7 +44,7 @@ function Project({ project, cursorRef }) {
                 </div>
                 <div className='flex flex-col gap-15 max-full'>
                     <div className='index fade--in m-hide' data-sal>
-                        {activeIndex + 1} / {project.images.length}
+                        {(activeIndex % project.images.length) + 1} / {project.images.length}
                     </div>
                     <ProjectSlider images={project.images} slug={project.slug.current} cursorRef={cursorRef} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
                 </div>
@@ -69,10 +69,22 @@ function ProjectSlider({ images, slug, cursorRef, activeIndex, setActiveIndex })
     }, [activeIndex, leakTransform])
 
     useEffect(() => {
+        if (activeIndex !== images.length) return
+        const el = trackRef.current
+        const onEnd = () => {
+            el.style.transition = "none"
+            setActiveIndex(0)
+            requestAnimationFrame(() => requestAnimationFrame(() => { el.style.transition = "" }))
+        }
+        el.addEventListener("transitionend", onEnd, { once: true })
+        return () => el.removeEventListener("transitionend", onEnd)
+    }, [activeIndex, images.length, setActiveIndex])
+
+    useEffect(() => {
         if (images.length <= 1) return
         const id = setInterval(() => {
             if (isHoveringRef.current) return
-            setActiveIndex(i => (i + 1) % images.length)
+            setActiveIndex(i => i >= images.length ? i : i + 1)
         }, 4000)
         return () => clearInterval(id)
     }, [images.length, setActiveIndex])
@@ -103,14 +115,15 @@ function ProjectSlider({ images, slug, cursorRef, activeIndex, setActiveIndex })
             router.push(`/case-study/${slug}`)
             return
         }
-        setActiveIndex(i => (i + 1) % images.length)
+        if (images.length <= 1) return
+        setActiveIndex(i => i >= images.length ? i : i + 1)
     }
 
     return (
         <div className='slider-wrap pos-rel ratio-8-5 w-100 mr15 overflow m-pl15'>
             <div ref={trackRef} className='slider-track' style={{ transform: restingTransform }}>
-                {[...images, ...(images.length > 1 ? [images[0]] : [])].map((slide, i) => (
-                    <div className='slide bg-grey' key={i} aria-hidden={i === images.length ? true : undefined}>
+                {[...images, ...(images.length > 1 ? [images[0], images[1]] : [])].map((slide, i) => (
+                    <div className='slide bg-grey' key={i} aria-hidden={i >= images.length ? true : undefined}>
                         {slide?.image && <Image className='bg-image' width={1184} height={740} src={slide.image} alt='' />}
                         {slide?.video && <video className='bg-image' src={slide.video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
                     </div>

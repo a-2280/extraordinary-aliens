@@ -8,6 +8,10 @@
     &.sal-animate {
         opacity: 1;
     }
+    &.is-exiting.sal-animate {
+        opacity: 0;
+        transition: 0.65s ease opacity;
+    }
 }
 
 /* ------------ Delays Styles ------------ */
@@ -53,12 +57,13 @@
 
 .image--blur {
 	filter: blur(8px);
+	transform: scale(1.05);
 	will-change: filter, transform;
 }
 
 .hover--unblur {
-	.image--blur { transition: 0.65s ease filter; }
-	&:hover .image--blur { filter: blur(0); }
+	.image--blur { transition: 0.65s ease filter, 0.65s ease transform; }
+	&:hover .image--blur { filter: blur(0); transform: scale(1); }
 }
 
 /* ------------ Page Transition ------------ */
@@ -81,4 +86,34 @@
 .hover--background {
 	transition: color .3s ease;
 	&:hover {background-color: #dadada73};
+}
+
+/* ------------ Tags Row ------------ */
+
+.tags-row {
+	@media (max-width: 768px) {
+		margin-left: -5px;
+	}
+}
+
+/* ------------ Clear Button ------------ */
+
+.clear-btn {
+	max-width: 0;
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: -15px;
+	overflow: hidden;
+	opacity: 0;
+	pointer-events: none;
+	white-space: nowrap;
+	transition: max-width .3s ease, margin-left .3s ease, padding .3s ease, opacity .3s ease;
+	&.is-active {
+		max-width: 100px;
+		padding-left: 5px;
+		padding-right: 5px;
+		margin-left: 0;
+		opacity: 1;
+		pointer-events: auto;
+	}
 }

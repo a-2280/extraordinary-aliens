@@ -51,8 +51,33 @@ function ButtonList({ open, data, currentTitle, isMobile, onToggle }) {
     const containerRef = useRef();
     const scrollFillRef = useRef(null);
     const scrubberPathRef = useRef(null);
+    const progressEndRef = useRef(null);
     const lenis = useLenis();
     const mobileToggle = isMobile && !!currentTitle;
+
+    useEffect(() => {
+        if (!currentTitle) {
+            progressEndRef.current = null;
+            return;
+        }
+        let raf = 0;
+        function measure() {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => {
+                const el = document.querySelector('.case-study-credits');
+                progressEndRef.current = el ? el.getBoundingClientRect().top + window.scrollY : null;
+            });
+        }
+        measure();
+        const ro = new ResizeObserver(measure);
+        ro.observe(document.body);
+        window.addEventListener('load', measure);
+        return () => {
+            ro.disconnect();
+            window.removeEventListener('load', measure);
+            cancelAnimationFrame(raf);
+        };
+    }, [currentTitle]);
 
     useGSAP(() => {
         const children = Array.from(containerRef.current.children);
@@ -79,17 +104,19 @@ function ButtonList({ open, data, currentTitle, isMobile, onToggle }) {
         });
     }, { dependencies: [open, mobileToggle] });
 
-    useLenis(({ progress }) => {
-        if (scrollFillRef.current) {
-            scrollFillRef.current.style.setProperty('--scroll-progress', progress || 0)
-        }
+    useLenis(({ scroll, progress }) => {
+        if (!scrollFillRef.current) return;
+        const end = progressEndRef.current;
+        const value = end && end > 0 ? Math.min(1, Math.max(0, scroll / end)) : (progress || 0);
+        scrollFillRef.current.style.setProperty('--scroll-progress', value);
     });
 
     function scrub(e) {
         if (!lenis) return;
         const rect = e.currentTarget.getBoundingClientRect();
         const fraction = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-        lenis.scrollTo(fraction * lenis.limit, { immediate: true, force: true });
+        const end = progressEndRef.current ?? lenis.limit;
+        lenis.scrollTo(fraction * end, { immediate: true, force: true });
     }
 
     function handlePointerDown(e) {
@@ -138,24 +165,56 @@ function ButtonList({ open, data, currentTitle, isMobile, onToggle }) {
 
 function NavLink({ link, showDot, className, style }) {
     const [copied, setCopied] = useState(false);
+    const [hovered, setHovered] = useState(false);
     const timeoutRef = useRef(null);
 
-    function handleCopy(e) {
-        e.preventDefault();
+    function handleCopy() {
         navigator.clipboard?.writeText(link.url);
         setCopied(true);
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => setCopied(false), 1000);
     }
 
+    const label = copied
+        ? "Copied"
+        : link.copyOnClick && hovered
+            ? link.url.replace(/^(mailto:|tel:|sms:)/i, "")
+            : link.title;
+
+    const [displayedLabel, setDisplayedLabel] = useState(label);
+    const pRef = useRef(null);
+    const isInitialRender = useRef(true);
+
+    useGSAP(() => {
+        if (isInitialRender.current) {
+            isInitialRender.current = false;
+            return;
+        }
+        gsap.timeline()
+            .to(pRef.current, { opacity: 0, duration: 0.15, ease: "power1.out", overwrite: "auto" })
+            .call(() => setDisplayedLabel(label))
+            .to(pRef.current, { opacity: 1, duration: 0.15, ease: "power1.in" });
+    }, { dependencies: [label] });
+
+    if (link.copyOnClick) {
+        return (
+            <button
+                type="button"
+                className={className}
+                style={style}
+                onClick={handleCopy}
+                onPointerEnter={() => setHovered(true)}
+                onPointerLeave={() => setHovered(false)}
+            >
+                <p ref={pRef} className="nowrap">{displayedLabel}</p>
+                {showDot && <div className='dot' />}
+            </button>
+        );
+    }
+
     return (
-        <Link
-            href={link.url}
-            className={className}
-            style={style}
-            onClick={link.copyOnClick ? handleCopy : undefined}
-        >
-            <p className="nowrap">{copied ? "Copied" : link.title}</p>
+        <Link href={link.url} className={className} style={style}>
+            <p ref={pRef} className="nowrap">{displayedLabel}</p>
             {showDot && <div className='dot' />}
         </Link>
     );

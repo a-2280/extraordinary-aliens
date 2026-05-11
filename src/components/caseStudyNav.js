@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react"
 import { useLenis } from "lenis/react"
 
+const SCROLL_OFFSET = -73
+
 export default function CaseStudyNav({ sections }) {
     const sectionGroups = sections?.filter(s => s._type === "sectionGroup" && s.slug) ?? []
     const groups = [{ _key: "introduction", title: "Introduction", slug: "introduction" }, ...sectionGroups]
@@ -59,13 +61,13 @@ export default function CaseStudyNav({ sections }) {
                 setIsOpen(o => !o)
                 return
             }
-            if (lenis) lenis.scrollTo(`#${slug}`)
+            if (lenis) lenis.scrollTo(`#${slug}`, { offset: SCROLL_OFFSET })
             setIsOpen(false)
             return
         }
         if (!lenis) return
         e.preventDefault()
-        lenis.scrollTo(`#${slug}`)
+        lenis.scrollTo(`#${slug}`, { offset: SCROLL_OFFSET })
     }
 
     function handleMouseEnter() {

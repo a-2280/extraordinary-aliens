@@ -3,13 +3,22 @@ import Image from "next/image"
 import { useRef, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
+import { RiExpandDiagonalSLine } from "react-icons/ri"
+import { useImageModal } from "../imageModalContext"
 
 export default function Carousel({ slides, variant = "normal" }) {
     const swiperRef = useRef(null)
     const cursorRef = useRef(null)
     const [currentIndex, setCurrentIndex] = useState(0)
+    const ctx = useImageModal()
 
     if (!slides?.length) return null
+
+    const handleOpen = e => {
+        e.stopPropagation()
+        const key = slides[currentIndex]?._key
+        if (key) ctx?.open(key)
+    }
 
     const handleMouseMove = e => {
         const { left, width } = e.currentTarget.getBoundingClientRect()
@@ -38,10 +47,13 @@ export default function Carousel({ slides, variant = "normal" }) {
                 <span className='label label-left'>Prev</span>
                 <span className='label label-right'>Next</span>
             </div>
-            <div className={`variant-${variant}`}>
+            <div className={`variant-${variant} pos-rel`}>
+                <button className='button-secondary pos-abs top-30 left-30 z-3' onClick={handleOpen}>
+                    <RiExpandDiagonalSLine size={15} strokeWidth={.01} />
+                </button>
                 <Swiper className={`variant-${variant} pos-rel radius-15 overflow`} slidesPerView={1} loop={slides.length > 1} speed={500} spaceBetween={15} onSwiper={s => (swiperRef.current = s)} onSlideChange={s => setCurrentIndex(s.realIndex)}>
                     {slides.map((slide, i) => (
-                        <SwiperSlide key={i} className='pos-rel ratio-3-4 max-full'>
+                        <SwiperSlide key={slide._key || i} className='pos-rel ratio-3-4 max-full'>
                             {slide?.image && <Image className='radius-15' src={slide.image} alt='' fill sizes='(max-width: 768px) 100vw, 50vw' style={{ objectFit: "cover", objectPosition: "center" }} />}
                             {slide?.video && (
                                 <video

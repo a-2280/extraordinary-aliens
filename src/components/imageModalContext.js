@@ -4,13 +4,49 @@ import { createContext, useCallback, useContext, useMemo, useState } from "react
 
 const ImageModalContext = createContext(null)
 
-function collectImageCards(sections) {
+function pushChild(result, child) {
+    if (!child) return
+    switch (child._type) {
+        case "imageCard": {
+            if (!child.image) return
+            result.push({ _key: child._key, image: child.image, video: child.video, caption: child.description })
+            return
+        }
+        case "carousel": {
+            for (const slide of child.slides || []) {
+                if (!slide?.image || !slide._key) continue
+                result.push({ _key: slide._key, image: slide.image, video: slide.video })
+            }
+            return
+        }
+        case "captionCarousel": {
+            for (const slide of child.slides || []) {
+                if (!slide?.image || !slide._key) continue
+                result.push({ _key: slide._key, image: slide.image, video: slide.video, caption: slide.caption })
+            }
+            return
+        }
+        case "annotationImage":
+        case "imageHotspot": {
+            if (!child.image) return
+            result.push({ _key: child._key, image: child.image, video: child.video })
+            return
+        }
+        case "imageExpandableCaption":
+        case "imageCaptionHover": {
+            if (!child.image) return
+            result.push({ _key: child._key, image: child.image, video: child.video, caption: child.caption })
+            return
+        }
+    }
+}
+
+function collectImages(sections) {
     const result = []
     const visitSection = entry => {
         if (entry?._type !== "section") return
-        for (const child of [entry.left?.[0], entry.right?.[0]]) {
-            if (child?._type === "imageCard" && child.image) result.push(child)
-        }
+        for (const child of entry.left || []) pushChild(result, child)
+        for (const child of entry.right || []) pushChild(result, child)
     }
     for (const entry of sections || []) {
         if (entry?._type === "sectionGroup") {
@@ -23,7 +59,7 @@ function collectImageCards(sections) {
 }
 
 export function ImageModalProvider({ sections, children }) {
-    const images = useMemo(() => collectImageCards(sections), [sections])
+    const images = useMemo(() => collectImages(sections), [sections])
     const [openKey, setOpenKey] = useState(null)
 
     const currentIndex = openKey

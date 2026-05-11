@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import Image from "next/image"
 import { GrAdd } from "react-icons/gr"
+import { PortableText } from "next-sanity"
 import { useImageModal } from "./imageModalContext"
 
 export default function ImageModal() {
@@ -116,15 +117,21 @@ export default function ImageModal() {
                 </>
             )}
 
-            {current.description && (
-                <CaptionBox key={current._key} description={current.description} onClick={stop} />
+            {hasCaption(current.caption) && (
+                <CaptionBox key={current._key} caption={current.caption} onClick={stop} />
             )}
         </div>,
         document.body,
     )
 }
 
-function CaptionBox({ description, onClick }) {
+function hasCaption(caption) {
+    if (!caption) return false
+    if (Array.isArray(caption)) return caption.length > 0
+    return true
+}
+
+function CaptionBox({ caption, onClick }) {
     const [isExpanded, setIsExpanded] = useState(false)
     const [showClamp, setShowClamp] = useState(true)
     const [collapsedHeight, setCollapsedHeight] = useState(0)
@@ -149,7 +156,7 @@ function CaptionBox({ description, onClick }) {
         measure()
         window.addEventListener("resize", measure)
         return () => window.removeEventListener("resize", measure)
-    }, [description])
+    }, [caption])
 
     const handleToggle = () => {
         if (isExpanded) {
@@ -181,7 +188,7 @@ function CaptionBox({ description, onClick }) {
                 style={captionStyle}
                 onTransitionEnd={handleTransitionEnd}
             >
-                {description}
+                {Array.isArray(caption) ? <PortableText value={caption} /> : caption}
             </div>
             {isOverflowing && (
                 <div

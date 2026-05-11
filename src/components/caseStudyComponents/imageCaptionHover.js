@@ -3,9 +3,13 @@
 import { useLayoutEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { GrAdd } from "react-icons/gr"
+import { RiExpandDiagonalSLine } from "react-icons/ri"
 import { PortableText } from "next-sanity"
+import { useImageModal } from "../imageModalContext"
 
-export default function ImageCaptionHover({ image, video, caption, variant = "normal" }) {
+export default function ImageCaptionHover({ _key, image, video, caption, variant = "normal" }) {
+    const ctx = useImageModal()
+    const handleOpen = () => ctx?.open(_key)
     const [isExpanded, setIsExpanded] = useState(false)
     const [showClamp, setShowClamp] = useState(true)
     const [collapsedHeight, setCollapsedHeight] = useState(0)
@@ -61,10 +65,13 @@ export default function ImageCaptionHover({ image, video, caption, variant = "no
         : undefined
 
     return (
-        <div className={`variant-${variant}`} {...hoverHandlers}>
-            <div className={`variant-${variant} pos-rel ratio-3-4 max-full radius-15 overflow`}>
+        <div className={`variant-${variant}`}>
+            <div className={`variant-${variant} pos-rel ratio-3-4 max-full radius-15 overflow`} {...hoverHandlers}>
                 <Image className='bg-image' src={image} alt='' width={1600} height={1000} />
                 {video && <video className='bg-image' src={video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
+                <button className='button-secondary pos-abs top-30 left-30 z-2' onClick={handleOpen}>
+                    <RiExpandDiagonalSLine size={15} strokeWidth={.01} />
+                </button>
             </div>
             <div className='p15 flex gap-40 space-between caption-row'>
                 <div

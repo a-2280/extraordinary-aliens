@@ -50,11 +50,12 @@ const SECTION_CHILD_PROJECTION = `_key, _type,
   },
   _type == "carousel" => {
     variant,
-    "slides": images[]{ "image": image.asset->url, "video": video.asset->url }
+    "slides": images[]{ _key, "image": image.asset->url, "video": video.asset->url }
   },
   _type == "captionCarousel" => {
     variant,
     slides[]{
+      _key,
       "image": image.asset->url,
       "video": video.asset->url,
       caption

@@ -29,6 +29,10 @@ Scoped overrides only — no light-mode rules belong here.
         }
     }
 
+    .image-modal {
+        background-color: rgba(15, 15, 15, 0.4);
+    }
+
     .caption-toggle,
     .annotation-toggle,
     .annotation-popup,

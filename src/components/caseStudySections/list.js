@@ -2,8 +2,7 @@ import Spacer from "../spacer";
 
 export default function List({ title, list }) {
     return (
-        <div>
-            <Spacer />
+        <div className="pt90">
             <div className='flex gap-15 m-flex-col'>
                 {title && <p className='flex-1 h5 fade--in m-pl15' data-sal>{title}</p>}
                 {list?.length > 0 && (
@@ -20,7 +19,6 @@ export default function List({ title, list }) {
                     </div>
                 )}
             </div>
-            <Spacer />
         </div>
     )
 }

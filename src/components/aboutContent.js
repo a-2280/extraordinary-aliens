@@ -22,8 +22,11 @@ const COMPONENTS = {
 }
 
 const SNAP_OFFSET = -100
-const SNAP_OPTS = { duration: 0.5, lock: true, offset: SNAP_OFFSET }
-const SNAP_COOLDOWN = 80
+const SNAP_PROXIMITY = 120
+const SETTLE_DELAY = 180
+const SNAP_DURATION = 1.1
+const SNAP_EASING = t => 1 - Math.pow(1 - t, 3)
+const CLICK_OPTS = { duration: 0.8, lock: true, offset: SNAP_OFFSET }
 
 export default function AboutContent({ components }) {
     const rootRef = useRef(null)
@@ -35,77 +38,63 @@ export default function AboutContent({ components }) {
 
     useEffect(() => {
         if (!lenis) return
-        let isSnapping = false
-        let cooldown
+        let settleTimer
+        const mql = window.matchMedia("(max-width: 768px)")
 
         const onScroll = () => {
             const sections = sectionRefs.current.filter(Boolean)
-            if (!sections.length) return
-            const y = window.scrollY
-            const positions = sections.map(el => el.getBoundingClientRect().top + y + SNAP_OFFSET)
-            let idx = 0
-            for (let i = 1; i < positions.length; i++) {
-                if (Math.abs(positions[i] - y) < Math.abs(positions[idx] - y)) idx = i
+            if (sections.length) {
+                const y = window.scrollY
+                const positions = sections.map(el => el.getBoundingClientRect().top + y + SNAP_OFFSET)
+                let idx = 0
+                for (let i = 1; i < positions.length; i++) {
+                    if (Math.abs(positions[i] - y) < Math.abs(positions[idx] - y)) idx = i
+                }
+                setActiveIndex(idx)
             }
-            setActiveIndex(idx)
+            if (mql.matches) return
+            clearTimeout(settleTimer)
+            settleTimer = setTimeout(trySnap, SETTLE_DELAY)
         }
 
-        const onWheel = e => {
-            if (isSnapping) { e.preventDefault(); return }
+        const trySnap = () => {
+            if (document.hidden) return
+            const active = document.activeElement
+            if (active && /^(INPUT|TEXTAREA|SELECT)$/.test(active.tagName)) return
             const sections = sectionRefs.current.filter(Boolean)
             if (!sections.length) return
             const y = window.scrollY
-            const tops = sections.map(el => el.getBoundingClientRect().top + y)
-            const positions = tops.map(t => t + SNAP_OFFSET)
             const lastBottom = sections[sections.length - 1].getBoundingClientRect().bottom + y
             if (y > lastBottom + 50) return
 
-            let target = -1
-            if (e.deltaY > 0) {
-                target = positions.findIndex(p => p > y + 5)
-            } else if (e.deltaY < 0) {
-                for (let i = positions.length - 1; i >= 0; i--) {
-                    if (positions[i] < y - 5) { target = i; break }
-                }
+            const lines = sections.map(el => el.getBoundingClientRect().top + y + SNAP_OFFSET)
+            let idx = 0
+            for (let i = 1; i < lines.length; i++) {
+                if (Math.abs(lines[i] - y) < Math.abs(lines[idx] - y)) idx = i
             }
-            if (target < 0) return
+            const delta = lines[idx] - y
+            const abs = Math.abs(delta)
+            if (abs <= 1 || abs > SNAP_PROXIMITY) return
 
-            e.preventDefault()
-            isSnapping = true
-            lenis.scrollTo(tops[target], {
-                ...SNAP_OPTS,
-                onComplete: () => {
-                    clearTimeout(cooldown)
-                    cooldown = setTimeout(() => { isSnapping = false }, SNAP_COOLDOWN)
-                },
+            lenis.scrollTo(sections[idx], {
+                duration: SNAP_DURATION,
+                offset: SNAP_OFFSET,
+                lock: false,
+                easing: SNAP_EASING,
             })
         }
 
-        lenis.on("scroll", onScroll)
-
-        const mql = window.matchMedia("(max-width: 768px)")
-        let wheelAttached = false
-        const syncWheel = () => {
-            if (mql.matches) {
-                if (wheelAttached) {
-                    window.removeEventListener("wheel", onWheel)
-                    wheelAttached = false
-                }
-                clearTimeout(cooldown)
-                isSnapping = false
-            } else if (!wheelAttached) {
-                window.addEventListener("wheel", onWheel, { passive: false })
-                wheelAttached = true
-            }
+        const onMqlChange = () => {
+            if (mql.matches) clearTimeout(settleTimer)
         }
-        syncWheel()
-        mql.addEventListener("change", syncWheel)
+
+        lenis.on("scroll", onScroll)
+        mql.addEventListener("change", onMqlChange)
 
         return () => {
-            clearTimeout(cooldown)
+            clearTimeout(settleTimer)
             lenis.off("scroll", onScroll)
-            mql.removeEventListener("change", syncWheel)
-            if (wheelAttached) window.removeEventListener("wheel", onWheel)
+            mql.removeEventListener("change", onMqlChange)
         }
     }, [lenis])
 
@@ -143,7 +132,7 @@ export default function AboutContent({ components }) {
                                 <p
                                     key={item._key}
                                     className={`pointer${activeIndex === i ? " text-grey-6" : ""}`}
-                                    onClick={() => lenis?.scrollTo(sectionRefs.current[i], SNAP_OPTS)}
+                                    onClick={() => lenis?.scrollTo(sectionRefs.current[i], CLICK_OPTS)}
                                 >
                                     {label}
                                 </p>

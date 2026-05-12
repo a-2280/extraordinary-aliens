@@ -30,15 +30,16 @@ export default function AllSpecialProjects({ projects }) {
 
 function Project({ project, cursorRef }) {
     const [activeIndex, setActiveIndex] = useState(0)
+    const rowRef = useRef(null)
 
     return (
-        <div className='grid col-4 pb150 m-flex m-flex-col m-gap-30'>
+        <div ref={rowRef} className='grid col-4 pb150 m-flex m-flex-col m-gap-30'>
             <p className='h4 text-grey-6 pl30 fade--in' data-sal>
                 {project.title}
             </p>
             <div className='span-3 flex flex-col gap-40 m-px30'>
                 <div className='flex gap-20 space-between pr30 fade--in' data-sal>
-                    <div className='h2 text-grey-5 max-500'>
+                    <div className='h2 text-grey-5 max-500 lh-110'>
                         <PortableText value={project.description} />
                     </div>
                     <div className='h-fit index fade--in m-hide' data-sal>
@@ -46,14 +47,14 @@ function Project({ project, cursorRef }) {
                     </div>
                 </div>
                 <div className='max-full'>
-                    <ProjectSlider images={project.images} slug={project.slug.current} cursorRef={cursorRef} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
+                    <ProjectSlider images={project.images} slug={project.slug.current} cursorRef={cursorRef} rowRef={rowRef} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
                 </div>
             </div>
         </div>
     )
 }
 
-function ProjectSlider({ images, slug, cursorRef, activeIndex, setActiveIndex }) {
+function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActiveIndex }) {
     const router = useRouter()
     const trackRef = useRef(null)
     const isHoveringRef = useRef(false)
@@ -89,9 +90,14 @@ function ProjectSlider({ images, slug, cursorRef, activeIndex, setActiveIndex })
         return () => clearInterval(id)
     }, [images.length, setActiveIndex])
 
+    const isLeftOfRow = clientX => {
+        const rect = rowRef.current?.getBoundingClientRect()
+        if (!rect) return true
+        return clientX - rect.left < rect.width / 2
+    }
+
     const handleMouseMove = e => {
-        const { left, width } = e.currentTarget.getBoundingClientRect()
-        const isLeft = e.clientX - left < width / 2
+        const isLeft = isLeftOfRow(e.clientX)
         isHoveringRef.current = true
         isHoveringRightRef.current = !isLeft
         const cursor = cursorRef.current
@@ -109,8 +115,7 @@ function ProjectSlider({ images, slug, cursorRef, activeIndex, setActiveIndex })
     }
 
     const handleClick = e => {
-        const { left, width } = e.currentTarget.getBoundingClientRect()
-        const isLeft = e.clientX - left < width / 2
+        const isLeft = isLeftOfRow(e.clientX)
         if (isLeft) {
             router.push(`/special-projects/${slug}`)
             return

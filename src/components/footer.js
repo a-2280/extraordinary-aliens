@@ -97,7 +97,7 @@ export default function Footer({ data }) {
                         {data.details.map((detail, index) => (
                             <div className='flex flex-col gap-30 m-gap-15' key={index}>
                                 <p className='h5'>{detail.title}</p>
-                                <div className='text-grey-4'>
+                                <div className='text-grey-4 nowrap'>
                                     <PortableText value={detail.detail} />
                                 </div>
                             </div>

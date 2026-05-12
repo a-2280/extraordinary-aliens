@@ -9,7 +9,8 @@
     transition: all .3s ease;
     border-radius: 5px;
     width: fit-content;
-    &:hover {
+    &:hover,
+    .more-projects-row:hover & {
         border-color: var(--grey-3);
         background-color: var(--grey-6);
         color: var(--grey-1);
@@ -22,7 +23,8 @@
     transition: all 0.3s ease;
 }
 
-.button:hover .icon {
+.button:hover .icon,
+.more-projects-row:hover .icon {
     opacity: 1;
     width: 15px;
     padding-right: 6px;
@@ -34,7 +36,9 @@
     padding: 5;
     transition: all .3s ease;
     &:hover {
-        background-color: #dadada;
+        background-color: var(--glass-bg);
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
         color: var(--black);
     }
 }
@@ -106,4 +110,23 @@
         position: relative;
         z-index: 1;
     }
+}
+
+.carousel-expand {
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+
+.carousel-index {
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    box-sizing: border-box;
+    line-height: 1;
 }

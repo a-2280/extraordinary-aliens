@@ -31,7 +31,7 @@ export default function CaseStudyContent({ project }) {
                 <Spacer className='x2 m-hide' />
                 <Spacer className='m-show' />
                 {caseStudySections?.length > 0 && (
-                    <div className='p15 flex flex-col gap-15'>
+                    <div className='p15 flex flex-col gap-15 case-study-sections'>
                         {caseStudySections.map(entry => {
                             if (entry._type === "sectionGroup") {
                                 return (

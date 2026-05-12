@@ -25,20 +25,26 @@ export default function MoreProjects({ nextProject }) {
 
             let activeTl
 
-            const onEnter = () => {
-                activeTl?.kill()
-                activeTl = gsap
-                    .timeline({ defaults: { duration: 0.6, ease: "power3.out" } })
-                    .to(imageRef.current, { autoAlpha: 1, x: 0 }, 0)
-                    .to(titleRef.current, { autoAlpha: 1 }, 0)
-            }
+            const observer = new IntersectionObserver(
+                (entries, obs) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) return
+                        activeTl = gsap
+                            .timeline({ defaults: { duration: 0.6, ease: "power3.out" } })
+                            .to(imageRef.current, { autoAlpha: 1, x: 0 }, 0)
+                            .to(titleRef.current, { autoAlpha: 1 }, 0)
+                        obs.unobserve(entry.target)
+                    })
+                },
+                { threshold: 0.2 },
+            )
+            observer.observe(rowRef.current)
 
+            const onEnter = () => {
+                gsap.to(imageRef.current, { x: 15, duration: 0.3, ease: "power2.out", overwrite: "auto" })
+            }
             const onLeave = () => {
-                activeTl?.kill()
-                activeTl = gsap
-                    .timeline({ defaults: { duration: 0.6, ease: "power3.in" } })
-                    .to(imageRef.current, { autoAlpha: 0, x: hiddenX }, 0)
-                    .to(titleRef.current, { autoAlpha: 0 }, 0)
+                gsap.to(imageRef.current, { x: 0, duration: 0.3, ease: "power2.out", overwrite: "auto" })
             }
 
             const row = rowRef.current
@@ -46,9 +52,10 @@ export default function MoreProjects({ nextProject }) {
             row.addEventListener("mouseleave", onLeave)
 
             return () => {
+                observer.disconnect()
+                activeTl?.kill()
                 row.removeEventListener("mouseenter", onEnter)
                 row.removeEventListener("mouseleave", onLeave)
-                activeTl?.kill()
             }
         },
         { scope: rowRef },
@@ -61,13 +68,13 @@ export default function MoreProjects({ nextProject }) {
             <div className='b-1' data-sal />
             <p className='h5 p15 m-pb50'>More Projects</p>
             <Spacer className="m-hide" />
-            <div ref={rowRef} className='flex m-hide'>
+            <div ref={rowRef} className='flex m-hide more-projects-row'>
                 <div className='p15 flex-2'>
                     <div ref={imageRef} className='pos-rel ratio-16-10 max-full radius-15 overflow'>
                         {nextProject.image && <Image className='bg-image radius-15' src={nextProject.image} alt='' width={435} height={515} />}
                         {nextProject.video && <video className='bg-image radius-15' src={nextProject.video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
                     </div>
-                    <p ref={titleRef} className='h3 p15'>
+                    <p ref={titleRef} className='h3 p15 pl15'>
                         {nextProject.title}
                     </p>
                 </div>

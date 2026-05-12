@@ -8,14 +8,7 @@
     height: 10rem;
     border-radius: 50%;
     pointer-events: none;
-    background: linear-gradient(90deg,
-        #000000,
-        #E30505,
-        #D9AE05,
-        #3CAE6C,
-        #0C3CBF,
-        #0C3CBF
-    );
+    background: linear-gradient(90deg, #000000, #e30505, #d9ae05, #3cae6c, #0c3cbf, #0c3cbf);
     filter: blur(60px);
     mix-blend-mode: screen;
     will-change: transform, opacity;
@@ -31,8 +24,10 @@
 }
 
 .footer-detail-row {
-    flex-wrap: wrap;
-
+    flex-wrap: nowrap;
+@media (max-width: 1000px) {
+        flex-wrap: wrap;
+    }
     > div:last-child {
         flex-basis: 100%;
     }

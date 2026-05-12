@@ -2,8 +2,7 @@ import Spacer from "../spacer";
 
 export default function TextLarge({ title, description }) {
     return (
-        <div>
-        <Spacer />
+        <div className="pt90">
             <div className='flex gap-15 m-flex-col'>
                 <div className='flex-1'>
                     <p className='h5 fade--in' data-sal>{title}</p>
@@ -12,7 +11,6 @@ export default function TextLarge({ title, description }) {
                     <p className='f-20 text-grey-4 max-700 fade--in delay-100' data-sal>{description}</p>
                 </div>
             </div>
-            <Spacer />
         </div>
     )
 }

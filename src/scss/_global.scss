@@ -78,6 +78,10 @@ a {
     display: none;
 }
 
+.lh-110 {
+    line-height: 110%;
+}
+
 /* ------------ Grid Styles ------------ */
 
 .grid {
@@ -314,6 +318,20 @@ a {
     padding-right: 200px;
 }
 
+.pt90 {
+    padding-top: 90px;
+}
+
+.case-study-sections > *:first-child,
+.case-study-sections > section:first-child > *:first-child {
+    padding-top: 0;
+}
+
+.case-study-sections > *:last-child,
+.case-study-sections > section:last-child > *:last-child {
+    padding-bottom: 90px;
+}
+
 .pth {
     padding-top: 61px;
 }
@@ -364,7 +382,7 @@ a {
 }
 
 .top-h-100 {
-    top: 161px;
+    top: 100px;
 }
 
 .left-30 {
@@ -547,6 +565,24 @@ div.bg-image,
 
 .flex-1 > div:has(> .variant-cut) {
     height: 100%;
+}
+
+.variant-cut.caption-wrapper {
+    position: relative;
+    top: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.variant-cut.caption-wrapper > .image-sticky-area {
+    flex: 1;
+    min-height: 0;
+}
+
+.variant-cut.caption-wrapper > .image-sticky-area > .image-shell {
+    position: sticky;
+    top: 76px;
 }
 
 /* ------------ Width Styles ------------ */
@@ -916,7 +952,9 @@ div.bg-image,
     height: 30px;
     transform: translate(-50%, -50%);
     border-radius: 5px;
-    background: #dadada;
+    background-color: var(--glass-bg);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     color: var(--black);
     font-size: 14px;
     display: flex;
@@ -924,6 +962,24 @@ div.bg-image,
     justify-content: center;
     cursor: pointer;
     padding: 5px;
+}
+
+.annotation-toggle,
+.annotation-popup,
+.spot-popup {
+    background-color: var(--glass-bg);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+.annotation-toggle {
+    transition: background-color 0.3s ease, -webkit-backdrop-filter 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.annotation-toggle.is-open {
+    background-color: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
 }
 
 .spot-popup.is-open {

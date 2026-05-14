@@ -51,6 +51,9 @@ Scoped overrides only — no light-mode rules belong here.
 
     .button-secondary:hover {
         color: var(--grey-1);
+        img {
+            filter: none;
+        }
     }
 
     .audio-player {

@@ -3,7 +3,6 @@
 import { useRef, useState } from "react"
 import Image from "next/image"
 import { GrAdd } from "react-icons/gr"
-import { RiExpandDiagonalSLine } from "react-icons/ri"
 import { PortableText } from "next-sanity"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
@@ -43,7 +42,7 @@ export default function AnnotationImage({ _key, image, video, title, annotation,
             <Image className='bg-image' src={image} alt='' width={1600} height={1000} />
             {video && <video className='bg-image' src={video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
             <button className='button-secondary pos-abs top-30 left-30 z-5' onClick={handleOpen}>
-                <RiExpandDiagonalSLine size={15} strokeWidth={0.01} />
+                <img src="/images/expand.svg" alt="" width="16" height="14" />
             </button>
             <div className={`z-4 bg-solid-grey pos-abs top-30 right-30 radius-5 p5 text-black flex align-center justify-center annotation-toggle${isOpen ? " is-open" : ""}`} style={{ cursor: "pointer" }} onClick={() => setIsOpen(prev => !prev)}>
                 <span ref={iconRef} className='flex'>

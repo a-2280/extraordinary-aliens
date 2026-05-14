@@ -4,7 +4,6 @@ import { useRef, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
 import { PortableText } from "next-sanity"
-import { RiExpandDiagonalSLine } from "react-icons/ri"
 import { useImageModal } from "../imageModalContext"
 
 export default function CaptionCarousel({ slides, variant = "normal" }) {
@@ -52,13 +51,13 @@ export default function CaptionCarousel({ slides, variant = "normal" }) {
             </div>
             <div className={`variant-${variant} caption-wrapper pos-rel`}>
                 <div className='image-sticky-area pos-rel'>
-                    <div className='image-shell pos-rel'>
+                    <div className={`variant-${variant} image-shell pos-rel ratio-3-4 max-full radius-15 overflow`}>
                         <button className='button-secondary carousel-expand pos-abs top-30 left-30 z-3' onClick={handleOpen}>
-                            <RiExpandDiagonalSLine size={15} strokeWidth={0.01} />
+                            <img src='/images/expand.svg' alt='' width='16' height='14' />
                         </button>
-                        <Swiper className={`variant-${variant} pos-rel radius-15 overflow`} slidesPerView={1} loop={slides.length > 1} speed={500} spaceBetween={15} onSwiper={s => (swiperRef.current = s)} onSlideChange={s => setCurrentIndex(s.realIndex)}>
+                        <Swiper className='pos-rel h-100' slidesPerView={1} loop={slides.length > 1} speed={500} spaceBetween={15} onSwiper={s => (swiperRef.current = s)} onSlideChange={s => setCurrentIndex(s.realIndex)}>
                             {slides.map((slide, i) => (
-                                <SwiperSlide key={slide._key || i} className='pos-rel ratio-3-4 max-full'>
+                                <SwiperSlide key={slide._key || i} className='pos-rel'>
                                     {slide?.image && <Image className='radius-15' src={slide.image} alt='' fill sizes='(max-width: 768px) 100vw, 50vw' style={{ objectFit: "cover", objectPosition: "center" }} />}
                                     {slide?.video && <video className='radius-15' src={slide.video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />}
                                 </SwiperSlide>

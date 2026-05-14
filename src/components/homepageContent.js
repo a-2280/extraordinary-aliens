@@ -79,12 +79,12 @@ function Header({ active, setActive, tags, selected, setSelected }) {
     return (
         <div className='px15'>
             <div className='b-1' data-sal />
-            <div className='p15 pb60 flex space-between fade--in m-pt0 m-flex-col m-pt15 m-gap-30' data-sal>
-                <div className='flex gap-20 h5 text-grey-4 uppercase'>
-                    <button className={`nowrap uppercase hover--grey-6 ${active == "featuredProjects" ? "text-grey-6" : ""}`} onClick={() => setActive("featuredProjects")}>
+            <div className='p15 pt10 pb60 flex space-between fade--in m-pt0 m-flex-col m-pt15 m-gap-30' data-sal>
+                <div className='flex gap-18 text-grey-4 uppercase'>
+                    <button className={`h5 nowrap uppercase hover--grey-6 ${active == "featuredProjects" ? "text-grey-6" : ""}`} onClick={() => setActive("featuredProjects")}>
                         Featured Projects
                     </button>
-                    <button className={`nowrap uppercase hover--grey-6 ${active == "allWork" ? "text-grey-6" : ""}`} onClick={() => setActive("allWork")}>
+                    <button className={`h5 nowrap uppercase hover--grey-6 ${active == "allWork" ? "text-grey-6" : ""}`} onClick={() => setActive("allWork")}>
                         All Work
                     </button>
                 </div>

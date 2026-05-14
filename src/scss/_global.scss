@@ -78,6 +78,11 @@ a {
     display: none;
 }
 
+.text-trim {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+}
+
 .lh-110 {
     line-height: 110%;
 }
@@ -155,6 +160,10 @@ a {
 
 .gap-15 {
     gap: 15px;
+}
+
+.gap-18 {
+    gap: 18px;
 }
 
 .gap-20 {
@@ -322,6 +331,11 @@ a {
     padding-top: 90px;
 }
 
+.py200 {
+    padding-top: 200px;
+    padding-bottom: 200px;
+}
+
 .case-study-sections > *:first-child,
 .case-study-sections > section:first-child > *:first-child {
     padding-top: 0;
@@ -334,6 +348,10 @@ a {
 
 .pth {
     padding-top: 61px;
+}
+
+.pt10 {
+    padding-top: 10px;
 }
 
 .py30 {
@@ -554,6 +572,7 @@ div.bg-image,
     }
 }
 
+.variant-fullWidth.ratio-3-4,
 .variant-fullWidth .swiper-slide.ratio-3-4 {
     aspect-ratio: 3 / 2;
 }
@@ -583,6 +602,17 @@ div.bg-image,
 .variant-cut.caption-wrapper > .image-sticky-area > .image-shell {
     position: sticky;
     top: 76px;
+}
+
+.caption-row-clamp {
+    min-height: calc(2lh + 20px);
+}
+
+@media (max-width: 768px) {
+    .variant-fullWidth .caption-row {
+        width: 100%;
+        margin-left: 0;
+    }
 }
 
 /* ------------ Width Styles ------------ */
@@ -699,6 +729,7 @@ div.bg-image,
     line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    max-height: calc(2lh);
 }
 
 .max-950 {

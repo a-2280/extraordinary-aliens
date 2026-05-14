@@ -2,13 +2,23 @@
     will-change: filter, transform;
 }
 
-.mission-card .swap-text {
-    flex-shrink: 0;
+.mission-card .swap-text-wrap {
+    position: relative;
     width: 260px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
 
-    &.is-hovered {
-        width: 310px;
-    }
+.mission-card .swap-caption {
+    width: 260px;
+}
+
+.mission-card .swap-description {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 310px;
+    opacity: 0;
 }
 
 @media (max-width: 768px) {

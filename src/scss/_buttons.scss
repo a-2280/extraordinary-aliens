@@ -9,6 +9,7 @@
     transition: all .3s ease;
     border-radius: 5px;
     width: fit-content;
+    letter-spacing: 4%;
     &:hover,
     .more-projects-row:hover & {
         border-color: var(--grey-3);
@@ -35,11 +36,17 @@
     border-radius: 5px;
     padding: 5;
     transition: all .3s ease;
+    img {
+        transition: filter .3s ease;
+    }
     &:hover {
         background-color: var(--glass-bg);
         -webkit-backdrop-filter: blur(8px);
         backdrop-filter: blur(8px);
         color: var(--black);
+        img {
+            filter: brightness(0);
+        }
     }
 }
 

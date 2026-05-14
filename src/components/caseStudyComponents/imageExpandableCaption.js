@@ -3,7 +3,6 @@
 import { useLayoutEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { GrAdd } from "react-icons/gr"
-import { RiExpandDiagonalSLine } from "react-icons/ri"
 import { PortableText } from "next-sanity"
 import { useImageModal } from "../imageModalContext"
 
@@ -67,11 +66,11 @@ export default function ImageExpandableCaption({ _key, image, video, caption, va
                     <Image className='bg-image' src={image} alt='' width={1600} height={1000} />
                     {video && <video className='bg-image' src={video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
                     <button className='button-secondary pos-abs top-30 left-30 z-2' onClick={handleOpen}>
-                        <RiExpandDiagonalSLine size={15} strokeWidth={.01} />
+                        <img src="/images/expand.svg" alt="" width="16" height="14" />
                     </button>
                 </div>
             </div>
-            <div className='p15 flex gap-40 space-between caption-row'>
+            <div className='p15 pb0 flex gap-40 space-between caption-row caption-row-clamp'>
                 <div
                     ref={captionRef}
                     className={`h4 text-grey-4 max-600${showClamp && !isExpanded ? ' line-clamp-2' : ''}`}

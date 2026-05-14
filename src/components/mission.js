@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { PortableText } from "@portabletext/react"
@@ -13,7 +13,6 @@ gsap.registerPlugin(useGSAP)
 
 export default function Mission({ mission }) {
     const cardsRef = useRef()
-    const [hoveredIndex, setHoveredIndex] = useState(null)
 
     useGSAP(
         () => {
@@ -21,8 +20,15 @@ export default function Mission({ mission }) {
 
             cards.forEach(card => {
                 const image = card.querySelector(".image")
+                const wrap = card.querySelector(".swap-text-wrap")
+                const caption = card.querySelector(".swap-caption")
+                const description = card.querySelector(".swap-description")
 
                 gsap.set(image, { filter: "blur(8px)", scale: 1.1 })
+
+                const captionHeight = caption.offsetHeight
+                const descriptionHeight = description.offsetHeight
+                gsap.set(wrap, { height: captionHeight })
 
                 const originalMaxWidth = gsap.getProperty(card, "maxWidth")
                 let activeTl
@@ -33,6 +39,9 @@ export default function Mission({ mission }) {
                         .timeline({ defaults: { duration: 0.6, ease: "power2.out" } })
                         .to(card, { maxWidth: 350 }, 0)
                         .to(image, { filter: "blur(0px)", scale: 1 }, 0)
+                        .to(wrap, { width: 310, height: descriptionHeight }, 0)
+                        .to(caption, { opacity: 0 }, 0)
+                        .to(description, { opacity: 1 }, 0)
                 }
 
                 const onLeave = () => {
@@ -41,6 +50,9 @@ export default function Mission({ mission }) {
                         .timeline({ defaults: { duration: 0.6, ease: "power2.out" } })
                         .to(card, { maxWidth: originalMaxWidth }, 0)
                         .to(image, { filter: "blur(8px)", scale: 1.1 }, 0)
+                        .to(wrap, { width: 260, height: captionHeight }, 0)
+                        .to(caption, { opacity: 1 }, 0)
+                        .to(description, { opacity: 0 }, 0)
                 }
 
                 card.addEventListener("mouseenter", onEnter)
@@ -68,13 +80,16 @@ export default function Mission({ mission }) {
                 <div className='h-650px flex justify-center pt60 m-hide'>
                     <div ref={cardsRef} className='flex align-center justify-center gap-15 fade--in' data-sal>
                         {mission?.missionCards?.map((card, index) => (
-                            <div className='mission-card bg-grey radius-15 p20 max-300 flex flex-col gap-30' key={index} onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)}>
+                            <div className='mission-card bg-grey radius-15 p20 max-300 flex flex-col gap-30' key={index}>
                                 <div className='pos-rel ratio-1-1 overflow radius-5'>
                                     <img className='image bg-image' src={card.image} alt={card.title} />
                                 </div>
                                 <div className='flex flex-col gap-20'>
                                     <p className='h4'>{card.title}</p>
-                                    <p className={`h3 swap-text ${hoveredIndex === index ? "is-hovered text-grey-6" : "text-grey-5"}`}>{hoveredIndex === index ? card.description : card.caption}</p>
+                                    <div className='swap-text-wrap'>
+                                        <p className='h3 swap-text swap-caption text-grey-5'>{card.caption}</p>
+                                        <p className='h3 swap-text swap-description text-grey-6'>{card.description}</p>
+                                    </div>
                                 </div>
                             </div>
                         ))}

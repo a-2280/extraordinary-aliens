@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { PortableText } from "next-sanity"
-import { RiExpandDiagonalSLine } from "react-icons/ri"
 import { useImageModal } from "../imageModalContext"
 
 export default function ImageHotspot({ _key, image, video, spots, variant = "normal" }) {
@@ -27,7 +26,7 @@ export default function ImageHotspot({ _key, image, video, spots, variant = "nor
             <Image className='bg-image' src={image} alt='' width={1600} height={1000} />
             {video && <video className='bg-image' src={video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
             <button className='button-secondary pos-abs top-30 left-30 z-5' onClick={handleOpen}>
-                <RiExpandDiagonalSLine size={15} strokeWidth={.01} />
+                <img src="/images/expand.svg" alt="" width="16" height="14" />
             </button>
             {placedSpots.map((spot, i) => (
                 <button

@@ -1,7 +1,7 @@
 import Image from "next/image"
+import Link from "next/link"
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { PortableText } from "@portabletext/react"
-import { useRouter } from "next/router"
 
 export default function FeaturedProjects({ projects, onTagClick }) {
     const cursorRef = useRef(null)
@@ -27,9 +27,11 @@ function Project({ project, cursorRef, onTagClick }) {
 
     return (
         <div ref={rowRef} className='grid col-4 pb150 m-flex m-flex-col'>
-            <p className='h1 text-grey-6 pl30 fade--in m-pb15' data-sal>
-                {project.title}
-            </p>
+            <Link href={`/case-study/${project.slug.current}`} aria-label={project.title}>
+                <p className='h1 text-grey-6 pl30 fade--in m-pb15' data-sal>
+                    {project.title}
+                </p>
+            </Link>
             <div className='span-3 flex flex-col gap-40'>
                 <div className='flex gap-20 space-between pr30 fade--in' data-sal>
                     <div className='f-20 text-grey-5 max-500 m-px30'>
@@ -55,13 +57,17 @@ function Project({ project, cursorRef, onTagClick }) {
 }
 
 function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActiveIndex }) {
-    const router = useRouter()
     const trackRef = useRef(null)
     const isHoveringRef = useRef(false)
     const isHoveringRightRef = useRef(false)
+    const touchStartRef = useRef(null)
+    const isDraggingRef = useRef(false)
+    const swipedRef = useRef(false)
 
     const restingTransform = `translateX(-${activeIndex * 100}%)`
     const leakTransform = `translateX(calc(-${activeIndex * 100}% - 5%))`
+
+    const isTouchDevice = () => typeof window !== "undefined" && window.matchMedia("(hover: none), (pointer: coarse), (max-width: 768px)").matches
 
     useLayoutEffect(() => {
         if (isHoveringRightRef.current && trackRef.current) {
@@ -84,7 +90,7 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
     useEffect(() => {
         if (images.length <= 1) return
         const id = setInterval(() => {
-            if (isHoveringRef.current) return
+            if (isHoveringRef.current || isDraggingRef.current) return
             setActiveIndex(i => i >= images.length ? i : i + 1)
         }, 4000)
         return () => clearInterval(id)
@@ -97,6 +103,7 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
     }
 
     const handleMouseMove = e => {
+        if (isTouchDevice()) return
         const isLeft = isLeftOfRow(e.clientX)
         isHoveringRef.current = true
         isHoveringRightRef.current = !isLeft
@@ -108,6 +115,7 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
     }
 
     const handleMouseLeave = () => {
+        if (isTouchDevice()) return
         isHoveringRef.current = false
         isHoveringRightRef.current = false
         cursorRef.current.style.opacity = "0"
@@ -115,13 +123,68 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
     }
 
     const handleClick = e => {
-        const isLeft = isLeftOfRow(e.clientX)
-        if (isLeft) {
-            router.push(`/case-study/${slug}`)
+        if (swipedRef.current) {
+            swipedRef.current = false
+            e.preventDefault()
             return
         }
+        if (isTouchDevice()) return
+        if (isLeftOfRow(e.clientX)) return
+        e.preventDefault()
         if (images.length <= 1) return
         setActiveIndex(i => i >= images.length ? i : i + 1)
+    }
+
+    const handleTouchStart = e => {
+        isHoveringRef.current = false
+        isHoveringRightRef.current = false
+        if (cursorRef.current) cursorRef.current.style.opacity = "0"
+        if (trackRef.current) trackRef.current.style.transform = restingTransform
+        if (images.length <= 1) return
+        const t = e.touches[0]
+        const trackWidth = trackRef.current?.getBoundingClientRect().width || 1
+        touchStartRef.current = { x: t.clientX, y: t.clientY, trackWidth }
+        isDraggingRef.current = false
+    }
+
+    const handleTouchMove = e => {
+        const start = touchStartRef.current
+        if (!start) return
+        const t = e.touches[0]
+        const dx = t.clientX - start.x
+        const dy = t.clientY - start.y
+        if (!isDraggingRef.current) {
+            if (Math.abs(dx) <= 10 || Math.abs(dx) <= Math.abs(dy)) return
+            isDraggingRef.current = true
+            trackRef.current.style.transition = "none"
+        }
+        e.preventDefault()
+        const clamped = activeIndex === 0 && dx > 0 ? dx * 0.3 : dx
+        trackRef.current.style.transform = `translateX(calc(-${activeIndex * 100}% + ${clamped}px))`
+    }
+
+    const handleTouchEnd = () => {
+        const start = touchStartRef.current
+        touchStartRef.current = null
+        if (!start || !trackRef.current) return
+        const wasDragging = isDraggingRef.current
+        isDraggingRef.current = false
+        trackRef.current.style.transition = ""
+        if (!wasDragging) return
+        swipedRef.current = true
+        const styleTransform = trackRef.current.style.transform
+        const match = styleTransform.match(/([-\d.]+)px\)$/)
+        const dx = match ? parseFloat(match[1]) : 0
+        const threshold = Math.min(50, start.trackWidth * 0.2)
+        if (dx <= -threshold) {
+            setActiveIndex(i => i >= images.length ? i : i + 1)
+            return
+        }
+        if (dx >= threshold && activeIndex > 0) {
+            setActiveIndex(i => i - 1)
+            return
+        }
+        trackRef.current.style.transform = restingTransform
     }
 
     return (
@@ -134,7 +197,19 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
                     </div>
                 ))}
             </div>
-            <div className='overlay pos-abs top-0 left-0 w-100 h-100 cursor-none z-2' onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onClick={handleClick} />
+            <Link
+                href={`/case-study/${slug}`}
+                className='overlay pos-abs top-0 left-0 w-100 h-100 cursor-none z-2'
+                style={{ touchAction: 'pan-y' }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                onClick={handleClick}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                onTouchCancel={handleTouchEnd}
+                aria-label='View case study'
+            />
         </div>
     )
 }

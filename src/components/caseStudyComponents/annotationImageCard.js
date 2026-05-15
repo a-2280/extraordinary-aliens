@@ -44,7 +44,7 @@ export default function AnnotationImage({ _key, image, video, title, annotation,
             <button className='button-secondary pos-abs top-30 left-30 z-5' onClick={handleOpen}>
                 <img src="/images/expand.svg" alt="" width="16" height="14" />
             </button>
-            <div className={`z-4 bg-solid-grey pos-abs top-30 right-30 radius-5 p5 text-black flex align-center justify-center annotation-toggle${isOpen ? " is-open" : ""}`} style={{ cursor: "pointer" }} onClick={() => setIsOpen(prev => !prev)}>
+            <div className={`z-4 bg-solid-grey pos-abs top-30 right-30 radius-5 p8 text-black flex align-center justify-center annotation-toggle${isOpen ? " is-open" : ""}`} style={{ cursor: "pointer" }} onClick={() => setIsOpen(prev => !prev)}>
                 <span ref={iconRef} className='flex'>
                     <GrAdd size={15} />
                 </span>

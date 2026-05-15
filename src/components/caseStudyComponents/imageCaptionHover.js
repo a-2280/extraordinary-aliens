@@ -84,7 +84,7 @@ export default function ImageCaptionHover({ _key, image, video, caption, variant
                     <PortableText value={caption} />
                 </div>
                 {isOverflowing && (
-                    <div className='p5 radius-5 shrink-0 h-fit'>
+                    <div className='p8 radius-5 shrink-0 h-fit'>
                         <span
                             className='flex'
                             style={{

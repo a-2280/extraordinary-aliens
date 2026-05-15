@@ -22,8 +22,9 @@ const COMPONENTS = {
 }
 
 const SNAP_OFFSET = -100
-const SNAP_PROXIMITY = 120
-const SETTLE_DELAY = 180
+const SNAP_PROXIMITY_RATIO = 0.3
+const MIN_SNAP_PROXIMITY = 200
+const SETTLE_DELAY = 50
 const SNAP_DURATION = 1.1
 const SNAP_EASING = t => 1 - Math.pow(1 - t, 3)
 const CLICK_OPTS = { duration: 0.8, lock: true, offset: SNAP_OFFSET }
@@ -74,7 +75,8 @@ export default function AboutContent({ components }) {
             }
             const delta = lines[idx] - y
             const abs = Math.abs(delta)
-            if (abs <= 1 || abs > SNAP_PROXIMITY) return
+            const proximity = Math.max(MIN_SNAP_PROXIMITY, window.innerHeight * SNAP_PROXIMITY_RATIO)
+            if (abs <= 1 || abs > proximity) return
 
             lenis.scrollTo(sections[idx], {
                 duration: SNAP_DURATION,

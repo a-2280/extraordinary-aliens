@@ -103,7 +103,7 @@ export default function Footer({ data }) {
                             </div>
                         ))}
                     </div>
-                    <div className="flex flex-col gap-20">
+                    <div className="flex flex-col gap-10">
                         <p className='h5'>{data.copyright}</p>
                         <div className='logo--footer' />
                     </div>

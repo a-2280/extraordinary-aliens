@@ -12,6 +12,7 @@
 
     .button-nav,
     .button-case-study {
+        -webkit-backdrop-filter: blur(8px);
         backdrop-filter: blur(8px);
         pointer-events: auto;
     }
@@ -51,7 +52,8 @@
         display: grid;
         grid-template-columns: 1fr;
         align-items: center;
-        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(30px);
+        backdrop-filter: blur(30px);
         overflow: hidden;
         white-space: nowrap;
 
@@ -98,18 +100,17 @@
 
     @media (max-width: 768px) {
         flex-direction: column;
-        align-items: stretch;
-        left: 15px;
-        right: 15px;
-        bottom: 15px;
+        align-items: center;
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
         width: auto;
-        max-width: calc(100vw - 30px);
+        max-width: calc(100vw - 28px);
         transform: none;
         padding: 0;
         transition: gap 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 
         > a {
-            width: 100%;
             justify-content: flex-start;
             grid-template-columns: 1fr;
         }

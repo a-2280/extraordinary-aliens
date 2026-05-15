@@ -19,6 +19,7 @@ export default function List({ title, list }) {
                     </div>
                 )}
             </div>
+            <Spacer className="m-show" />
         </div>
     )
 }

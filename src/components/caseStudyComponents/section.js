@@ -24,8 +24,10 @@ export default function Section({ left, right }) {
     const rightCaption = hasCaptionCarousel(right)
     const leftNeedsSpacer = rightCaption && !leftCaption
     const rightNeedsSpacer = leftCaption && !rightCaption
+    const isPaired = left?.length > 0 && right?.length > 0
+    const splitMobileTrim = sectionStart && isPaired ? " m-pt0" : ""
     return (
-        <div className={`flex gap-15 m-flex-col${sectionStart}`}>
+        <div className={`flex gap-15 m-flex-col${sectionStart}${splitMobileTrim}`}>
             <div className='flex-1 min-w-0'>
                 {left?.map(c => <div key={c._key}>{renderComponent(c)}</div>)}
                 {leftNeedsSpacer && <div className='caption-row h4 p15 m-hide' aria-hidden />}

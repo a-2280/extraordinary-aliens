@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { createPortal } from "react-dom"
 import { useLenis } from "lenis/react"
 
 const SCROLL_OFFSET = -73
@@ -11,6 +12,7 @@ export default function CaseStudyNav({ sections }) {
     const [activeSlug, setActiveSlug] = useState("introduction")
     const [isOpen, setIsOpen] = useState(false)
     const [isTouch, setIsTouch] = useState(false)
+    const [mounted, setMounted] = useState(false)
     const leaveTimeoutRef = useRef(null)
     const navRef = useRef(null)
     const lenis = useLenis()
@@ -19,6 +21,7 @@ export default function CaseStudyNav({ sections }) {
         if (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches) {
             setIsTouch(true)
         }
+        setMounted(true)
     }, [])
 
     useEffect(() => {
@@ -53,6 +56,7 @@ export default function CaseStudyNav({ sections }) {
     }, [isTouch, isOpen])
 
     if (sectionGroups.length === 0) return null
+    if (!mounted) return null
 
     function handleClick(e, slug, isActive) {
         if (isTouch) {
@@ -85,7 +89,7 @@ export default function CaseStudyNav({ sections }) {
         leaveTimeoutRef.current = setTimeout(() => setIsOpen(false), 450)
     }
 
-    return (
+    return createPortal(
         <nav
             ref={navRef}
             className={`case-study-nav p15 flex gap-3${isOpen ? " animate" : ""}`}
@@ -103,6 +107,7 @@ export default function CaseStudyNav({ sections }) {
                     </a>
                 )
             })}
-        </nav>
+        </nav>,
+        document.body
     )
 }

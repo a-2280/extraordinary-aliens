@@ -12,6 +12,73 @@ let didNavigate = false
 
 const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect
 
+export function fadeOutNavChildren() {
+    const navChildren = document.querySelectorAll(NAV_CHILDREN_SELECTOR)
+    if (!navChildren.length) return null
+    return gsap.to(navChildren, {
+        opacity: 0,
+        x: -10,
+        duration: 0.3,
+        stagger: { each: 0.08, from: "end" },
+        ease: "power2.in",
+        overwrite: true,
+    })
+}
+
+export function fadeInNavChildren() {
+    const navChildren = document.querySelectorAll(NAV_CHILDREN_SELECTOR)
+    if (!navChildren.length) return null
+    gsap.set(navChildren, { opacity: 0, x: -10 })
+    return gsap.to(navChildren, {
+        opacity: 1,
+        x: 0,
+        duration: 0.3,
+        stagger: 0.05,
+        ease: "power2.out",
+        overwrite: true,
+    })
+}
+
+export function runNavSwap(onSwap) {
+    let outTween = null
+    let inTween = null
+    let cancelled = false
+    let rafId = 0
+
+    const swap = () => {
+        if (typeof onSwap === "function") onSwap()
+        rafId = requestAnimationFrame(() => {
+            if (cancelled) return
+            inTween = fadeInNavChildren()
+        })
+    }
+
+    const navChildren = document.querySelectorAll(NAV_CHILDREN_SELECTOR)
+    if (!navChildren.length) {
+        swap()
+    } else {
+        outTween = gsap.to(navChildren, {
+            opacity: 0,
+            x: -10,
+            duration: 0.3,
+            stagger: { each: 0.08, from: "end" },
+            ease: "power2.in",
+            overwrite: true,
+            onComplete: () => {
+                if (cancelled) return
+                swap()
+            },
+        })
+    }
+
+    return () => {
+        cancelled = true
+        if (rafId) cancelAnimationFrame(rafId)
+        if (outTween) outTween.kill()
+        if (inTween) inTween.kill()
+    }
+}
+
 export default function PageTransition({ children }) {
     const router = useRouter()
     const wrapperRef = useRef(null)
@@ -22,17 +89,7 @@ export default function PageTransition({ children }) {
     useIsoLayoutEffect(() => {
         if (!didNavigate) return
         didNavigate = false
-        const navChildren = document.querySelectorAll(NAV_CHILDREN_SELECTOR)
-        if (!navChildren.length) return
-        gsap.set(navChildren, { opacity: 0, x: -10 })
-        gsap.to(navChildren, {
-            opacity: 1,
-            x: 0,
-            duration: 0.3,
-            stagger: 0.05,
-            ease: "power2.out",
-            overwrite: true,
-        })
+        fadeInNavChildren()
     }, [routeKey])
 
     useEffect(() => {
@@ -81,17 +138,7 @@ export default function PageTransition({ children }) {
                 wrapper.classList.remove("fade--in")
                 wrapper.classList.add("fade--out")
 
-                const navChildren = document.querySelectorAll(NAV_CHILDREN_SELECTOR)
-                if (navChildren.length) {
-                    gsap.to(navChildren, {
-                        opacity: 0,
-                        x: -10,
-                        duration: 0.3,
-                        stagger: { each: 0.08, from: "end" },
-                        ease: "power2.in",
-                        overwrite: true,
-                    })
-                }
+                fadeOutNavChildren()
                 didNavigate = true
 
                 setTimeout(() => {

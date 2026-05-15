@@ -55,6 +55,8 @@ export default function AllWork({ projects, exitingSlugs = new Set(), onTagClick
 
     useGSAP(
         () => {
+            if (typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches) return
+
             const cards = gsap.utils.toArray(gridRef.current.querySelectorAll(".work-card"))
             const bound = []
 
@@ -99,7 +101,7 @@ export default function AllWork({ projects, exitingSlugs = new Set(), onTagClick
     )
 
     return (
-        <div ref={gridRef} className='p15 grid gap-90 m-flex m-flex-col pos-rel'>
+        <div ref={gridRef} className='p15 grid gap-90 m-gap-80 m-flex m-flex-col pos-rel'>
             {projects.map(project => (
                 <Link href={`/case-study/${project.slug.current}`} className={`work-card max-full flex flex-col fade--in ${exitingSlugs.has(project.slug.current) ? "is-exiting" : ""}`} data-sal key={project.slug.current}>
                     <div className='bg-grey pos-rel ratio-16-18 overflow radius-15'>
@@ -108,7 +110,7 @@ export default function AllWork({ projects, exitingSlugs = new Set(), onTagClick
                     </div>
                     <div className='p15 flex flex-col gap-15'>
                         <p className='h3'>{project.title}</p>
-                        <div className='tags flex flex-wrap gap-5'>
+                        <div className='tags flex flex-wrap gap-5 m-hide'>
                             {project.tags.map((tag, index) => (
                                 <p className='tag nowrap' key={index} onClick={e => { e.preventDefault(); e.stopPropagation(); onTagClick(tag.name) }}>
                                     {tag.name}

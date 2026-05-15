@@ -122,10 +122,10 @@ const CASE_STUDY_ITEM_PROJECTION = `_type == "textLarge" => {
     credits[]{
       _key,
       title,
-      "image": image.asset->url,
       creditInfo[]{
         _key,
-        credit
+        credit,
+        "image": image.asset->url
       }
     }
   },

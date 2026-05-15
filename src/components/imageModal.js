@@ -13,6 +13,13 @@ import { useImageModal } from "./imageModalContext"
 gsap.registerPlugin(useGSAP)
 
 const TRANSITION_DURATION = 0.1
+const ENTER_DURATION = 0.3
+const EXIT_DURATION = 0.25
+
+function prefersReducedMotion() {
+    if (typeof window === "undefined" || !window.matchMedia) return false
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches
+}
 
 function parseSanityDimensions(url) {
     const match = typeof url === "string" && url.match(/-(\d+)x(\d+)\.[a-z0-9]+(?:\?|$)/i)
@@ -24,9 +31,11 @@ export default function ImageModal() {
     const ctx = useImageModal()
     const [mounted, setMounted] = useState(false)
     const touchStartRef = useRef(null)
+    const overlayRef = useRef(null)
     const frameRef = useRef(null)
     const captionRef = useRef(null)
     const [displayed, setDisplayed] = useState(null)
+    const [visible, setVisible] = useState(false)
     const lenis = useLenis()
 
     useEffect(() => { setMounted(true) }, [])
@@ -80,12 +89,12 @@ export default function ImageModal() {
     const currentKey = currentImage?._key
 
     useEffect(() => {
-        if (!isOpen) {
+        if (!isOpen && !visible) {
             setDisplayed(null)
             return
         }
         if (currentImage && !displayed) setDisplayed(currentImage)
-    }, [isOpen, currentImage, displayed])
+    }, [isOpen, visible, currentImage, displayed])
 
     useGSAP(() => {
         if (!isOpen || !displayed || !currentImage) return
@@ -113,16 +122,57 @@ export default function ImageModal() {
         }
     }, { dependencies: [currentKey, isOpen] })
 
-    if (!mounted || !ctx || !isOpen) return null
+    useLayoutEffect(() => {
+        if (isOpen) setVisible(true)
+    }, [isOpen])
+
+    useGSAP(() => {
+        if (!visible) return
+        const overlay = overlayRef.current
+        const frame = frameRef.current
+        const caption = captionRef.current
+        if (!overlay) return
+
+        const reduced = prefersReducedMotion()
+
+        if (isOpen) {
+            gsap.set(overlay, { opacity: 0 })
+            if (frame) gsap.set(frame, { opacity: 0, scale: 0.96 })
+            if (caption) gsap.set(caption, { opacity: 0 })
+            if (reduced) {
+                gsap.set(overlay, { opacity: 1 })
+                if (frame) gsap.set(frame, { opacity: 1, scale: 1 })
+                if (caption) gsap.set(caption, { opacity: 1 })
+                return
+            }
+            const tl = gsap.timeline()
+            tl.to(overlay, { opacity: 1, duration: ENTER_DURATION, ease: "power2.out" }, 0)
+            if (frame) tl.to(frame, { opacity: 1, scale: 1, duration: ENTER_DURATION, ease: "power2.out" }, 0)
+            if (caption) tl.to(caption, { opacity: 1, duration: ENTER_DURATION, ease: "power2.out" }, 0)
+            return () => { tl.kill() }
+        }
+
+        if (reduced) {
+            setVisible(false)
+            return
+        }
+        const tl = gsap.timeline({ onComplete: () => setVisible(false) })
+        tl.to(overlay, { opacity: 0, duration: EXIT_DURATION, ease: "power2.in" }, 0)
+        if (frame) tl.to(frame, { opacity: 0, scale: 0.96, duration: EXIT_DURATION, ease: "power2.in" }, 0)
+        if (caption) tl.to(caption, { opacity: 0, duration: EXIT_DURATION, ease: "power2.in" }, 0)
+        return () => { tl.kill() }
+    }, { dependencies: [isOpen, visible] })
+
+    if (!mounted || !ctx || (!isOpen && !visible)) return null
 
     const { images, currentIndex } = ctx
     const current = images[currentIndex]
-    if (!current) return null
+    const rendered = current || displayed
+    if (!rendered) return null
 
-    const rendered = displayed || current
     const hasPrev = currentIndex > 0
     const hasNext = currentIndex < images.length - 1
-    const showNav = images.length > 1
+    const showNav = isOpen && images.length > 1
     const stop = e => e.stopPropagation()
 
     const onTouchStart = e => {
@@ -144,7 +194,7 @@ export default function ImageModal() {
     const { width: renderedWidth, height: renderedHeight } = parseSanityDimensions(rendered.image)
 
     return createPortal(
-        <div className='image-modal' onClick={close}>
+        <div ref={overlayRef} className='image-modal' onClick={close}>
             <div ref={frameRef} className='image-modal__frame radius-15 overflow' onClick={stop} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
                 <Image
                     key={rendered._key}

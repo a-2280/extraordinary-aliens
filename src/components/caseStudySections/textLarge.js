@@ -11,6 +11,7 @@ export default function TextLarge({ title, description }) {
                     <p className='f-20 text-grey-4 max-700 fade--in delay-100' data-sal>{description}</p>
                 </div>
             </div>
+            <Spacer className="m-show" />
         </div>
     )
 }

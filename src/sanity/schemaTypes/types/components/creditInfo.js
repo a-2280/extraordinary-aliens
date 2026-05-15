@@ -11,6 +11,11 @@ export default {
             title: "Credit",
             type: "string",
         },
+        {
+            name: "image",
+            title: "Image",
+            type: "image",
+        },
     ],
     preview: {
         select: {

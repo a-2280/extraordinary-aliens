@@ -60,7 +60,7 @@ export default function Carousel({ slides, variant = "normal" }) {
                     <div className='p5 radius-5 text-black pos-abs z-2 bg-grey top-30 right-30 carousel-index'>
                         {currentIndex + 1} / {slides.length}
                     </div>
-                    <div className='pos-abs top-0 left-0 w-100 h-100 cursor-none z-2' onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onClick={handleClick} />
+                    <div className='pos-abs top-0 left-0 w-100 h-100 cursor-none z-2 m-hide' onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onClick={handleClick} />
                 </Swiper>
             </div>
         </>

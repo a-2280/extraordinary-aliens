@@ -18,11 +18,6 @@ export default {
             type: "array",
             of: [{ type: "creditInfo", components: { item: makeBackButtonItem("Credit") } }],
         },
-        {
-            name: "image",
-            title: "Image",
-            type: "image",
-        },
     ],
     preview: {
         select: {

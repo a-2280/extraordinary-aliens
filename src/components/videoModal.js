@@ -1,17 +1,25 @@
 "use client"
 
-import { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { FaVolumeMute, FaVolumeUp, FaExpand, FaCompress } from "react-icons/fa"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin"
 import { HeaderTitleContext } from "@/layouts/layout"
+import { runNavSwap } from "@/components/pageTransition"
 
 gsap.registerPlugin(useGSAP, MorphSVGPlugin)
 
 const PLAY_D = "M3 2 L22 12 L3 22 Z"
 const PAUSE_D = "M3 2 H9 V22 H3 Z M15 2 H21 V22 H15 Z"
+const ENTER_DURATION = 0.3
+const EXIT_DURATION = 0.25
+
+function prefersReducedMotion() {
+    if (typeof window === "undefined" || !window.matchMedia) return false
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches
+}
 
 export default function VideoModal({ open, onClose, src, title, description }) {
     const [mounted, setMounted] = useState(false)
@@ -20,14 +28,59 @@ export default function VideoModal({ open, onClose, src, title, description }) {
     const [currentTime, setCurrentTime] = useState(0)
     const [duration, setDuration] = useState(0)
     const [isFullscreen, setIsFullscreen] = useState(false)
+    const [visible, setVisible] = useState(false)
+    const overlayRef = useRef(null)
     const videoRef = useRef(null)
     const frameRef = useRef(null)
+    const captionRef = useRef(null)
     const trackRef = useRef(null)
     const pathRef = useRef(null)
     const draggingRef = useRef(false)
+    const navSwapCancelRef = useRef(null)
     const { setOverride } = useContext(HeaderTitleContext)
 
     useEffect(() => { setMounted(true) }, [])
+
+    useLayoutEffect(() => {
+        if (open) setVisible(true)
+    }, [open])
+
+    useGSAP(() => {
+        if (!visible) return
+        const overlay = overlayRef.current
+        const frame = frameRef.current
+        const caption = captionRef.current
+        if (!overlay) return
+
+        const reduced = prefersReducedMotion()
+
+        if (open) {
+            gsap.set(overlay, { opacity: 0 })
+            if (frame) gsap.set(frame, { opacity: 0, scale: 0.96 })
+            if (caption) gsap.set(caption, { opacity: 0 })
+            if (reduced) {
+                gsap.set(overlay, { opacity: 1 })
+                if (frame) gsap.set(frame, { opacity: 1, scale: 1 })
+                if (caption) gsap.set(caption, { opacity: 1 })
+                return
+            }
+            const tl = gsap.timeline()
+            tl.to(overlay, { opacity: 1, duration: ENTER_DURATION, ease: "power2.out" }, 0)
+            if (frame) tl.to(frame, { opacity: 1, scale: 1, duration: ENTER_DURATION, ease: "power2.out" }, 0)
+            if (caption) tl.to(caption, { opacity: 1, duration: ENTER_DURATION, ease: "power2.out" }, 0)
+            return () => { tl.kill() }
+        }
+
+        if (reduced) {
+            setVisible(false)
+            return
+        }
+        const tl = gsap.timeline({ onComplete: () => setVisible(false) })
+        tl.to(overlay, { opacity: 0, duration: EXIT_DURATION, ease: "power2.in" }, 0)
+        if (frame) tl.to(frame, { opacity: 0, scale: 0.96, duration: EXIT_DURATION, ease: "power2.in" }, 0)
+        if (caption) tl.to(caption, { opacity: 0, duration: EXIT_DURATION, ease: "power2.in" }, 0)
+        return () => { tl.kill() }
+    }, { dependencies: [open, visible] })
 
     useEffect(() => {
         if (!open) return
@@ -46,8 +99,12 @@ export default function VideoModal({ open, onClose, src, title, description }) {
 
     useEffect(() => {
         if (!open || !title) return
-        setOverride(title)
-        return () => setOverride(null)
+        if (navSwapCancelRef.current) navSwapCancelRef.current()
+        navSwapCancelRef.current = runNavSwap(() => setOverride(title))
+        return () => {
+            if (navSwapCancelRef.current) navSwapCancelRef.current()
+            navSwapCancelRef.current = runNavSwap(() => setOverride(null))
+        }
     }, [open, title, setOverride])
 
     useEffect(() => {
@@ -94,7 +151,7 @@ export default function VideoModal({ open, onClose, src, title, description }) {
         })
     }, { dependencies: [isPlaying, mounted, open] })
 
-    if (!mounted || !open) return null
+    if (!mounted || (!open && !visible)) return null
 
     const togglePlay = () => {
         const el = videoRef.current
@@ -147,7 +204,7 @@ export default function VideoModal({ open, onClose, src, title, description }) {
     const stop = e => e.stopPropagation()
 
     return createPortal(
-        <div className='video-modal' onClick={onClose}>
+        <div ref={overlayRef} className='video-modal' onClick={onClose}>
             <div ref={frameRef} className='video-modal__frame radius-15 overflow' onClick={stop}>
                 <video
                     ref={videoRef}
@@ -182,7 +239,7 @@ export default function VideoModal({ open, onClose, src, title, description }) {
                 </div>
             </div>
             {(title || description) && (
-                <div className='video-modal__caption bg-grey radius-5 p15 flex flex-col gap-5' onClick={stop}>
+                <div ref={captionRef} className='video-modal__caption bg-grey radius-5 p15 flex flex-col gap-5' onClick={stop}>
                     {title && <p className='h5'>{title}</p>}
                     {description && <p className="h4">{description}</p>}
                 </div>

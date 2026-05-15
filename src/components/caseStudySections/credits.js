@@ -9,6 +9,7 @@ export default function Credits({ title, description, credits, tags }) {
     const [open, setOpen] = useState(false)
     const [hoveredKey, setHoveredKey] = useState(null)
     const [lastImage, setLastImage] = useState(null)
+    const [lastAlt, setLastAlt] = useState("")
     const verticalRef = useRef(null)
     const creditsRef = useRef(null)
     const mobileCreditsRef = useRef(null)
@@ -63,18 +64,20 @@ export default function Credits({ title, description, credits, tags }) {
                             </div>
                             <div ref={mobileCreditsRef} className='flex flex-col gap-40 m-show' style={{ height: 0, overflow: "hidden", opacity: 0, visibility: "hidden" }}>
                                 {credits?.map(credit => (
-                                    <div
-                                        className='h4 flex flex-col gap-10 pointer'
-                                        key={credit._key}
-                                        onMouseEnter={() => {
-                                            setHoveredKey(credit._key)
-                                            if (credit.image) setLastImage(credit.image)
-                                        }}
-                                        onMouseLeave={() => setHoveredKey(null)}>
+                                    <div className='h4 flex flex-col gap-10' key={credit._key}>
                                         <p>{credit.title}</p>
                                         <div>
                                             {credit.creditInfo?.map(info => (
-                                                <p className='text-grey-4 credits-text' key={info._key}>
+                                                <p
+                                                    className='text-grey-4 credits-text pointer'
+                                                    key={info._key}
+                                                    onMouseEnter={() => {
+                                                        if (!info.image) return
+                                                        setHoveredKey(info._key)
+                                                        setLastImage(info.image)
+                                                        setLastAlt(info.credit || "")
+                                                    }}
+                                                    onMouseLeave={() => setHoveredKey(null)}>
                                                     {info.credit}
                                                 </p>
                                             ))}
@@ -82,7 +85,7 @@ export default function Credits({ title, description, credits, tags }) {
                                     </div>
                                 ))}
                             </div>
-                            <button className='bg-grey-2 w-fit p5 radius-5 credits-toggle' onClick={() => setOpen(!open)}>
+                            <button className='bg-grey-2 w-fit p8 radius-5 credits-toggle' onClick={() => setOpen(!open)}>
                                 <svg width='15' height='15' viewBox='0 0 15 15'>
                                     <line x1='1' y1='7.5' x2='14' y2='7.5' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' />
                                     <line ref={verticalRef} x1='7.5' y1='1' x2='7.5' y2='14' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' />
@@ -91,18 +94,20 @@ export default function Credits({ title, description, credits, tags }) {
                         </div>
                         <div ref={creditsRef} className='flex flex-col gap-40 m-hide' style={{ opacity: 0, visibility: "hidden" }}>
                             {credits?.map(credit => (
-                                <div
-                                    className='h4 flex flex-col gap-10 pointer'
-                                    key={credit._key}
-                                    onMouseEnter={() => {
-                                        setHoveredKey(credit._key)
-                                        if (credit.image) setLastImage(credit.image)
-                                    }}
-                                    onMouseLeave={() => setHoveredKey(null)}>
+                                <div className='h4 flex flex-col gap-10' key={credit._key}>
                                     <p>{credit.title}</p>
                                     <div>
                                         {credit.creditInfo?.map(info => (
-                                            <p className='text-grey-4 credits-text' key={info._key}>
+                                            <p
+                                                className='text-grey-4 credits-text pointer'
+                                                key={info._key}
+                                                onMouseEnter={() => {
+                                                    if (!info.image) return
+                                                    setHoveredKey(info._key)
+                                                    setLastImage(info.image)
+                                                    setLastAlt(info.credit || "")
+                                                }}
+                                                onMouseLeave={() => setHoveredKey(null)}>
                                                 {info.credit}
                                             </p>
                                         ))}
@@ -112,7 +117,7 @@ export default function Credits({ title, description, credits, tags }) {
                         </div>
                     </div>
                     <div ref={imageRef} className='ratio-3-4 bg-grey radius-5 max-100 self-start pos-rel overflow' style={{ opacity: 0, visibility: "hidden" }}>
-                        {lastImage && <Image className='bg-image' src={lastImage} alt='' width={1600} height={1000} />}
+                        {lastImage && <Image className='bg-image' src={lastImage} alt={lastAlt} width={1600} height={1000} />}
                     </div>
                 </div>
             </div>

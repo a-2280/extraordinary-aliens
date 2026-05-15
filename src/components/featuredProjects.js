@@ -89,6 +89,7 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
 
     useEffect(() => {
         if (images.length <= 1) return
+        if (isTouchDevice()) return
         const id = setInterval(() => {
             if (isHoveringRef.current || isDraggingRef.current) return
             setActiveIndex(i => i >= images.length ? i : i + 1)
@@ -159,8 +160,8 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
             trackRef.current.style.transition = "none"
         }
         e.preventDefault()
-        const clamped = activeIndex === 0 && dx > 0 ? dx * 0.3 : dx
-        trackRef.current.style.transform = `translateX(calc(-${activeIndex * 100}% + ${clamped}px))`
+        start.lastDx = dx
+        trackRef.current.style.transform = `translateX(calc(-${activeIndex * 100}% + ${dx}px))`
     }
 
     const handleTouchEnd = () => {
@@ -172,18 +173,26 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
         trackRef.current.style.transition = ""
         if (!wasDragging) return
         swipedRef.current = true
-        const styleTransform = trackRef.current.style.transform
-        const match = styleTransform.match(/([-\d.]+)px\)$/)
-        const dx = match ? parseFloat(match[1]) : 0
+        const dx = start.lastDx ?? 0
         const elapsed = performance.now() - start.t
-        const distanceThreshold = Math.min(30, start.trackWidth * 0.1)
-        const isFlick = Math.abs(dx) > 10 && elapsed < 300
+        const distanceThreshold = Math.max(30, start.trackWidth * 0.12)
+        const velocity = Math.abs(dx) / Math.max(elapsed, 1)
+        const isFlick = velocity > 0.3 && Math.abs(dx) > 10
         if (dx <= -distanceThreshold || (isFlick && dx < 0)) {
-            setActiveIndex(i => i >= images.length ? i : i + 1)
+            setActiveIndex(i => i >= images.length - 1 ? images.length : i + 1)
             return
         }
-        if ((dx >= distanceThreshold || (isFlick && dx > 0)) && activeIndex > 0) {
-            setActiveIndex(i => i - 1)
+        if (dx >= distanceThreshold || (isFlick && dx > 0)) {
+            if (activeIndex > 0) {
+                setActiveIndex(i => i - 1)
+            } else {
+                const track = trackRef.current
+                track.style.transition = "none"
+                track.style.transform = `translateX(-${images.length * 100}%)`
+                void track.offsetWidth
+                track.style.transition = ""
+                setActiveIndex(images.length - 1)
+            }
             return
         }
         trackRef.current.style.transform = restingTransform

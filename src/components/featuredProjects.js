@@ -61,7 +61,6 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
     const isHoveringRef = useRef(false)
     const isHoveringRightRef = useRef(false)
     const touchStartRef = useRef(null)
-    const isDraggingRef = useRef(false)
     const swipedRef = useRef(false)
 
     const restingTransform = `translateX(-${activeIndex * 100}%)`
@@ -91,7 +90,7 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
         if (images.length <= 1) return
         if (isTouchDevice()) return
         const id = setInterval(() => {
-            if (isHoveringRef.current || isDraggingRef.current) return
+            if (isHoveringRef.current) return
             setActiveIndex(i => i >= images.length ? i : i + 1)
         }, 4000)
         return () => clearInterval(id)
@@ -143,59 +142,33 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
         if (trackRef.current) trackRef.current.style.transform = restingTransform
         if (images.length <= 1) return
         const t = e.touches[0]
-        const trackWidth = trackRef.current?.getBoundingClientRect().width || 1
-        touchStartRef.current = { x: t.clientX, y: t.clientY, trackWidth, t: performance.now() }
-        isDraggingRef.current = false
+        touchStartRef.current = { x: t.clientX, y: t.clientY }
     }
 
-    const handleTouchMove = e => {
-        const start = touchStartRef.current
-        if (!start) return
-        const t = e.touches[0]
-        const dx = t.clientX - start.x
-        const dy = t.clientY - start.y
-        if (!isDraggingRef.current) {
-            if (Math.abs(dx) <= 10 || Math.abs(dx) <= Math.abs(dy)) return
-            isDraggingRef.current = true
-            trackRef.current.style.transition = "none"
-        }
-        e.preventDefault()
-        start.lastDx = dx
-        trackRef.current.style.transform = `translateX(calc(-${activeIndex * 100}% + ${dx}px))`
-    }
-
-    const handleTouchEnd = () => {
+    const handleTouchEnd = e => {
         const start = touchStartRef.current
         touchStartRef.current = null
-        if (!start || !trackRef.current) return
-        const wasDragging = isDraggingRef.current
-        isDraggingRef.current = false
-        trackRef.current.style.transition = ""
-        if (!wasDragging) return
+        if (!start) return
+        const t = e.changedTouches?.[0]
+        if (!t) return
+        const dx = t.clientX - start.x
+        const dy = t.clientY - start.y
+        if (Math.abs(dx) < 40 || Math.abs(dx) <= Math.abs(dy)) return
         swipedRef.current = true
-        const dx = start.lastDx ?? 0
-        const elapsed = performance.now() - start.t
-        const distanceThreshold = Math.max(30, start.trackWidth * 0.12)
-        const velocity = Math.abs(dx) / Math.max(elapsed, 1)
-        const isFlick = velocity > 0.3 && Math.abs(dx) > 10
-        if (dx <= -distanceThreshold || (isFlick && dx < 0)) {
+        if (dx < 0) {
             setActiveIndex(i => i >= images.length - 1 ? images.length : i + 1)
-            return
-        }
-        if (dx >= distanceThreshold || (isFlick && dx > 0)) {
-            if (activeIndex > 0) {
-                setActiveIndex(i => i - 1)
-            } else {
-                const track = trackRef.current
+        } else if (activeIndex > 0) {
+            setActiveIndex(i => i - 1)
+        } else {
+            const track = trackRef.current
+            if (track) {
                 track.style.transition = "none"
                 track.style.transform = `translateX(-${images.length * 100}%)`
                 void track.offsetWidth
                 track.style.transition = ""
-                setActiveIndex(images.length - 1)
             }
-            return
+            setActiveIndex(images.length - 1)
         }
-        trackRef.current.style.transform = restingTransform
     }
 
     return (
@@ -216,7 +189,6 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
                 onMouseLeave={handleMouseLeave}
                 onClick={handleClick}
                 onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
                 onTouchCancel={handleTouchEnd}
                 aria-label='View case study'

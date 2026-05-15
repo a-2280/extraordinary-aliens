@@ -13,8 +13,10 @@ export default function CaseStudyNav({ sections }) {
     const [isOpen, setIsOpen] = useState(false)
     const [isTouch, setIsTouch] = useState(false)
     const [mounted, setMounted] = useState(false)
+    const [pastEnd, setPastEnd] = useState(false)
     const leaveTimeoutRef = useRef(null)
     const navRef = useRef(null)
+    const sectionsElRef = useRef(null)
     const lenis = useLenis()
 
     useEffect(() => {
@@ -45,6 +47,29 @@ export default function CaseStudyNav({ sections }) {
     useEffect(() => () => {
         if (leaveTimeoutRef.current) clearTimeout(leaveTimeoutRef.current)
     }, [])
+
+    useEffect(() => {
+        function check() {
+            if (!sectionsElRef.current) sectionsElRef.current = document.querySelector(".case-study-sections")
+            const el = sectionsElRef.current
+            if (!el) {
+                setPastEnd(false)
+                return
+            }
+            setPastEnd(el.getBoundingClientRect().bottom < window.innerHeight - 40)
+        }
+        check()
+        if (lenis) {
+            lenis.on("scroll", check)
+            return () => lenis.off("scroll", check)
+        }
+        window.addEventListener("scroll", check, { passive: true })
+        window.addEventListener("resize", check)
+        return () => {
+            window.removeEventListener("scroll", check)
+            window.removeEventListener("resize", check)
+        }
+    }, [lenis])
 
     useEffect(() => {
         if (!isTouch || !isOpen) return
@@ -92,7 +117,7 @@ export default function CaseStudyNav({ sections }) {
     return createPortal(
         <nav
             ref={navRef}
-            className={`case-study-nav p15 flex gap-3${isOpen ? " animate" : ""}`}
+            className={`case-study-nav p15 flex gap-3${isOpen ? " animate" : ""}${pastEnd ? " hidden" : ""}`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >

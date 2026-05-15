@@ -94,6 +94,11 @@ html.image-modal-open .case-study-nav > a {
     backdrop-filter: none !important;
 }
 
+html.image-modal-open .case-study-nav {
+    opacity: 0;
+    pointer-events: none;
+}
+
 html.image-modal-open .masthead .button-case-study::before {
     background-color: transparent;
 }

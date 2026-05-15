@@ -143,7 +143,7 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
         if (images.length <= 1) return
         const t = e.touches[0]
         const trackWidth = trackRef.current?.getBoundingClientRect().width || 1
-        touchStartRef.current = { x: t.clientX, y: t.clientY, trackWidth }
+        touchStartRef.current = { x: t.clientX, y: t.clientY, trackWidth, t: performance.now() }
         isDraggingRef.current = false
     }
 
@@ -175,12 +175,14 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
         const styleTransform = trackRef.current.style.transform
         const match = styleTransform.match(/([-\d.]+)px\)$/)
         const dx = match ? parseFloat(match[1]) : 0
-        const threshold = Math.min(50, start.trackWidth * 0.2)
-        if (dx <= -threshold) {
+        const elapsed = performance.now() - start.t
+        const distanceThreshold = Math.min(30, start.trackWidth * 0.1)
+        const isFlick = Math.abs(dx) > 10 && elapsed < 300
+        if (dx <= -distanceThreshold || (isFlick && dx < 0)) {
             setActiveIndex(i => i >= images.length ? i : i + 1)
             return
         }
-        if (dx >= threshold && activeIndex > 0) {
+        if ((dx >= distanceThreshold || (isFlick && dx > 0)) && activeIndex > 0) {
             setActiveIndex(i => i - 1)
             return
         }

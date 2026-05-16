@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react"
 import { useLenis } from "lenis/react"
+import Snap from "lenis/snap"
 import Studio from "./aboutSections/studio"
 import Approach from "./aboutSections/approach"
 import Capabilities from "./aboutSections/capabilities"
@@ -22,83 +23,131 @@ const COMPONENTS = {
 }
 
 const SNAP_OFFSET = -100
-const SNAP_PROXIMITY_RATIO = 0.3
-const MIN_SNAP_PROXIMITY = 200
-const SETTLE_DELAY = 50
 const SNAP_DURATION = 1.1
 const SNAP_EASING = t => 1 - Math.pow(1 - t, 3)
 const CLICK_OPTS = { duration: 0.8, lock: true, offset: SNAP_OFFSET }
+const DRIFT_CLEAR_PX = 24
+
+function DividerOverlay() {
+    const ref = useRef(null)
+    useEffect(() => {
+        const el = ref.current
+        if (!el) return
+        let r2
+        const r1 = requestAnimationFrame(() => {
+            r2 = requestAnimationFrame(() => el.classList.add("sal-animate"))
+        })
+        return () => {
+            cancelAnimationFrame(r1)
+            if (r2) cancelAnimationFrame(r2)
+        }
+    }, [])
+    return <div ref={ref} className='b-1' />
+}
 
 export default function AboutContent({ components }) {
     const rootRef = useRef(null)
     const sectionRefs = useRef([])
     const dividerRefs = useRef([])
     const [activeIndex, setActiveIndex] = useState(0)
+    const [snappedIndex, setSnappedIndex] = useState(null)
+    const [snapKey, setSnapKey] = useState(0)
     const [dividerTops, setDividerTops] = useState([])
+    const snappedIndexRef = useRef(null)
+    const isSnappingRef = useRef(false)
     const lenis = useLenis()
 
     useEffect(() => {
+        snappedIndexRef.current = snappedIndex
+    }, [snappedIndex])
+
+    useEffect(() => {
         if (!lenis) return
-        let settleTimer
-        const mql = window.matchMedia("(max-width: 768px)")
-
         const onScroll = () => {
-            const sections = sectionRefs.current.filter(Boolean)
-            if (sections.length) {
-                const y = window.scrollY
-                const positions = sections.map(el => el.getBoundingClientRect().top + y + SNAP_OFFSET)
-                let idx = 0
-                for (let i = 1; i < positions.length; i++) {
-                    if (Math.abs(positions[i] - y) < Math.abs(positions[idx] - y)) idx = i
-                }
-                setActiveIndex(idx)
-            }
-            if (mql.matches) return
-            clearTimeout(settleTimer)
-            settleTimer = setTimeout(trySnap, SETTLE_DELAY)
-        }
-
-        const trySnap = () => {
-            if (document.hidden) return
-            const active = document.activeElement
-            if (active && /^(INPUT|TEXTAREA|SELECT)$/.test(active.tagName)) return
             const sections = sectionRefs.current.filter(Boolean)
             if (!sections.length) return
             const y = window.scrollY
-            const lastBottom = sections[sections.length - 1].getBoundingClientRect().bottom + y
-            if (y > lastBottom + 50) return
-
             const lines = sections.map(el => el.getBoundingClientRect().top + y + SNAP_OFFSET)
             let idx = 0
             for (let i = 1; i < lines.length; i++) {
                 if (Math.abs(lines[i] - y) < Math.abs(lines[idx] - y)) idx = i
             }
-            const delta = lines[idx] - y
-            const abs = Math.abs(delta)
-            const proximity = Math.max(MIN_SNAP_PROXIMITY, window.innerHeight * SNAP_PROXIMITY_RATIO)
-            if (abs <= 1 || abs > proximity) return
-
-            lenis.scrollTo(sections[idx], {
-                duration: SNAP_DURATION,
-                offset: SNAP_OFFSET,
-                lock: false,
-                easing: SNAP_EASING,
-            })
+            setActiveIndex(idx)
+            const snapped = snappedIndexRef.current
+            if (snapped != null && lines[snapped] != null && !isSnappingRef.current) {
+                if (Math.abs(lines[snapped] - y) > DRIFT_CLEAR_PX) setSnappedIndex(null)
+            }
         }
-
-        const onMqlChange = () => {
-            if (mql.matches) clearTimeout(settleTimer)
-        }
-
         lenis.on("scroll", onScroll)
+        return () => lenis.off("scroll", onScroll)
+    }, [lenis])
+
+    useEffect(() => {
+        if (!lenis) return
+        if (!components?.length) return
+
+        const mql = window.matchMedia("(max-width: 768px)")
+        let snap = null
+
+        const findIndexByValue = value => {
+            const y = window.scrollY
+            let bestI = 0
+            let bestD = Infinity
+            sectionRefs.current.forEach((el, i) => {
+                if (!el) return
+                const d = Math.abs(el.getBoundingClientRect().top + y + SNAP_OFFSET - value)
+                if (d < bestD) {
+                    bestD = d
+                    bestI = i
+                }
+            })
+            return bestI
+        }
+
+        const build = () => {
+            if (mql.matches) return
+            const sections = sectionRefs.current.filter(Boolean)
+            if (!sections.length) return
+            snap = new Snap(lenis, {
+                type: "proximity",
+                distanceThreshold: "60%",
+                duration: SNAP_DURATION,
+                easing: SNAP_EASING,
+                debounce: 180,
+                onSnapStart: ({ value }) => {
+                    isSnappingRef.current = true
+                    const i = findIndexByValue(value)
+                    setSnappedIndex(i)
+                    setSnapKey(k => k + 1)
+                },
+                onSnapComplete: ({ value }) => {
+                    setSnappedIndex(findIndexByValue(value))
+                    isSnappingRef.current = false
+                },
+            })
+            const y = window.scrollY
+            sections.forEach(el => snap.add(el.getBoundingClientRect().top + y + SNAP_OFFSET))
+        }
+
+        const rebuild = () => {
+            snap?.destroy()
+            snap = null
+            isSnappingRef.current = false
+            build()
+        }
+
+        build()
+        window.addEventListener("resize", rebuild)
+        const onMqlChange = () => rebuild()
         mql.addEventListener("change", onMqlChange)
 
         return () => {
-            clearTimeout(settleTimer)
-            lenis.off("scroll", onScroll)
+            window.removeEventListener("resize", rebuild)
             mql.removeEventListener("change", onMqlChange)
+            snap?.destroy()
+            isSnappingRef.current = false
         }
-    }, [lenis])
+    }, [lenis, components])
 
     useLayoutEffect(() => {
         if (!components?.length) return
@@ -152,9 +201,9 @@ export default function AboutContent({ components }) {
                                 <div
                                     ref={el => (dividerRefs.current[i] = el)}
                                     className="px15"
-                                    style={activeIndex === i ? { visibility: "hidden" } : undefined}
+                                    style={snappedIndex === i ? { visibility: "hidden" } : undefined}
                                 >
-                                    <div className='b-1' data-sal />
+                                    <div className='b-1 sal-animate' />
                                 </div>
                             ) : null
                         return (
@@ -168,17 +217,15 @@ export default function AboutContent({ components }) {
                     })}
                 </div>
             </div>
-            {components.map((item, i) =>
-                i > 0 && item ? (
-                    <div
-                        key={`overlay-${item._key}`}
-                        className={`pos-abs left-0 w-100 px15 z-2${activeIndex === i ? "" : " hide"}`}
-                        style={{ top: dividerTops[i] ?? 0 }}
-                    >
-                        <div className='b-1 sal-animate' />
-                    </div>
-                ) : null
-            )}
+            {snappedIndex != null && snappedIndex > 0 && components[snappedIndex] ? (
+                <div
+                    key={`overlay-${snappedIndex}-${snapKey}`}
+                    className='pos-abs left-0 w-100 px15 z-2'
+                    style={{ top: dividerTops[snappedIndex] ?? 0 }}
+                >
+                    <DividerOverlay />
+                </div>
+            ) : null}
         </div>
     )
 }

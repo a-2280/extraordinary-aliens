@@ -68,12 +68,12 @@ export default function CaptionCarousel({ slides, variant = "normal" }) {
                             <div className='pos-abs top-0 left-0 w-100 h-100 cursor-none z-2 m-hide' onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onClick={handleClick} />
                         </Swiper>
                     </div>
+                    {activeCaption?.length > 0 && (
+                        <div className='h4 text-grey-4 p15 pb0 caption-row fade--in' data-sal>
+                            <PortableText value={activeCaption} />
+                        </div>
+                    )}
                 </div>
-                {activeCaption?.length > 0 && (
-                    <div className='h4 text-grey-4 p15 pb0 caption-row fade--in' data-sal>
-                        <PortableText value={activeCaption} />
-                    </div>
-                )}
             </div>
         </>
     )

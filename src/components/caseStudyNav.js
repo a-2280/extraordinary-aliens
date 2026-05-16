@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { useLenis } from "lenis/react"
 
@@ -17,6 +17,7 @@ export default function CaseStudyNav({ sections }) {
     const leaveTimeoutRef = useRef(null)
     const navRef = useRef(null)
     const sectionsElRef = useRef(null)
+    const prevActiveSlugRef = useRef(activeSlug)
     const lenis = useLenis()
 
     useEffect(() => {
@@ -47,6 +48,18 @@ export default function CaseStudyNav({ sections }) {
     useEffect(() => () => {
         if (leaveTimeoutRef.current) clearTimeout(leaveTimeoutRef.current)
     }, [])
+
+    useLayoutEffect(() => {
+        if (prevActiveSlugRef.current === activeSlug) return
+        prevActiveSlugRef.current = activeSlug
+        const nav = navRef.current
+        if (!nav) return
+        nav.classList.add("no-transition")
+        const id = requestAnimationFrame(() => requestAnimationFrame(() => {
+            nav.classList.remove("no-transition")
+        }))
+        return () => cancelAnimationFrame(id)
+    }, [activeSlug])
 
     useEffect(() => {
         function check() {

@@ -69,33 +69,33 @@ export default function ImageExpandableCaption({ _key, image, video, caption, va
                         <img src="/images/expand.svg" alt="" width="16" height="14" />
                     </button>
                 </div>
-            </div>
-            <div className='p15 pb0 flex gap-40 space-between caption-row caption-row-clamp'>
-                <div
-                    ref={captionRef}
-                    className={`h4 text-grey-4 max-600${showClamp && !isExpanded ? ' line-clamp-2' : ''}`}
-                    style={captionStyle}
-                    onTransitionEnd={handleTransitionEnd}
-                >
-                    <PortableText value={caption} />
-                </div>
-                {isOverflowing && (
+                <div className='p15 pb0 flex gap-40 space-between caption-row caption-row-clamp'>
                     <div
-                        className='bg-grey-2 p8 radius-5 shrink-0 h-fit caption-toggle'
-                        style={{ cursor: 'pointer' }}
-                        onClick={handleClick}
+                        ref={captionRef}
+                        className={`h4 text-grey-4 max-600${showClamp && !isExpanded ? ' line-clamp-2' : ''}`}
+                        style={captionStyle}
+                        onTransitionEnd={handleTransitionEnd}
                     >
-                        <span
-                            className='flex'
-                            style={{
-                                transform: isExpanded ? 'rotate(45deg)' : 'none',
-                                transition: 'transform 0.3s ease',
-                            }}
-                        >
-                            <GrAdd size={15} />
-                        </span>
+                        <PortableText value={caption} />
                     </div>
-                )}
+                    {isOverflowing && (
+                        <div
+                            className='bg-grey-2 p8 radius-5 shrink-0 h-fit caption-toggle'
+                            style={{ cursor: 'pointer' }}
+                            onClick={handleClick}
+                        >
+                            <span
+                                className='flex'
+                                style={{
+                                    transform: isExpanded ? 'rotate(45deg)' : 'none',
+                                    transition: 'transform 0.3s ease',
+                                }}
+                            >
+                                <GrAdd size={15} />
+                            </span>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )

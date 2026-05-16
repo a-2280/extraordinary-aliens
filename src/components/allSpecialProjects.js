@@ -34,11 +34,11 @@ function Project({ project, cursorRef }) {
 
     return (
         <div ref={rowRef} className='grid col-4 pb150 m-flex m-flex-col m-gap-30'>
-            <p className='h4 text-grey-6 pl30 fade--in' data-sal>
+            <p className='h4 text-grey-6 pl30 fade--in m-pl24' data-sal>
                 {project.title}
             </p>
-            <div className='span-3 flex flex-col gap-40 m-px30'>
-                <div className='flex gap-20 space-between pr30 fade--in' data-sal>
+            <div className='span-3 flex flex-col gap-40 m-pl24'>
+                <div className='flex gap-20 space-between pr30 fade--in m-pr24' data-sal>
                     <div className='h2 text-grey-5 max-500 lh-110'>
                         <PortableText value={project.description} />
                     </div>
@@ -46,7 +46,7 @@ function Project({ project, cursorRef }) {
                         {(activeIndex % project.images.length) + 1} / {project.images.length}
                     </div>
                 </div>
-                <div className='max-full'>
+                <div className='max-full m-pr10'>
                     <ProjectSlider images={project.images} slug={project.slug.current} cursorRef={cursorRef} rowRef={rowRef} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
                 </div>
             </div>

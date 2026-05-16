@@ -28,6 +28,13 @@ export default function ImageHotspot({ _key, image, video, spots, variant = "nor
             <button className='button-secondary pos-abs top-30 left-30 z-5' onClick={handleOpen}>
                 <img src="/images/expand.svg" alt="" width="16" height="14" />
             </button>
+            {isOpen && (
+                <div
+                    className='spot-backdrop pos-abs top-0 left-0 z-1'
+                    onClick={() => setOpenIndex(null)}
+                    aria-hidden='true'
+                />
+            )}
             {placedSpots.map((spot, i) => (
                 <button
                     key={spot._key || i}

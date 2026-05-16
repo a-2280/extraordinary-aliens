@@ -87,6 +87,10 @@ a {
     line-height: 110%;
 }
 
+.letter-spacing-4 {
+    letter-spacing: 4%;
+}
+
 /* ------------ Grid Styles ------------ */
 
 .grid {
@@ -278,6 +282,10 @@ a {
     padding: 40px;
 }
 
+.pt0 {
+    padding-top: 0;
+}
+
 .pt60 {
     padding-top: 60px;
 }
@@ -363,8 +371,12 @@ a {
 }
 
 .case-study-sections > *:first-child,
-.case-study-sections > section:first-child > *:first-child {
+.case-study-sections > section > *:first-child {
     padding-top: 0;
+}
+
+.case-study-sections > section:not(:first-child) {
+    padding-top: 92px;
 }
 
 .case-study-sections > *:last-child,
@@ -528,6 +540,14 @@ div.bg-image,
     &.x2 {
         height: 200px;
     }
+
+    &.h60 {
+        height: 60px;
+    }
+
+    &.h75 {
+        height: 75px;
+    }
 }
 
 /* ------------ Ratio Styles ------------ */
@@ -572,6 +592,11 @@ div.bg-image,
     height: 100%;
     max-width: 100%;
     max-height: 100%;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        height: auto;
+    }
 }
 
 .ratio-16-18 {
@@ -621,11 +646,6 @@ div.bg-image,
 }
 
 .variant-cut.caption-wrapper > .image-sticky-area {
-    flex: 1;
-    min-height: 0;
-}
-
-.variant-cut.caption-wrapper > .image-sticky-area > .image-shell {
     position: sticky;
     top: 76px;
 }
@@ -1012,6 +1032,30 @@ div.bg-image,
     }
 }
 
+.m-h-100 {
+    @media (max-width: 768px) {
+        height: 100%;
+    }
+}
+
+.m-pl24 {
+    @media (max-width: 768px) {
+        padding-left: 24px;
+    }
+}
+
+.m-pr24 {
+    @media (max-width: 768px) {
+        padding-right: 24px;
+    }
+}
+
+.m-pr10 {
+    @media (max-width: 768px) {
+        padding-right: 10px;
+    }
+}
+
 /* ------------ Spot Marker ------------ */
 
 .spot-marker {
@@ -1031,6 +1075,13 @@ div.bg-image,
     justify-content: center;
     cursor: pointer;
     padding: 5px;
+}
+
+.spot-backdrop {
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    cursor: default;
 }
 
 .annotation-toggle,

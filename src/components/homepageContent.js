@@ -88,18 +88,18 @@ function Header({ active, setActive, tags, selected, setSelected }) {
                         All Work
                     </button>
                     <div className='m-show mla'>
-                        <button className={`radius-5 clear-btn text-grey-6 ${selected.length > 0 ? "is-active" : ""}`} onClick={() => setSelected([])}>
+                        <button className={`letter-spacing-4 radius-5 clear-btn text-grey-6 ${selected.length > 0 ? "is-active" : ""}`} onClick={() => setSelected([])}>
                             Clear
                         </button>
                     </div>
                 </div>
                 <div ref={tagsRef} style={{ visibility: "hidden", opacity: 0 }} className='flex gap-10 justify-end m-justify-start m-flex-wrap tags-row'>
                     {tags.map(tag => (
-                        <button className={`hover--grey-6 hover--background p5 radius-5 nowrap ${selected.includes(tag) ? "text-grey-6 bg-grey" : "text-grey-5"}`} key={tag} onClick={() => toggle(tag)}>
+                        <button className={`letter-spacing-4 hover--grey-6 hover--background p5 radius-5 nowrap ${selected.includes(tag) ? "text-grey-6 bg-grey" : "text-grey-5"}`} key={tag} onClick={() => toggle(tag)}>
                             {tag}
                         </button>
                     ))}
-                    <button className={`m-hide hover--background radius-5 p5 clear-btn ${selected.length > 0 ? "is-active" : ""}`} onClick={() => setSelected([])}>
+                    <button className={`m-hide letter-spacing-4 hover--background radius-5 p5 clear-btn ${selected.length > 0 ? "is-active" : ""}`} onClick={() => setSelected([])}>
                         Clear
                     </button>
                 </div>

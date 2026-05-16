@@ -78,7 +78,7 @@ export default function AudioPlayer({ title, description, audio }) {
                 <div className='flex align-center gap-20 space-between'>
                     <p className='uppercase'>{title}</p>
                     <div className='flex gap-15 align-center'>
-                        <p>
+                        <p className="nowrap">
                             {formatTime(currentTime)} / {formatTime(duration)}
                         </p>
                         <button className='audio-button' onClick={toggle}>

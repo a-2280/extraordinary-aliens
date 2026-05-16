@@ -70,12 +70,17 @@ Scoped overrides only — no light-mode rules belong here.
         color: var(--grey-5);
     }
 
+    .case-study-nav .button-nav {
+        color: var(--grey-5);
+    }
+
     .case-study-nav .button-nav:hover {
         color: var(--grey-3);
     }
 
     .button-case-study {
         background-color: rgba(218, 218, 218, 0.15);
+        color: var(--grey-4);
 
         &::before {
             background-color: rgba(244, 244, 244, 0.22);
@@ -102,6 +107,16 @@ Scoped overrides only — no light-mode rules belong here.
         color: var(--grey-4);
     }
 
+    .footer-copyright,
+    .footer-detail-row .h5 {
+        color: var(--grey-6);
+    }
+
+    .credits-tags,
+    .credit-title {
+        color: var(--grey-6);
+    }
+
     .index {
         color: var(--grey-5);
     }
@@ -114,6 +129,10 @@ Scoped overrides only — no light-mode rules belong here.
     .button:hover,
     .more-projects-row:hover .button {
         border-color: transparent;
+    }
+
+    .contact-cta .h1 span[style*="color"] {
+        color: var(--grey-6) !important;
     }
 }
 

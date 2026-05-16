@@ -11,7 +11,6 @@ export default function FeaturedSpecialProject({ description, title, slug, heroI
     const containerRef = useRef(null)
     const descriptionRef = useRef(null)
     const imageRef = useRef(null)
-    const cursorRef = useRef(null)
     const [hovered, setHovered] = useState(false)
 
     useGSAP(() => {
@@ -38,29 +37,15 @@ export default function FeaturedSpecialProject({ description, title, slug, heroI
         })
     }, { scope: containerRef, dependencies: [hovered] })
 
-    const handleImageMouseMove = e => {
-        const c = cursorRef.current
-        if (!c) return
-        c.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`
-        c.style.opacity = "1"
-    }
-
-    const handleImageMouseLeave = () => {
-        if (cursorRef.current) cursorRef.current.style.opacity = "0"
-    }
-
     if (!slug) return null
     return (
         <>
-            <div ref={cursorRef} className='custom-cursor'>
-                <span className='label label-left'>View Case Study</span>
-            </div>
-            <div ref={containerRef} className='p15 h-100vh flex flex-col'>
+            <div ref={containerRef} className='p15 h-100vh flex flex-col m-h-100'>
                 <div className='b-1' data-sal />
                 <p className='h5 py15'>Featured Project</p>
                 <Spacer />
-                <div className='flex-1 min-h-0 flex align-center justify-center'>
-                    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className='pos-rel ratio-16-10 overflow radius-15 fit'>
+                <div className='flex-1 min-h-0 flex align-center justify-center featured-special-stage'>
+                    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className={`pos-rel ratio-16-10 overflow radius-15 fit${hovered ? " is-hovered" : ""}`}>
                         {heroImage && <img ref={imageRef} className='bg-image image--blur' src={heroImage} alt={title} />}
                         {heroVideo && <video className='bg-image' src={heroVideo} autoPlay muted loop playsInline preload='auto' aria-hidden='true' />}
                         {title && <p className='h1 pos-abs center-abs'>{title}</p>}
@@ -69,15 +54,16 @@ export default function FeaturedSpecialProject({ description, title, slug, heroI
                                 {description}
                             </p>
                         )}
-                        <Link href={`/special-projects/${slug}`} aria-label={title} className='pos-abs top-0 left-0 w-100 h-100 cursor-none' onMouseMove={handleImageMouseMove} onMouseLeave={handleImageMouseLeave} />
+                        <Link href={`/special-projects/${slug}`} aria-label={title} className='pos-abs top-0 left-0 w-100 h-100 featured-special-link-overlay' />
+                        <Link href={`/special-projects/${slug}`} className='view-case-study-btn'>View Case Study</Link>
                     </div>
                 </div>
                 {description && (
-                    <div className='m-show flex justify-center p30'>
+                    <div className='m-show flex justify-center p10 pt0'>
                         <p className='h4 max-350 text-center text-grey-4'>{description}</p>
                     </div>
                 )}
-                <Spacer />
+                <Spacer className="m-hide" />
             </div>
         </>
     )

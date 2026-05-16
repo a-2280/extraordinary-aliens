@@ -73,29 +73,29 @@ export default function ImageCaptionHover({ _key, image, video, caption, variant
                         <img src="/images/expand.svg" alt="" width="16" height="14" />
                     </button>
                 </div>
-            </div>
-            <div className='p15 pb0 flex gap-40 space-between caption-row caption-row-clamp'>
-                <div
-                    ref={captionRef}
-                    className={`h4 text-grey-4 max-600${showClamp && !isExpanded ? ' line-clamp-2' : ''}`}
-                    style={captionStyle}
-                    onTransitionEnd={handleTransitionEnd}
-                >
-                    <PortableText value={caption} />
-                </div>
-                {isOverflowing && (
-                    <div className='p8 radius-5 shrink-0 h-fit'>
-                        <span
-                            className='flex'
-                            style={{
-                                opacity: isExpanded ? 0 : 1,
-                                transition: 'opacity 0.3s ease',
-                            }}
-                        >
-                            <GrAdd size={15} />
-                        </span>
+                <div className='p15 pb0 flex gap-40 space-between caption-row caption-row-clamp'>
+                    <div
+                        ref={captionRef}
+                        className={`h4 text-grey-4 max-600${showClamp && !isExpanded ? ' line-clamp-2' : ''}`}
+                        style={captionStyle}
+                        onTransitionEnd={handleTransitionEnd}
+                    >
+                        <PortableText value={caption} />
                     </div>
-                )}
+                    {isOverflowing && (
+                        <div className='p8 radius-5 shrink-0 h-fit'>
+                            <span
+                                className='flex'
+                                style={{
+                                    opacity: isExpanded ? 0 : 1,
+                                    transition: 'opacity 0.3s ease',
+                                }}
+                            >
+                                <GrAdd size={15} />
+                            </span>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )

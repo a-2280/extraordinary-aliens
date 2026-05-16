@@ -155,4 +155,10 @@
             }
         }
     }
+
+    &.no-transition,
+    &.no-transition > a,
+    &.no-transition > .button-nav {
+        transition: none;
+    }
 }

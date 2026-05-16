@@ -59,13 +59,13 @@ export default function Credits({ title, description, credits, tags }) {
                     <div className='flex gap-100'>
                         <div className='flex flex-col gap-30'>
                             <div className='flex flex-col gap-15 fade--in' data-sal>
-                                {tags?.length > 0 && <p className='h4 w-100 max-200'>{tags.map(tag => tag.name).join(", ")}</p>}
+                                {tags?.length > 0 && <p className='h4 w-100 max-200 credits-tags'>{tags.map(tag => tag.name).join(", ")}</p>}
                                 <p className='h4 text-grey-4 credits-text'>Extraordinary Aliens</p>
                             </div>
                             <div ref={mobileCreditsRef} className='flex flex-col gap-40 m-show' style={{ height: 0, overflow: "hidden", opacity: 0, visibility: "hidden" }}>
                                 {credits?.map(credit => (
                                     <div className='h4 flex flex-col gap-10' key={credit._key}>
-                                        <p>{credit.title}</p>
+                                        <p className='credit-title'>{credit.title}</p>
                                         <div>
                                             {credit.creditInfo?.map(info => (
                                                 <p
@@ -95,7 +95,7 @@ export default function Credits({ title, description, credits, tags }) {
                         <div ref={creditsRef} className='flex flex-col gap-40 m-hide' style={{ opacity: 0, visibility: "hidden" }}>
                             {credits?.map(credit => (
                                 <div className='h4 flex flex-col gap-10' key={credit._key}>
-                                    <p>{credit.title}</p>
+                                    <p className='credit-title'>{credit.title}</p>
                                     <div>
                                         {credit.creditInfo?.map(info => (
                                             <p

@@ -97,6 +97,29 @@
     }
 }
 
+.view-case-study-btn {
+    position: absolute;
+    top: 65px;
+    right: 20px;
+    background: var(--grey-2);
+    color: var(--grey-6);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.is-hovered > .view-case-study-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.featured-special-link-overlay { pointer-events: none; }
+
 .featured-projects .index {
     padding: 4px 7px;
     border-radius: 5px;
@@ -112,5 +135,15 @@
     }
     .cursor-none {
         cursor: auto;
+    }
+    .view-case-study-btn { display: none; }
+    .featured-special-link-overlay { pointer-events: auto; }
+    .featured-special-stage {
+        flex: 0 0 auto;
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        padding-left: 50px;
+        padding-right: 50px;
+        box-sizing: border-box;
     }
 }

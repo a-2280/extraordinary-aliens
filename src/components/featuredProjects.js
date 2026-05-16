@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { PortableText } from "@portabletext/react"
+import { useRouter } from "next/router"
 
 export default function FeaturedProjects({ projects, onTagClick }) {
     const cursorRef = useRef(null)
@@ -57,6 +58,7 @@ function Project({ project, cursorRef, onTagClick }) {
 }
 
 function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActiveIndex }) {
+    const router = useRouter()
     const trackRef = useRef(null)
     const isHoveringRef = useRef(false)
     const isHoveringRightRef = useRef(false)
@@ -125,12 +127,17 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
     const handleClick = e => {
         if (swipedRef.current) {
             swipedRef.current = false
-            e.preventDefault()
             return
         }
-        if (isTouchDevice()) return
-        if (isLeftOfRow(e.clientX)) return
-        e.preventDefault()
+        if (isTouchDevice()) {
+            router.push(`/case-study/${slug}`)
+            return
+        }
+        const isLeft = isLeftOfRow(e.clientX)
+        if (isLeft) {
+            router.push(`/case-study/${slug}`)
+            return
+        }
         if (images.length <= 1) return
         setActiveIndex(i => i >= images.length ? i : i + 1)
     }
@@ -181,8 +188,7 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
                     </div>
                 ))}
             </div>
-            <Link
-                href={`/case-study/${slug}`}
+            <div
                 className='overlay pos-abs top-0 left-0 w-100 h-100 cursor-none z-2'
                 style={{ touchAction: 'pan-y' }}
                 onMouseMove={handleMouseMove}
@@ -191,7 +197,6 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, activeIndex, setActive
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
                 onTouchCancel={handleTouchEnd}
-                aria-label='View case study'
             />
         </div>
     )

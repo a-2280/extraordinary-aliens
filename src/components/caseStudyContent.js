@@ -29,7 +29,7 @@ export default function CaseStudyContent({ project }) {
             <div>
                 <Header project={project} />
                 <Spacer className='x2 m-hide' />
-                <Spacer className='m-show' />
+                <Spacer className='m-show h60' />
                 {caseStudySections?.length > 0 && (
                     <div className='p15 flex flex-col gap-15 case-study-sections'>
                         {caseStudySections.map(entry => {
@@ -58,7 +58,7 @@ function Header({ project }) {
         <div id='introduction' className='p15 flex flex-col gap-15'>
             {heroImage && (
                 <div>
-                    <Spacer />
+                    <Spacer className="h75" />
                     <div className='pos-rel ratio-16-9 max-100vh radius-15 overflow'>
                         <Image className='bg-image' src={heroImage} alt={title || ""} width={1920} height={1080} loading='eager' />
                         {heroVideo && <video className='bg-image' src={heroVideo} autoPlay muted loop playsInline preload='auto' aria-hidden='true' />}

@@ -12,7 +12,8 @@ export const structure = (S, context) =>
                         .items([
                             S.documentTypeListItem("about").title("About"),
                             S.documentTypeListItem("specialProjectsSettings").title("Special Projects Landing"),
-                            S.documentTypeListItem("page").title("Other Pages"),
+                            S.documentTypeListItem("inquire").title("Inquire"),
+                            S.documentTypeListItem("page").title("Homepage"),
                         ]),
                 ),
             S.listItem().title("Layouts").schemaType("layout").child(S.documentTypeList("layout").title("Layouts")),

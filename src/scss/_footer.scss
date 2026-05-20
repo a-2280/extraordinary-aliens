@@ -20,3 +20,33 @@
         flex-basis: 100%;
     }
 }
+
+.inquire-footer-image {
+    width: 300px;
+    transition: width 0.4s ease;
+
+    @media (min-width: 769px) {
+        &:hover {
+            width: 350px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+}
+
+.inquire-footer-hover {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+
+    &.is-active {
+        opacity: 1;
+    }
+}

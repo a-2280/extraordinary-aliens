@@ -19,7 +19,7 @@ const lenisOptions = {
 
 export const HeaderTitleContext = createContext({ setOverride: () => {} })
 
-export default function Layout({ children, headerData, footerData, contactCta, currentTitle, theme }) {
+export default function Layout({ children, headerData, footerData, contactCta, currentTitle, theme, header, footer, hideFooter, hideContactCta }) {
     const lenisRef = useRef(null)
     const [overrideTitle, setOverrideTitle] = useState(null)
 
@@ -50,12 +50,12 @@ export default function Layout({ children, headerData, footerData, contactCta, c
     return (
         <ReactLenis ref={lenisRef} root options={lenisOptions}>
             <HeaderTitleContext.Provider value={headerCtx}>
-                <Header data={headerData} currentTitle={overrideTitle ?? currentTitle} />
+                {header ?? <Header data={headerData} currentTitle={overrideTitle ?? currentTitle} />}
                 <PageTransition>
                     <main>{children}</main>
-                    <ContactCta contactCta={contactCta} />
+                    {!hideContactCta && <ContactCta contactCta={contactCta} />}
                 </PageTransition>
-                <Footer data={footerData} />
+                {footer ?? (!hideFooter && <Footer data={footerData} />)}
             </HeaderTitleContext.Provider>
         </ReactLenis>
     )

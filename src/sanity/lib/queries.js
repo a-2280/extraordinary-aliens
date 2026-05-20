@@ -270,6 +270,32 @@ export const ABOUT_QUERY = `*[_type == "layout"][0].aboutPage->{
   "video": video.asset->url
 }`
 
+export const INQUIRE_QUERY = `*[_type == "layout"][0].inquirePage->{
+  description[]{
+    ...,
+    markDefs[]{
+      ...,
+      _type == "textColor" => {
+        "color": swatch->color.hex
+      }
+    }
+  },
+  formText[]{
+    ...,
+    markDefs[]{
+      ...,
+      _type == "textColor" => {
+        "color": swatch->color.hex
+      }
+    }
+  },
+  buttons[]{ _key, title, link, "image": image.asset->url, "video": video.asset->url },
+  "footerImage": footerImage.asset->url,
+  "footerVideo": footerVideo.asset->url,
+  location,
+  copyright
+}`
+
 export const CONTACT_CTA_QUERY = `*[_type == "contactCta"][0]{
   description[]{
     ...,

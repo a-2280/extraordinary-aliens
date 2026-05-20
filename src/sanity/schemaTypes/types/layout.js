@@ -35,6 +35,14 @@ export default defineType({
             to: [{ type: "specialProjectsSettings" }],
             validation: Rule => Rule.required(),
         }),
+        defineField({
+            name: "inquirePage",
+            title: "Inquire Page",
+            description: "Select the Inquire variant you want to render at /inquire.",
+            type: "reference",
+            to: [{ type: "inquire" }],
+            validation: Rule => Rule.required(),
+        }),
         // defineField({
         //     name: "notFoundPage",
         //     title: "Not Found Page",

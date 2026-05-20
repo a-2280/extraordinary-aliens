@@ -120,6 +120,44 @@ a {
     flex: 2;
 }
 
+.inquire-slot {
+    display: grid;
+    > * {
+        grid-area: 1 / 1;
+        align-self: start;
+    }
+    @media (max-width: 768px) {
+        flex: 0 0 auto;
+    }
+}
+
+.form-open {
+    @media (max-width: 768px) {
+        .inquire-cta {
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .inquire-slot {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 20px;
+            overflow: hidden;
+
+            > * {
+                align-self: stretch;
+            }
+        }
+    }
+}
+
+.text-stack {
+    display: grid;
+    > * {
+        grid-area: 1 / 1;
+    }
+}
+
 .flex-wrap {
     flex-wrap: wrap;
 }
@@ -130,6 +168,10 @@ a {
 
 .align-center {
     align-items: center;
+}
+
+.align-baseline {
+    align-items: baseline;
 }
 
 .self-start {
@@ -146,6 +188,11 @@ a {
 
 .justify-end {
     justify-content: flex-end;
+}
+
+.pointer {
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 /* ------------ Gap Styles ------------ */
@@ -260,6 +307,10 @@ a {
 
 .p20 {
     padding: 20px;
+}
+
+.p28 {
+    padding: 28px;
 }
 
 .p30 {
@@ -425,6 +476,10 @@ a {
     left: 0;
 }
 
+.left-28 {
+    left: 28px;
+}
+
 .top-15 {
     top: 15px;
 }
@@ -455,6 +510,10 @@ a {
 
 .right-30 {
     right: 30px;
+}
+
+.bottom-28 {
+    bottom: 28px;
 }
 
 .bottom-30 {
@@ -769,6 +828,10 @@ div.bg-image,
     max-width: 850px;
 }
 
+.max-950 {
+    max-width: 950px;
+}
+
 .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -853,6 +916,12 @@ div.bg-image,
     }
 }
 
+.m-pt10 {
+    @media (max-width: 768px) {
+        padding-top: 10px;
+    }
+}
+
 .m-h-35vh {
     @media (max-width: 768px) {
         height: 35vh;
@@ -886,6 +955,12 @@ div.bg-image,
 .m-pb15 {
     @media (max-width: 768px) {
         padding-bottom: 15px;
+    }
+}
+
+.m-pb20 {
+    @media (max-width: 768px) {
+        padding-bottom: 20px;
     }
 }
 
@@ -1053,6 +1128,18 @@ div.bg-image,
 .m-pr10 {
     @media (max-width: 768px) {
         padding-right: 10px;
+    }
+}
+
+.m-pb45 {
+    @media (max-width: 768px) {
+        padding-bottom: 45px;
+    }
+}
+
+.m-mt75 {
+    @media (max-width: 768px) {
+        margin-top: 75px;
     }
 }
 

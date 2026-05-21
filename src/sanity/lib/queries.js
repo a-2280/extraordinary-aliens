@@ -306,5 +306,14 @@ export const CONTACT_CTA_QUERY = `*[_type == "contactCta"][0]{
       }
     }
   },
+  formText[]{
+    ...,
+    markDefs[]{
+      ...,
+      _type == "textColor" => {
+        "color": swatch->color.hex
+      }
+    }
+  },
   button
 }`

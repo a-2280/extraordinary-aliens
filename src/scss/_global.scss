@@ -170,6 +170,10 @@ a {
     align-items: center;
 }
 
+.align-start {
+    align-items: flex-start;
+}
+
 .align-baseline {
     align-items: baseline;
 }
@@ -353,6 +357,10 @@ a {
     padding-bottom: 0;
 }
 
+.pb20 {
+    padding-bottom: 20px;
+}
+
 .pb60 {
     padding-bottom: 60px;
 }
@@ -419,6 +427,10 @@ a {
 .py200 {
     padding-top: 200px;
     padding-bottom: 200px;
+}
+
+.mt-5 {
+    margin-top: -5px;
 }
 
 .case-study-sections > *:first-child,
@@ -744,6 +756,10 @@ div.bg-image,
     height: 650px;
 }
 
+.h-770px {
+    height: 770px;
+}
+
 .h-60vh {
     height: 60vh;
 }
@@ -898,9 +914,21 @@ div.bg-image,
     }
 }
 
+.m-flex-none {
+    @media (max-width: 768px) {
+        flex: none;
+    }
+}
+
 .m-flex-col {
     @media (max-width: 768px) {
         flex-direction: column;
+    }
+}
+
+.m-gap-0 {
+    @media (max-width: 768px) {
+        gap: 0px;
     }
 }
 
@@ -967,6 +995,12 @@ div.bg-image,
 .m-pb50 {
     @media (max-width: 768px) {
         padding-bottom: 50px;
+    }
+}
+
+.m-pb80 {
+    @media (max-width: 768px) {
+        padding-bottom: 80px;
     }
 }
 
@@ -1052,6 +1086,18 @@ div.bg-image,
 .m-pt15 {
     @media (max-width: 768px) {
         padding-top: 15px;
+    }
+}
+
+.m-mt20 {
+    @media (max-width: 768px) {
+        margin-top: 20px;
+    }
+}
+
+.m-pt80 {
+    @media (max-width: 768px) {
+        padding-top: 80px;
     }
 }
 

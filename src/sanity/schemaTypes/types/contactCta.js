@@ -41,6 +41,34 @@ export default defineType({
             type: "string",
             validation: Rule => Rule.required(),
         }),
+        defineField({
+            name: "formText",
+            title: "Form Text (Displayed when form is open)",
+            type: "array",
+            of: [
+                {
+                    type: "block",
+                    marks: {
+                        annotations: [
+                            {
+                                name: "textColor",
+                                title: "Text Color",
+                                type: "object",
+                                icon: ColorWheelIcon,
+                                fields: [
+                                    {
+                                        name: "swatch",
+                                        title: "Color",
+                                        type: "reference",
+                                        to: [{ type: "colorSwatch" }],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                },
+            ],
+        }),
     ],
     preview: { select: { title: "title" } },
 })

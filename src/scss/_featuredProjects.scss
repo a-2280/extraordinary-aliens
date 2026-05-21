@@ -20,7 +20,6 @@
     display: flex;
     width: 100%;
     height: 100%;
-    transition: transform 0.65s ease;
     will-change: transform;
 }
 
@@ -53,8 +52,8 @@
         top: 0;
         left: 0;
         transform: translate(-50%, -50%);
-        background: #dadada99;
-        backdrop-filter: blur(8px);
+        background: white;
+        color: var(--grey-6);
         padding: 5px 10px;
         border-radius: 5px;
         font-size: 14px;
@@ -82,8 +81,8 @@
         top: 0;
         left: 0;
         transform: translate(-50%, -50%);
-        background: #dadada;
-        color: var(--black);
+        background: white;
+        color: var(--grey-6);
         padding: 5px 10px;
         border-radius: 5px;
         font-size: 14px;
@@ -96,29 +95,6 @@
         .label-right { opacity: 1; }
     }
 }
-
-.view-case-study-btn {
-    position: absolute;
-    top: 65px;
-    right: 20px;
-    background: var(--grey-2);
-    color: var(--grey-6);
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 2;
-}
-
-.is-hovered > .view-case-study-btn {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.featured-special-link-overlay { pointer-events: none; }
 
 .featured-projects .index {
     padding: 4px 7px;
@@ -136,8 +112,6 @@
     .cursor-none {
         cursor: auto;
     }
-    .view-case-study-btn { display: none; }
-    .featured-special-link-overlay { pointer-events: auto; }
     .featured-special-stage {
         flex: 0 0 auto;
         width: 100%;

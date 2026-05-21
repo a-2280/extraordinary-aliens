@@ -26,14 +26,33 @@
     }
 }
 
+.contact-form {
+        width: 500px;
+        position: absolute;
+}
+
+.contact-cta {
+    height: 700px;
+    @media (max-width: 768px) {
+        height: min-content;
+    min-height: 350px;
+    }
+}
+
 @media (max-width: 768px) {
     .contact-cta {
         align-items: stretch;
     }
 
+    .contact-cta.form-open {
+        padding-top: 120px;
+        padding-bottom: 120px;
+    }
+
     .contact-form {
         width: 100%;
         max-width: none;
+        position: relative;
     }
 
     .contact-cta-intro {

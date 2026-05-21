@@ -3,9 +3,9 @@ import FooterLightStrike from "./footerLightStrike"
 
 export default function Footer({ data }) {
     return (
-        <div className='p15 h-100vh pth text-grey-6 m-pt15'>
+        <div className='p15 pt0 h-770px text-grey-6 m-pt15'>
             <div className='bg-black radius-15 h-100 footer-light-strike-host'>
-                <div className='p35 h-100 flex flex-col space-between'>
+                <div className='p35 pb20 h-100 flex flex-col space-between'>
                     <div className='h3 text-footer max-500'>
                         <PortableText value={data.caption} />
                     </div>

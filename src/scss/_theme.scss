@@ -121,11 +121,6 @@ Scoped overrides only — no light-mode rules belong here.
         color: var(--grey-5);
     }
 
-    .label {
-        background-color: var(--grey-1);
-        color: var(--black);
-    }
-
     .button:hover,
     .more-projects-row:hover .button {
         border-color: transparent;

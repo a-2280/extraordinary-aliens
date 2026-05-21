@@ -7,13 +7,21 @@ import gsap from "gsap"
 
 const FADE_OUT_MS = 350
 const NAV_CHILDREN_SELECTOR = ".masthead .overflow > *"
+const TITLE_ONLY_SELECTOR = ".masthead .overflow > .button-case-study"
 
 let didNavigate = false
 
 const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect
 
+function navTargets() {
+    const sel = document.querySelector(".masthead.menu-closed")
+        ? TITLE_ONLY_SELECTOR
+        : NAV_CHILDREN_SELECTOR
+    return document.querySelectorAll(sel)
+}
+
 export function fadeOutNavChildren() {
-    const navChildren = document.querySelectorAll(NAV_CHILDREN_SELECTOR)
+    const navChildren = navTargets()
     if (!navChildren.length) return null
     return gsap.to(navChildren, {
         opacity: 0,
@@ -26,7 +34,7 @@ export function fadeOutNavChildren() {
 }
 
 export function fadeInNavChildren() {
-    const navChildren = document.querySelectorAll(NAV_CHILDREN_SELECTOR)
+    const navChildren = navTargets()
     if (!navChildren.length) return null
     gsap.set(navChildren, { opacity: 0, x: -10 })
     return gsap.to(navChildren, {
@@ -53,7 +61,7 @@ export function runNavSwap(onSwap) {
         })
     }
 
-    const navChildren = document.querySelectorAll(NAV_CHILDREN_SELECTOR)
+    const navChildren = navTargets()
     if (!navChildren.length) {
         swap()
     } else {

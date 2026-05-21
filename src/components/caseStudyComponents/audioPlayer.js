@@ -75,9 +75,9 @@ export default function AudioPlayer({ title, description, audio }) {
             </div>
             <p className='f-20 text-grey-4 max-450 m-hide'>{description}</p>
             <div className='bg-grey-2 radius-15 p30 flex flex-col gap-40 audio-player'>
-                <div className='flex align-center gap-20 space-between'>
+                <div className='flex align-start gap-20 space-between'>
                     <p className='uppercase'>{title}</p>
-                    <div className='flex gap-15 align-center'>
+                    <div className='flex gap-15 align-center mt-5'>
                         <p className="nowrap">
                             {formatTime(currentTime)} / {formatTime(duration)}
                         </p>

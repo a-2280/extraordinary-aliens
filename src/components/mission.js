@@ -96,7 +96,7 @@ export default function Mission({ mission }) {
                     </div>
                 </div>
                 <div className='m-show pt60 fade--in mission-mobile-list' data-sal>
-                    <Swiper slidesPerView={1.07} spaceBetween={15} snapToSlideEdge={true}>
+                    <Swiper slidesPerView='auto' spaceBetween={14}>
                         {mission?.missionCards?.map((card, index) => (
                             <SwiperSlide key={index}>
                                 <div className='mission-card bg-grey radius-15 p20 flex flex-col gap-30'>

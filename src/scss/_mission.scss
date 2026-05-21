@@ -22,8 +22,9 @@
 }
 
 @media (max-width: 768px) {
-    .mission-mobile-list {
-        padding-left: 19px;
+
+    .mission-mobile-list .swiper-slide {
+        width: calc(100vw - 28px) !important;
     }
 
     .swiper-slide .mission-card {

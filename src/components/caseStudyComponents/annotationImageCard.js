@@ -38,10 +38,10 @@ export default function AnnotationImage({ _key, image, video, title, annotation,
     if (!image) return null
 
     return (
-        <div className={`variant-${variant} pos-rel ratio-3-4 max-full radius-15 overflow`}>
+        <div className={`variant-${variant} image-shell pos-rel ratio-3-4 max-full radius-15 overflow`}>
             <Image className='bg-image' src={image} alt='' width={1600} height={1000} />
             {video && <video className='bg-image' src={video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
-            <button className='button-secondary pos-abs top-30 left-30 z-5' onClick={handleOpen}>
+            <button className='button-secondary lightbox-trigger pos-abs top-30 left-30 z-5' onClick={handleOpen}>
                 <img src="/images/expand.svg" alt="" width="16" height="14" />
             </button>
             <div className={`z-4 bg-solid-grey pos-abs top-30 right-30 radius-5 p8 text-black flex align-center justify-center annotation-toggle${isOpen ? " is-open" : ""}`} style={{ cursor: "pointer" }} onClick={() => setIsOpen(prev => !prev)}>

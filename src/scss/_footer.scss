@@ -50,3 +50,13 @@
         opacity: 1;
     }
 }
+
+.footer-light-strike-host {
+    a {
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: var(--grey-6);
+        }
+    }
+}

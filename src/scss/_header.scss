@@ -12,9 +12,14 @@
 
     .button-nav,
     .button-case-study {
-        -webkit-backdrop-filter: blur(8px);
-        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(80px);
+        backdrop-filter: blur(80px);
         pointer-events: auto;
+    }
+
+    > div > .button-nav {
+        padding-top: 9px;
+        padding-bottom: 9px;
     }
 
     .scrubber-chevron {
@@ -58,8 +63,8 @@
         display: grid;
         grid-template-columns: 1fr;
         align-items: center;
-        -webkit-backdrop-filter: blur(30px);
-        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(80px);
+        backdrop-filter: blur(80px);
         overflow: hidden;
         white-space: nowrap;
 

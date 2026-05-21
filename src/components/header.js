@@ -35,7 +35,7 @@ export default function Header({ data, currentTitle }) {
     }
 
     return (
-        <header className={`masthead p15 flex align-center text-black m-flex-col m-gap-3${currentTitle ? ' is-case-study' : ''}`}>
+        <header className={`masthead p15 flex align-center text-black m-flex-col m-gap-3${currentTitle ? ' is-case-study' : ''}${isMobile && !open ? ' menu-closed' : ''}`}>
             <button className='button-nav f-nav flex gap-20 align-center shrink-0 m-w-100 m-space-between' onClick={handleClick}>
                 Extraordinary Aliens
                 <svg width='6' height='9' viewBox='0 0 6 9' fill='none'>
@@ -137,27 +137,15 @@ function ButtonList({ open, data, currentTitle, isMobile, onToggle }) {
     return (
         <div ref={containerRef} className='overflow w-100 flex gap-3 pl3 m-flex-col m-pl0'>
             {currentTitle && (
-                <div
-                    ref={scrollFillRef}
-                    className='flex-1 h5 button-case-study flex align-center space-between'
-                    onPointerDown={handlePointerDown}
-                    onPointerMove={handlePointerMove}
-                    onClick={handleScrubberClick}
-                >
-                    <p>{currentTitle}</p>
+                <div ref={scrollFillRef} className='flex-1 button-case-study flex align-center space-between' onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onClick={handleScrubberClick}>
+                    <p className='h5'>{currentTitle}</p>
                     <svg className='scrubber-chevron' width='6' height='9' viewBox='0 0 6 9' fill='none'>
                         <path ref={scrubberPathRef} d={RIGHT} stroke='currentColor' strokeWidth='1.16' strokeLinecap='round' strokeLinejoin='round' />
                     </svg>
                 </div>
             )}
             {data?.links?.map((link, index) => (
-                <NavLink
-                    key={index}
-                    link={link}
-                    showDot={!currentTitle}
-                    className={`${currentTitle ? '' : 'flex-1 '}h5 button-nav flex align-center space-between`}
-                    style={{ zIndex: data.links.length - index }}
-                />
+                <NavLink key={index} link={link} showDot={!currentTitle} className={`${currentTitle ? "" : "flex-1 "}h5 button-nav flex align-center space-between`} style={{ zIndex: data.links.length - index }} />
             ))}
         </div>
     )

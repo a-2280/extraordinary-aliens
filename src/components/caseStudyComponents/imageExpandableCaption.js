@@ -65,7 +65,7 @@ export default function ImageExpandableCaption({ _key, image, video, caption, va
                 <div className={`variant-${variant} image-shell pos-rel ratio-3-4 max-full radius-15 overflow`}>
                     <Image className='bg-image' src={image} alt='' width={1600} height={1000} />
                     {video && <video className='bg-image' src={video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
-                    <button className='button-secondary pos-abs top-30 left-30 z-2' onClick={handleOpen}>
+                    <button className='button-secondary lightbox-trigger pos-abs top-30 left-30 z-2' onClick={handleOpen}>
                         <img src="/images/expand.svg" alt="" width="16" height="14" />
                     </button>
                 </div>

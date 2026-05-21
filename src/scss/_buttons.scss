@@ -50,6 +50,17 @@
     }
 }
 
+@media (hover: hover) {
+    .lightbox-trigger {
+        opacity: 0;
+        transition: opacity .3s ease;
+    }
+    .image-shell:hover .lightbox-trigger,
+    .lightbox-trigger:focus-visible {
+        opacity: 1;
+    }
+}
+
 .button-nav {
     height: 100%;
     padding: 8px 15px;

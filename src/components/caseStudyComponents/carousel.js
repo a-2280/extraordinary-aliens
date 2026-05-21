@@ -46,8 +46,8 @@ export default function Carousel({ slides, variant = "normal" }) {
                 <span className='label label-left'>Prev</span>
                 <span className='label label-right'>Next</span>
             </div>
-            <div className={`variant-${variant} pos-rel`}>
-                <button className='button-secondary carousel-expand pos-abs top-30 left-30 z-3' onClick={handleOpen}>
+            <div className={`variant-${variant} image-shell pos-rel`}>
+                <button className='button-secondary lightbox-trigger carousel-expand pos-abs top-30 left-30 z-3' onClick={handleOpen}>
                     <img src="/images/expand.svg" alt="" width="16" height="14" />
                 </button>
                 <Swiper className={`variant-${variant} pos-rel radius-15 overflow`} slidesPerView={1} loop={slides.length > 1} speed={500} spaceBetween={15} onSwiper={s => (swiperRef.current = s)} onSlideChange={s => setCurrentIndex(s.realIndex)}>

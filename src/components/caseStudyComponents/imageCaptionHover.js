@@ -10,7 +10,7 @@ export default function ImageCaptionHover({ _key, image, video, caption, variant
     const ctx = useImageModal()
     const handleOpen = () => ctx?.open(_key)
     const [isExpanded, setIsExpanded] = useState(false)
-    const [showClamp, setShowClamp] = useState(true)
+    const [isFullyExpanded, setIsFullyExpanded] = useState(false)
     const [collapsedHeight, setCollapsedHeight] = useState(0)
     const [fullHeight, setFullHeight] = useState(0)
     const [isOverflowing, setIsOverflowing] = useState(false)
@@ -31,29 +31,43 @@ export default function ImageCaptionHover({ _key, image, video, caption, variant
             setIsOverflowing(full > collapsed + 1)
         }
         measure()
+        let cancelled = false
+        if (typeof document !== 'undefined' && document.fonts?.ready) {
+            document.fonts.ready.then(() => { if (!cancelled) measure() })
+        }
         window.addEventListener('resize', measure)
-        return () => window.removeEventListener('resize', measure)
+        return () => {
+            cancelled = true
+            window.removeEventListener('resize', measure)
+        }
     }, [caption])
 
     const handleMouseEnter = () => {
-        setShowClamp(false)
         setIsExpanded(true)
     }
 
     const handleMouseLeave = () => {
-        setIsExpanded(false)
+        if (isFullyExpanded && captionRef.current) {
+            setFullHeight(captionRef.current.scrollHeight)
+            setIsFullyExpanded(false)
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => setIsExpanded(false))
+            })
+        } else {
+            setIsExpanded(false)
+        }
     }
 
     const handleTransitionEnd = (e) => {
         if (e.propertyName !== 'max-height') return
-        if (!isExpanded) setShowClamp(true)
+        if (isExpanded) setIsFullyExpanded(true)
     }
 
     if (!image) return null
 
     const captionStyle = isOverflowing
         ? {
-            maxHeight: isExpanded ? `${fullHeight}px` : `${collapsedHeight}px`,
+            maxHeight: isFullyExpanded ? 'none' : (isExpanded ? `${fullHeight}px` : `${collapsedHeight}px`),
             overflow: 'hidden',
             transition: 'max-height 0.4s ease',
         }
@@ -76,7 +90,7 @@ export default function ImageCaptionHover({ _key, image, video, caption, variant
                 <div className='p15 pb0 flex gap-40 space-between caption-row caption-row-clamp'>
                     <div
                         ref={captionRef}
-                        className={`h4 text-grey-4 max-600${showClamp && !isExpanded ? ' line-clamp-2' : ''}`}
+                        className={`h4 text-grey-4 max-600${!isExpanded ? ' line-clamp-2' : ''}`}
                         style={captionStyle}
                         onTransitionEnd={handleTransitionEnd}
                     >

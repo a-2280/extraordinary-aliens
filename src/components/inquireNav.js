@@ -6,9 +6,9 @@ export default function InquireNav({ inquireOnly }) {
             {inquireOnly ? (
                 <span className="f-nav text-grey-6">Extraordinary Aliens</span>
             ) : (
-                <Link href="/" className="f-nav text-grey-6 pointer">
+                <div className="f-nav text-grey-6 pointer">
                     Extraordinary Aliens
-                </Link>
+                </div>
             )}
         </header>
     )

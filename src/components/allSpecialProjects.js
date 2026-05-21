@@ -31,10 +31,9 @@ export default function AllSpecialProjects({ projects }) {
 
 function Project({ project, cursorRef }) {
     const [activeIndex, setActiveIndex] = useState(0)
-    const rowRef = useRef(null)
 
     return (
-        <div ref={rowRef} className='grid col-4 pb150 m-flex m-flex-col m-gap-30'>
+        <div className='grid col-4 pb150 m-flex m-flex-col m-gap-30'>
             <p className='h4 text-grey-6 pl30 fade--in m-pl24' data-sal>
                 {project.title}
             </p>
@@ -48,16 +47,17 @@ function Project({ project, cursorRef }) {
                     </div>
                 </div>
                 <div className='max-full m-pr10'>
-                    <ProjectSlider images={project.images} slug={project.slug.current} cursorRef={cursorRef} rowRef={rowRef} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
+                    <ProjectSlider images={project.images} slug={project.slug.current} cursorRef={cursorRef} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
                 </div>
             </div>
         </div>
     )
 }
 
-function ProjectSlider({ images, slug, cursorRef, rowRef, setActiveIndex }) {
+function ProjectSlider({ images, slug, cursorRef, setActiveIndex }) {
     const router = useRouter()
     const trackRef = useRef(null)
+    const overlayRef = useRef(null)
     const isHoveringRef = useRef(false)
     const isHoveringRightRef = useRef(false)
     const touchStartRef = useRef(null)
@@ -129,21 +129,36 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, setActiveIndex }) {
         if (images.length <= 1) return
         if (isTouchDevice()) return
         const id = setInterval(() => {
+            if (typeof document !== "undefined" && document.hidden) return
             if (isHoveringRef.current) return
             advanceRef.current()
         }, 4000)
-        return () => clearInterval(id)
+
+        const resyncToCleanState = () => {
+            if (!trackRef.current) return
+            gsap.killTweensOf(trackRef.current)
+            const normalized = ((indexRef.current % images.length) + images.length) % images.length
+            indexRef.current = normalized
+            setActiveIndex(normalized)
+            gsap.set(trackRef.current, { xPercent: -normalized * 100 })
+        }
+
+        document.addEventListener("visibilitychange", resyncToCleanState)
+        return () => {
+            clearInterval(id)
+            document.removeEventListener("visibilitychange", resyncToCleanState)
+        }
     }, [images.length])
 
-    const isLeftOfRow = clientX => {
-        const rect = rowRef.current?.getBoundingClientRect()
+    const isLeftOfImage = clientX => {
+        const rect = overlayRef.current?.getBoundingClientRect()
         if (!rect) return true
-        return clientX - rect.left < rect.width / 2
+        return clientX - rect.left < rect.width * 2 / 3
     }
 
     const handleMouseMove = e => {
         if (isTouchDevice()) return
-        const isLeft = isLeftOfRow(e.clientX)
+        const isLeft = isLeftOfImage(e.clientX)
         const wasRight = isHoveringRightRef.current
         isHoveringRef.current = true
         isHoveringRightRef.current = !isLeft
@@ -171,7 +186,7 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, setActiveIndex }) {
             router.push(`/special-projects/${slug}`)
             return
         }
-        const isLeft = isLeftOfRow(e.clientX)
+        const isLeft = isLeftOfImage(e.clientX)
         if (isLeft) {
             router.push(`/special-projects/${slug}`)
             return
@@ -213,6 +228,7 @@ function ProjectSlider({ images, slug, cursorRef, rowRef, setActiveIndex }) {
                 ))}
             </div>
             <div
+                ref={overlayRef}
                 className='overlay pos-abs top-0 left-0 w-100 h-100 cursor-none z-2'
                 style={{ touchAction: 'pan-y' }}
                 onMouseMove={handleMouseMove}

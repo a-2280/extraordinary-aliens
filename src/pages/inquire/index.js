@@ -1,4 +1,3 @@
-import { useState } from "react"
 import "../../scss/site.scss"
 import Layout from "@/layouts/layout"
 import InquireNav from "@/components/inquireNav"
@@ -15,10 +14,9 @@ export async function getStaticProps() {
 }
 
 export default function InquireIndex({ layout, inquire }) {
-    const [hoveredButton, setHoveredButton] = useState(null)
     return (
-        <Layout headerData={layout?.header} header={<InquireNav />} footer={<InquireFooter inquire={inquire} hoveredButton={hoveredButton} className="pos-abs bottom-28 left-28 m-hide" />} hideContactCta>
-            <InquireContent inquire={inquire} onButtonHover={setHoveredButton} />
+        <Layout headerData={layout?.header} header={<InquireNav inquireOnly={inquire?.inquireOnly} />} footer={<InquireFooter inquire={inquire} className="pos-abs bottom-28 left-28 m-hide" />} hideContactCta>
+            <InquireContent inquire={inquire} />
         </Layout>
     )
 }

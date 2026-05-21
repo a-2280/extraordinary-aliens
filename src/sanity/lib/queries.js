@@ -270,7 +270,10 @@ export const ABOUT_QUERY = `*[_type == "layout"][0].aboutPage->{
   "video": video.asset->url
 }`
 
+export const INQUIRE_ONLY_QUERY = `*[_type == "layout"][0].inquirePage->.inquireOnly`
+
 export const INQUIRE_QUERY = `*[_type == "layout"][0].inquirePage->{
+  inquireOnly,
   description[]{
     ...,
     markDefs[]{
@@ -289,10 +292,12 @@ export const INQUIRE_QUERY = `*[_type == "layout"][0].inquirePage->{
       }
     }
   },
-  buttons[]{ _key, title, link, "image": image.asset->url, "video": video.asset->url },
+  buttons[]{ _key, title, link },
   "footerImage": footerImage.asset->url,
   "footerVideo": footerVideo.asset->url,
   location,
+  "locationImage": locationImage.asset->url,
+  "locationVideo": locationVideo.asset->url,
   copyright
 }`
 

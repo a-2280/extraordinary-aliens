@@ -14,6 +14,13 @@ export default defineType({
             validation: Rule => Rule.required(),
         }),
         defineField({
+            name: "inquireOnly",
+            title: "Inquire Only Mode",
+            description: "When on, the rest of the site redirects to /inquire.",
+            type: "boolean",
+            initialValue: false,
+        }),
+        defineField({
             name: "description",
             title: "Description",
             type: "array",
@@ -80,10 +87,8 @@ export default defineType({
                     fields: [
                         { name: "title", title: "Title", type: "string", validation: Rule => Rule.required() },
                         { name: "link", title: "Link", type: "string" },
-                        { name: "image", title: "Image", type: "image" },
-                        { name: "video", title: "Video (optional, plays over image)", type: "file", options: { accept: "video/*" } },
                     ],
-                    preview: { select: { title: "title", media: "image" } },
+                    preview: { select: { title: "title" } },
                 },
             ],
         }),
@@ -102,6 +107,17 @@ export default defineType({
             name: "location",
             title: "Location",
             type: "string",
+        }),
+        defineField({
+            name: "locationImage",
+            title: "Location Hover Image",
+            type: "image",
+        }),
+        defineField({
+            name: "locationVideo",
+            title: "Location Hover Video",
+            type: "file",
+            options: { accept: "video/*" },
         }),
         defineField({
             name: "copyright",

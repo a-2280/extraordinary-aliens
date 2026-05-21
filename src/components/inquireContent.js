@@ -14,7 +14,7 @@ const components = {
     },
 }
 
-export default function InquireContent({ inquire, onButtonHover }) {
+export default function InquireContent({ inquire }) {
     const [formOpen, setFormOpen] = useState(false)
     const formRef = useRef()
     const buttonRef = useRef()
@@ -120,15 +120,11 @@ export default function InquireContent({ inquire, onButtonHover }) {
                 </div>
                 <div ref={slotRef} className='flex-1 inquire-slot'>
                 <div ref={newDivRef} className='flex gap-3 inquire-buttons m-pt15'>
-                    {inquire?.buttons?.map((button, i) => (
+                    {inquire?.buttons?.map(button => (
                         <a
                             key={button._key}
                             href={button.link}
                             className='button-nav w-100'
-                            onMouseEnter={() => onButtonHover?.(i)}
-                            onMouseLeave={() => onButtonHover?.(null)}
-                            onFocus={() => onButtonHover?.(i)}
-                            onBlur={() => onButtonHover?.(null)}
                         >
                             <p className="h5 text-black">{button.title}</p>
                         </a>

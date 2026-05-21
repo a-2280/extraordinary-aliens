@@ -132,12 +132,22 @@ export default function InquireContent({ inquire }) {
                 </div>
                 <form
                     ref={formRef}
+                    name='inquire-form'
+                    method='POST'
+                    data-netlify='true'
                     style={{ visibility: "hidden", opacity: 0, display: "none" }}
                     className='contact-form flex flex-col gap-50 max-500 m-pb45'
-                    onSubmit={e => {
+                    onSubmit={async e => {
                         e.preventDefault()
+                        const data = new URLSearchParams(new FormData(e.currentTarget))
+                        await fetch("/", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                            body: data.toString(),
+                        })
                         setFormOpen(false)
                     }}>
+                    <input type='hidden' name='form-name' value='inquire-form' />
                     <div className='flex flex-col gap-20'>
                         <label className='contact-field flex flex-col'>
                             <input placeholder='Name*' type='text' name='name' className='contact-input' required />

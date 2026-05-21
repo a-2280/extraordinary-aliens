@@ -424,6 +424,14 @@ a {
     padding-top: 90px;
 }
 
+.pt100 {
+    padding-top: 100px;
+}
+
+.pb100 {
+    padding-bottom: 100px;
+}
+
 .py200 {
     padding-top: 200px;
     padding-bottom: 200px;
@@ -431,20 +439,6 @@ a {
 
 .mt-5 {
     margin-top: -5px;
-}
-
-.case-study-sections > *:first-child,
-.case-study-sections > section > *:first-child {
-    padding-top: 0;
-}
-
-.case-study-sections > section:not(:first-child) {
-    padding-top: 92px;
-}
-
-.case-study-sections > *:last-child,
-.case-study-sections > section:last-child > *:last-child {
-    padding-bottom: 90px;
 }
 
 .pth {

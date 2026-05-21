@@ -6,7 +6,7 @@ export default function InquireNav({ inquireOnly }) {
             {inquireOnly ? (
                 <span className="f-nav text-grey-6">Extraordinary Aliens</span>
             ) : (
-                <div className="f-nav text-grey-6 pointer">
+                <div className="f-nav text-grey-6">
                     Extraordinary Aliens
                 </div>
             )}

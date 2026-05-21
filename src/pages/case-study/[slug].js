@@ -1,6 +1,6 @@
 import "../../scss/site.scss"
 import Layout from "@/layouts/layout"
-import { fetchLayout, fetchContactCta, fetchProjectSlugs, fetchProjectBySlug, fetchProjectNav, fetchInquireOnly } from "@/sanity/lib/fetch"
+import { fetchLayout, fetchContactCta, fetchProjectSlugs, fetchProjectBySlug, fetchProjectNav } from "@/sanity/lib/fetch"
 import CaseStudyContent from "@/components/caseStudyContent"
 import MoreProjects from "@/components/moreProjects"
 
@@ -13,9 +13,6 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    if (await fetchInquireOnly()) {
-        return { redirect: { destination: "/inquire", permanent: false }, revalidate: 60 }
-    }
     const [layout, contactCta, project, projectNav] = await Promise.all([
         fetchLayout(),
         fetchContactCta(),

@@ -1,14 +1,11 @@
 import AboutHero from "@/components/aboutHero"
 import "../../scss/site.scss"
 import Layout from "@/layouts/layout"
-import { fetchLayout, fetchContactCta, fetchAbout, fetchInquireOnly } from "@/sanity/lib/fetch"
+import { fetchLayout, fetchContactCta, fetchAbout } from "@/sanity/lib/fetch"
 import AboutContent from "@/components/aboutContent"
 import AboutImage from "@/components/aboutImage"
 
 export async function getStaticProps() {
-    if (await fetchInquireOnly()) {
-        return { redirect: { destination: "/inquire", permanent: false }, revalidate: 60 }
-    }
     const [layout, contactCta, about] = await Promise.all([fetchLayout(), fetchContactCta(), fetchAbout()])
     return {
         props: { layout: layout ?? null, contactCta: contactCta ?? null, about: about ?? null },

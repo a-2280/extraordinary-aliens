@@ -292,7 +292,7 @@ export const INQUIRE_QUERY = `*[_type == "layout"][0].inquirePage->{
       }
     }
   },
-  buttons[]{ _key, title, link },
+  buttons[]{ _key, title },
   "footerImage": footerImage.asset->url,
   "footerVideo": footerVideo.asset->url,
   location,

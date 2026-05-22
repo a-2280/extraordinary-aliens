@@ -16,12 +16,14 @@ const components = {
 
 export default function InquireContent({ inquire }) {
     const [formOpen, setFormOpen] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const formRef = useRef()
     const buttonRef = useRef()
     const newDivRef = useRef()
     const inquireTextRef = useRef()
     const contactTextRef = useRef()
     const slotRef = useRef()
+    const imageWrapperRef = useRef()
     const ctaInitRef = useRef(true)
     const ctaNaturalHRef = useRef(0)
 
@@ -33,6 +35,19 @@ export default function InquireContent({ inquire }) {
         window.addEventListener("keydown", onKey)
         return () => window.removeEventListener("keydown", onKey)
     }, [formOpen])
+
+    useEffect(() => {
+        if (!newDivRef.current || !imageWrapperRef.current) return
+        if (window.matchMedia("(max-width: 768px)").matches) return
+        const wrap = imageWrapperRef.current
+        const observer = new ResizeObserver(entries => {
+            for (const entry of entries) {
+                wrap.style.width = `${entry.contentRect.width}px`
+            }
+        })
+        observer.observe(newDivRef.current)
+        return () => observer.disconnect()
+    }, [])
 
     useGSAP(() => {
         gsap.set(buttonRef.current, { transition: "none" })
@@ -114,61 +129,73 @@ export default function InquireContent({ inquire }) {
                         </div>
                     </div>
                     <button ref={buttonRef} className='button flex align-center fade--in delay-100 inquire-cta' data-sal onClick={() => setFormOpen(true)}>
-                        <img className="icon" src="/images/top-right.svg" alt="" width="14" height="9" />
+                        <img className='icon' src='/images/top-right.svg' alt='' width='14' height='9' />
                         <p>Book a call</p>
                     </button>
                 </div>
                 <div ref={slotRef} className='flex-1 inquire-slot'>
-                <div ref={newDivRef} className='flex gap-3 inquire-buttons m-pt15'>
-                    {inquire?.buttons?.map(button => (
-                        <a
-                            key={button._key}
-                            href={button.link}
-                            className='button-nav w-100'
-                        >
-                            <p className="h5 text-black">{button.title}</p>
-                        </a>
-                    ))}
-                </div>
-                <form
-                    ref={formRef}
-                    name='inquire-form'
-                    method='POST'
-                    data-netlify='true'
-                    style={{ visibility: "hidden", opacity: 0, display: "none" }}
-                    className='contact-form flex flex-col gap-50 max-500 m-pb45'
-                    onSubmit={async e => {
-                        e.preventDefault()
-                        const data = new URLSearchParams(new FormData(e.currentTarget))
-                        await fetch("/", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                            body: data.toString(),
-                        })
-                        setFormOpen(false)
-                    }}>
-                    <input type='hidden' name='form-name' value='inquire-form' />
-                    <div className='flex flex-col gap-20'>
-                        <label className='contact-field flex flex-col'>
-                            <input placeholder='Name*' type='text' name='name' className='contact-input' required />
-                        </label>
-                        <label className='contact-field flex flex-col'>
-                            <input placeholder='Company Name' type='text' name='company' className='contact-input' />
-                        </label>
-                        <label className='contact-field flex flex-col'>
-                            <input placeholder='Email*' type='email' name='email' className='contact-input' required />
-                        </label>
-                        <label className='contact-field flex flex-col'>
-                            <input placeholder='Website/Instagram' type='text' name='website' className='contact-input' />
-                        </label>
+                    <div ref={newDivRef} className='flex gap-3 inquire-buttons m-pt15'>
+                        {inquire?.buttons?.map(button => (
+                            <div key={button._key} className='inquire-tag w-100'>
+                                <p className='h5 text-black'>{button.title}</p>
+                            </div>
+                        ))}
+                        <div ref={imageWrapperRef} className="inquire-image-wrap">
+                            <div className='m-hide bg-grey pos-rel ratio-16-10 radius-15 overflow inquire-content-image'>
+                                {inquire?.footerImage && <img className='bg-image' src={inquire.footerImage} alt='' />}
+                                {inquire?.footerVideo && <video className='bg-image' src={inquire.footerVideo} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
+                            </div>
+                        </div>
                     </div>
-                    <button type='submit' className='button'>
-                        <p>Check Availability</p>
-                    </button>
-                </form>
+                    <form
+                        ref={formRef}
+                        name='inquire-form'
+                        method='POST'
+                        netlify
+                        style={{ visibility: "hidden", opacity: 0, display: "none" }}
+                        className='contact-form flex flex-col gap-50 max-500 m-pb45'
+                        onSubmit={async e => {
+                            e.preventDefault()
+                            if (isSubmitting) return
+                            setIsSubmitting(true)
+                            try {
+                                const data = new URLSearchParams(new FormData(e.currentTarget))
+                                await fetch("/", {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                                    body: data.toString(),
+                                })
+                                setFormOpen(false)
+                            } finally {
+                                setIsSubmitting(false)
+                            }
+                        }}>
+                        <input type='hidden' name='form-name' value='inquire-form' />
+                        <div className='flex flex-col gap-20'>
+                            <label className='contact-field flex flex-col'>
+                                <input placeholder='Name*' type='text' name='name' className='contact-input' required />
+                            </label>
+                            <label className='contact-field flex flex-col'>
+                                <input placeholder='Company Name' type='text' name='company' className='contact-input' />
+                            </label>
+                            <label className='contact-field flex flex-col'>
+                                <input placeholder='Email*' type='email' name='email' className='contact-input' required />
+                            </label>
+                            <label className='contact-field flex flex-col'>
+                                <input placeholder='Links' type='text' name='website' className='contact-input' />
+                            </label>
+                            <label className='contact-field flex flex-col'>
+                                <input placeholder='Message' type='text' name='message' className='contact-input contact-input-tall' />
+                            </label>
+                        </div>
+                        <button type='submit' className='button flex align-center' disabled={isSubmitting}>
+                            {isSubmitting && <span className='spinner' aria-hidden />}
+                            <p>Check Availability</p>
+                        </button>
+                    </form>
+                </div>
             </div>
-            </div>
-            <InquireFooter inquire={inquire} className="m-show" />
+            <InquireFooter inquire={inquire} className='m-show' />
         </div>
     )
 }

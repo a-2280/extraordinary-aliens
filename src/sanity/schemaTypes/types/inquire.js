@@ -86,7 +86,6 @@ export default defineType({
                     type: "object",
                     fields: [
                         { name: "title", title: "Title", type: "string", validation: Rule => Rule.required() },
-                        { name: "link", title: "Link", type: "string" },
                     ],
                     preview: { select: { title: "title" } },
                 },

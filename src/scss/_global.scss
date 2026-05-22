@@ -133,11 +133,6 @@ a {
 
 .form-open {
     @media (max-width: 768px) {
-        .inquire-cta {
-            overflow: hidden;
-            pointer-events: none;
-        }
-
         .inquire-slot {
             display: flex;
             flex-direction: column-reverse;

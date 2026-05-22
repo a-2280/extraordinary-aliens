@@ -16,16 +16,15 @@ const components = {
 
 export default function InquireContent({ inquire }) {
     const [formOpen, setFormOpen] = useState(false)
+    const [ctaDisplay, setCtaDisplay] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const formRef = useRef()
-    const buttonRef = useRef()
     const newDivRef = useRef()
     const inquireTextRef = useRef()
     const contactTextRef = useRef()
     const slotRef = useRef()
     const imageWrapperRef = useRef()
-    const ctaInitRef = useRef(true)
-    const ctaNaturalHRef = useRef(0)
+    const ctaContentRef = useRef()
 
     useEffect(() => {
         if (!formOpen) return
@@ -50,7 +49,14 @@ export default function InquireContent({ inquire }) {
     }, [])
 
     useGSAP(() => {
-        gsap.set(buttonRef.current, { transition: "none" })
+        if (ctaDisplay === formOpen) return
+        gsap.timeline()
+            .to(ctaContentRef.current, { autoAlpha: 0, duration: 0.18, ease: "power2.in" })
+            .call(() => setCtaDisplay(formOpen))
+            .to(ctaContentRef.current, { autoAlpha: 1, duration: 0.18, ease: "power2.out" })
+    }, { dependencies: [formOpen] })
+
+    useGSAP(() => {
         const out = 0.25
         const inDur = 0.3
         const stag = 0.1
@@ -58,7 +64,7 @@ export default function InquireContent({ inquire }) {
         const form = formRef.current
 
         const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches
-        const closedLeft = [inquireTextRef.current, buttonRef.current]
+        const closedLeft = [inquireTextRef.current]
         const openLeft = [contactTextRef.current]
         const closedRight = [newDivRef.current]
         const openRight = isMobile ? [form, newDivRef.current] : [form]
@@ -87,33 +93,6 @@ export default function InquireContent({ inquire }) {
         gsap.to(leavingRight, { autoAlpha: 0, duration: out, delay: stag, ease: "power2.in" })
         gsap.to(enteringLeft, { autoAlpha: 1, duration: inDur, delay: out, ease: "power2.out" })
         gsap.to(enteringRight, { autoAlpha: 1, duration: inDur, delay: out + stag, ease: "power2.out" })
-
-        const cta = buttonRef.current
-        if (isMobile) {
-            if (ctaInitRef.current) {
-                ctaNaturalHRef.current = cta.offsetHeight
-                ctaInitRef.current = false
-            } else if (formOpen) {
-                gsap.fromTo(cta,
-                    { height: ctaNaturalHRef.current || cta.offsetHeight, marginTop: 0 },
-                    { height: 0, marginTop: -20, duration: out + inDur, delay: stag, ease: "power2.inOut" }
-                )
-            } else {
-                gsap.fromTo(cta,
-                    { height: 0, marginTop: -20 },
-                    {
-                        height: ctaNaturalHRef.current,
-                        marginTop: 0,
-                        duration: out + inDur,
-                        delay: stag,
-                        ease: "power2.inOut",
-                        onComplete: () => gsap.set(cta, { clearProps: "height,marginTop" }),
-                    }
-                )
-            }
-        } else {
-            gsap.set(cta, { clearProps: "height,marginTop" })
-        }
     }, { dependencies: [formOpen] })
 
     return (
@@ -128,9 +107,11 @@ export default function InquireContent({ inquire }) {
                             <PortableText value={inquire?.formText} components={components} />
                         </div>
                     </div>
-                    <button ref={buttonRef} className='button flex align-center fade--in delay-100 inquire-cta' data-sal onClick={() => setFormOpen(true)}>
-                        <img className='icon' src='/images/top-right.svg' alt='' width='14' height='9' />
-                        <p>Book a call</p>
+                    <button className='button flex align-center fade--in delay-100 inquire-cta' data-sal onClick={() => setFormOpen(o => !o)}>
+                        <span ref={ctaContentRef} className='flex align-center'>
+                            {!ctaDisplay && <img className='icon' src='/images/top-right.svg' alt='' width='14' height='9' />}
+                            <p>{ctaDisplay ? "Close" : "Schedule"}</p>
+                        </span>
                     </button>
                 </div>
                 <div ref={slotRef} className='flex-1 inquire-slot'>

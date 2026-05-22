@@ -16,6 +16,7 @@ const components = {
 
 export default function InquireContent({ inquire }) {
     const [formOpen, setFormOpen] = useState(false)
+    const [slotOpen, setSlotOpen] = useState(false)
     const [ctaDisplay, setCtaDisplay] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const formRef = useRef()
@@ -66,8 +67,8 @@ export default function InquireContent({ inquire }) {
         const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches
         const closedLeft = [inquireTextRef.current]
         const openLeft = [contactTextRef.current]
-        const closedRight = [newDivRef.current]
-        const openRight = isMobile ? [form, newDivRef.current] : [form]
+        const closedRight = isMobile ? [] : [newDivRef.current]
+        const openRight = [form]
 
         const [leavingLeft, leavingRight, enteringLeft, enteringRight] = formOpen
             ? [closedLeft, closedRight, openLeft, openRight]
@@ -84,7 +85,10 @@ export default function InquireContent({ inquire }) {
             delay: stag,
             ease: "power2.inOut",
             onComplete: () => {
-                if (!formOpen) gsap.set(form, { display: "none" })
+                if (!formOpen) {
+                    gsap.set(form, { display: "none" })
+                    if (isMobile) setSlotOpen(false)
+                }
                 gsap.set(slot, { clearProps: "height" })
             },
         })
@@ -97,7 +101,7 @@ export default function InquireContent({ inquire }) {
 
     return (
         <div className='p28 h-100vh flex flex-col justify-center fade--in m-justify-start' data-sal>
-            <div className={`flex gap-40 m-flex-col m-mt75 m-gap-30${formOpen ? " form-open" : ""}`}>
+            <div className={`flex gap-40 m-flex-col m-mt75 m-gap-30${slotOpen ? " form-open" : ""}`}>
                 <div className='flex-1 flex flex-col gap-20 m-justify-center'>
                     <div className='text-stack'>
                         <div ref={inquireTextRef} className='h1 max-950'>
@@ -107,7 +111,13 @@ export default function InquireContent({ inquire }) {
                             <PortableText value={inquire?.formText} components={components} />
                         </div>
                     </div>
-                    <button className='button flex align-center fade--in delay-100 inquire-cta' data-sal onClick={() => setFormOpen(o => !o)}>
+                    <button className='button flex align-center fade--in delay-100 inquire-cta' data-sal onClick={() => {
+                        const willOpen = !formOpen
+                        const isMobile = window.matchMedia("(max-width: 768px)").matches
+                        if (willOpen) setSlotOpen(true)
+                        else if (!isMobile) setSlotOpen(false)
+                        setFormOpen(willOpen)
+                    }}>
                         <span ref={ctaContentRef} className='flex align-center'>
                             {!ctaDisplay && <img className='icon' src='/images/top-right.svg' alt='' width='14' height='9' />}
                             <p>{ctaDisplay ? "Close" : "Book a call"}</p>
@@ -146,6 +156,8 @@ export default function InquireContent({ inquire }) {
                                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
                                     body: data.toString(),
                                 })
+                                const isMobile = window.matchMedia("(max-width: 768px)").matches
+                                if (!isMobile) setSlotOpen(false)
                                 setFormOpen(false)
                             } finally {
                                 setIsSubmitting(false)

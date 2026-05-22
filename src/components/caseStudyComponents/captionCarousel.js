@@ -51,7 +51,7 @@ export default function CaptionCarousel({ slides, variant = "normal" }) {
             </div>
             <div className={`variant-${variant} caption-wrapper pos-rel`}>
                 <div className='image-sticky-area pos-rel'>
-                    <div className={`variant-${variant} image-shell pos-rel ratio-3-4 max-full radius-15 overflow`}>
+                    <div className={`variant-${variant} image-shell pos-rel ratio-3-4 radius-15 overflow`}>
                         <button className='button-secondary lightbox-trigger carousel-expand pos-abs top-30 left-30 z-3' onClick={handleOpen}>
                             <img src='/images/expand.svg' alt='' width='16' height='14' />
                         </button>

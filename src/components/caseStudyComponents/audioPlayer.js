@@ -69,16 +69,16 @@ export default function AudioPlayer({ title, description, audio }) {
     const progress = duration > 0 ? (currentTime / duration) * 100 : 0
 
     return (
-        <div className='ratio-3-4 max-full flex flex-col space-between'>
+        <div className='ratio-3-4 flex flex-col space-between'>
             <div className='m-show h-100 flex felx-col align-center'>
-                <p className='f-20 text-grey-4 max-450'>{description}</p>
+                <p className='f-20 text-grey-4 max-450 m-pb15'>{description}</p>
             </div>
             <p className='f-20 text-grey-4 max-450 m-hide'>{description}</p>
             <div className='bg-grey-2 radius-15 p30 flex flex-col gap-40 audio-player'>
                 <div className='flex align-start gap-20 space-between'>
                     <p className='uppercase'>{title}</p>
                     <div className='flex gap-15 align-center mt-5'>
-                        <p className="nowrap">
+                        <p className='nowrap'>
                             {formatTime(currentTime)} / {formatTime(duration)}
                         </p>
                         <button className='audio-button' onClick={toggle}>

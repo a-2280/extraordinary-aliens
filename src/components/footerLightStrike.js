@@ -3,7 +3,7 @@ import gsap from "gsap"
 import { Renderer, Program, Mesh, Triangle, Vec2 } from "ogl"
 
 const CONFIG = {
-    baseBloomRadius: 0.38,
+    baseBloomRadius: 0.26,
     velocityBloomGain: -0.08,
     baseBrightness: 0.3,
     velocityBrightnessGain: 0.35,
@@ -12,7 +12,7 @@ const CONFIG = {
     stretchStrength: 0.25,
     stretchMax: 1.0,
 
-    dispersionBase: 0.09,
+    dispersionBase: 0.062,
     dispersionVelocityGain: 0.08,
 
     exposure: 0.85,
@@ -36,7 +36,7 @@ const CONFIG = {
     breathAmplitudeBloom: 0.06,
 
     dispAngleMinVelocity: 0.02,
-    dispAngleEasing: 1.6,
+    dispAngleEasing: 0.4,
 }
 
 function prefersReducedMotion() {

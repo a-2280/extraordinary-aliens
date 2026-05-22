@@ -17,6 +17,8 @@ async function getInquireOnly() {
 }
 
 export async function proxy(request) {
+    if (process.env.NODE_ENV !== "production") return NextResponse.next()
+
     if (await getInquireOnly()) {
         return NextResponse.redirect(new URL("/inquire", request.url))
     }

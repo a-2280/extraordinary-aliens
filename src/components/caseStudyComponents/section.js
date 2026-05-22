@@ -3,11 +3,12 @@ import renderComponent from "./registry"
 const isFullWidth = side => side?.[0]?.variant === "fullWidth"
 const startsSection = side => side?.[0]?._type === "textBlock"
 const hasCaptionCarousel = side => side?.[0]?._type === "captionCarousel"
+const hasAudioPlayer = side => side?.[0]?._type === "audioPlayer"
 
 export default function Section({ left, right }) {
-    const hasText = startsSection(left) || startsSection(right)
+    const needsTopPad = startsSection(left) || startsSection(right) || hasAudioPlayer(left) || hasAudioPlayer(right)
     const isSplit = left?.length > 0 && right?.length > 0
-    const wrapperPadding = hasText ? (isSplit ? " pt100" : " pt100 pb100") : ""
+    const wrapperPadding = needsTopPad ? (isSplit ? " pt90" : " pt90 pb100") : ""
     if (isFullWidth(left)) {
         return (
             <div className={`w-100${wrapperPadding}`}>

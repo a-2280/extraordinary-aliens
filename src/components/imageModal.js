@@ -195,10 +195,10 @@ export default function ImageModal() {
 
     return createPortal(
         <div ref={overlayRef} className='image-modal' onClick={close}>
-            <div ref={frameRef} className='image-modal__frame radius-15 overflow' onClick={stop} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+            <div ref={frameRef} className='image-modal__frame radius-15 overflow ratio-3-4' onClick={stop} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
                 <Image
                     key={rendered._key}
-                    className='image-modal__img'
+                    className='bg-image'
                     src={rendered.image}
                     alt=''
                     width={renderedWidth}

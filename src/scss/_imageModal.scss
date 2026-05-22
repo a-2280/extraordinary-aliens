@@ -24,22 +24,12 @@ html.image-modal-open .masthead ~ *:not(.image-modal) {
 
 .image-modal__frame {
     position: relative;
-    display: inline-block;
-    max-width: calc(100vw - 200px);
-    max-height: 80vh;
+    width: min(calc(100vw - 200px), 60vh);
     line-height: 0;
 
     @media (max-width: 768px) {
-        max-width: calc(100vw - 28px);
+        width: calc(100vw - 28px);
         margin: 0 14px;
-    }
-
-    .image-modal__img {
-        display: block;
-        width: auto;
-        height: auto;
-        max-width: 100%;
-        max-height: 80vh;
     }
 }
 

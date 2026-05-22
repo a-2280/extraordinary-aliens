@@ -45,7 +45,7 @@ export default function Credits({ title, description, credits, tags }) {
     }, [hoveredKey, lastImage])
 
     return (
-        <div className='case-study-credits pt90'>
+        <div className='case-study-credits pt90 m-pb90'>
             <div className='flex m-flex-col m-gap-50'>
                 <div className='flex-1 flex flex-col gap-20'>
                     <p className='h5 fade--in' data-sal>

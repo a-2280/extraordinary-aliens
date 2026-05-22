@@ -52,7 +52,7 @@ export default function Carousel({ slides, variant = "normal" }) {
                 </button>
                 <Swiper className={`variant-${variant} pos-rel radius-15 overflow`} slidesPerView={1} loop={slides.length > 1} speed={500} spaceBetween={15} onSwiper={s => (swiperRef.current = s)} onSlideChange={s => setCurrentIndex(s.realIndex)}>
                     {slides.map((slide, i) => (
-                        <SwiperSlide key={slide._key || i} className='pos-rel ratio-3-4 max-full'>
+                        <SwiperSlide key={slide._key || i} className='pos-rel ratio-3-4'>
                             {slide?.image && <Image className='radius-15' src={slide.image} alt='' fill sizes='(max-width: 768px) 100vw, 50vw' style={{ objectFit: "cover", objectPosition: "center" }} />}
                             {slide?.video && <video className='radius-15' src={slide.video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />}
                         </SwiperSlide>

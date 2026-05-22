@@ -110,7 +110,7 @@ export default function InquireContent({ inquire }) {
                     <button className='button flex align-center fade--in delay-100 inquire-cta' data-sal onClick={() => setFormOpen(o => !o)}>
                         <span ref={ctaContentRef} className='flex align-center'>
                             {!ctaDisplay && <img className='icon' src='/images/top-right.svg' alt='' width='14' height='9' />}
-                            <p>{ctaDisplay ? "Close" : "Schedule"}</p>
+                            <p>{ctaDisplay ? "Close" : "Book a call"}</p>
                         </span>
                     </button>
                 </div>
@@ -171,7 +171,7 @@ export default function InquireContent({ inquire }) {
                         </div>
                         <button type='submit' className='button flex align-center' disabled={isSubmitting}>
                             {isSubmitting && <span className='spinner' aria-hidden />}
-                            <p>Check Availability</p>
+                            <p>Schedule</p>
                         </button>
                     </form>
                 </div>

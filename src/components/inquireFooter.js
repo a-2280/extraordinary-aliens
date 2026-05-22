@@ -40,7 +40,7 @@ export default function InquireFooter({ inquire, className = '' }) {
                 </div>
             </div>
             <div className="m-hide">
-                <div ref={desktopTileRef} className='bg-grey pos-rel ratio-16-10 radius-15 overflow inquire-hover-image' style={{ opacity: 0, visibility: 'hidden' }}>
+                <div ref={desktopTileRef} className='pos-rel ratio-16-10 radius-15 overflow inquire-hover-image' style={{ opacity: 0, visibility: 'hidden' }}>
                     {inquire?.locationImage && <img className='bg-image' src={inquire.locationImage} alt='' />}
                     {inquire?.locationVideo && <video className='bg-image' src={inquire.locationVideo} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
                 </div>

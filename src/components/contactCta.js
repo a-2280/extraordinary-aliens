@@ -96,7 +96,7 @@ export default function ContactCta({ contactCta }) {
                                 <input placeholder='Links' type='text' name='website' className='contact-input' />
                             </label>
                             <label className='contact-field flex flex-col'>
-                                <input placeholder='Message' type='text' name='message' className='contact-input contact-input-tall' />
+                                <textarea placeholder='Message' name='message' rows={3} className='contact-input contact-input-tall' />
                             </label>
                         </div>
                         <button type='submit' className='button'>

@@ -8,8 +8,8 @@ function pushChild(result, child) {
     if (!child) return
     switch (child._type) {
         case "imageCard": {
-            if (!child.image) return
-            result.push({ _key: child._key, image: child.image, video: child.video, caption: child.description })
+            if (!child.image || child.video) return
+            result.push({ _key: child._key, image: child.image, caption: child.description })
             return
         }
         case "carousel": {
@@ -28,14 +28,21 @@ function pushChild(result, child) {
         }
         case "annotationImage":
         case "imageHotspot": {
-            if (!child.image) return
-            result.push({ _key: child._key, image: child.image, video: child.video })
+            if (!child.image || child.video) return
+            result.push({ _key: child._key, image: child.image })
             return
         }
         case "imageExpandableCaption":
         case "imageCaptionHover": {
-            if (!child.image) return
-            result.push({ _key: child._key, image: child.image, video: child.video, caption: child.caption })
+            if (!child.image || child.video) return
+            result.push({ _key: child._key, image: child.image, caption: child.caption })
+            return
+        }
+        case "imageTrio": {
+            for (const item of child.items || []) {
+                if (!item?.image || !item._key || item.video) continue
+                result.push({ _key: item._key, image: item.image })
+            }
             return
         }
     }

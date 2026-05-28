@@ -17,7 +17,7 @@ export default {
                     name: "captionSlide",
                     components: { item: makeBackButtonItem("Caption Carousel") },
                     fields: [
-                        { name: "image", title: "Image", type: "image", validation: Rule => Rule.required() },
+                        { name: "image", title: "Image", type: "image", validation: Rule => Rule.custom((image, context) => image || context.parent?.video ? true : "Add an image or a video") },
                         { name: "video", title: "Video (optional, plays over image)", type: "file", options: { accept: "video/*" } },
                         { name: "caption", title: "Caption", type: "array", of: [{ type: "block" }] },
                     ],
@@ -39,8 +39,8 @@ export default {
             options: {
                 list: [
                     { title: "Full Width", value: "fullWidth" },
-                    { title: "Normal", value: "normal" },
-                    { title: "Cut", value: "cut" },
+                    { title: "Portrait", value: "normal" },
+                    { title: "Landscape", value: "cut" },
                 ],
                 layout: "radio",
             },

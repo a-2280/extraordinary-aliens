@@ -1,7 +1,7 @@
 import { StackIcon } from "@sanity/icons"
 import { makeBackButtonItem } from "../../../components/BackButtonItem"
 
-const childTypes = ["section", "textLarge", "quote", "list", "credits"]
+const childTypes = ["section", "textLarge", "quote", "list", "credits", "imageTrio"]
 
 const itemsOf = childTypes.map(type => ({
     type,

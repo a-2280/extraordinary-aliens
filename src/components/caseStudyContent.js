@@ -5,6 +5,7 @@ import TextLarge from "./caseStudySections/textLarge"
 import Quote from "./caseStudySections/quote"
 import List from "./caseStudySections/list"
 import Credits from "./caseStudySections/credits"
+import ImageTrio from "./caseStudyComponents/imageTrio"
 import Spacer from "./spacer"
 import CaseStudyNav from "./caseStudyNav"
 import { ImageModalProvider } from "./imageModalContext"
@@ -16,6 +17,7 @@ function renderItem(item, project) {
     if (item._type === "quote") return <Quote key={item._key} {...item} />
     if (item._type === "list") return <List key={item._key} {...item} />
     if (item._type === "credits") return <Credits key={item._key} tags={project.tags} {...item} />
+    if (item._type === "imageTrio") return <div key={item._key} className='w-100'><ImageTrio {...item} /></div>
     return <Section key={item._key} {...item} />
 }
 
@@ -56,11 +58,11 @@ function Header({ project }) {
 
     return (
         <div id='introduction' className='p15 flex flex-col gap-15'>
-            {heroImage && (
+            {(heroImage || heroVideo) && (
                 <div>
                     <Spacer className="h75" />
                     <div className='pos-rel ratio-16-9 max-100vh radius-15 overflow'>
-                        <Image className='bg-image' src={heroImage} alt={title || ""} width={1920} height={1080} loading='eager' />
+                        {heroImage && <Image className='bg-image' src={heroImage} alt={title || ""} width={1920} height={1080} loading='eager' />}
                         {heroVideo && <video className='bg-image' src={heroVideo} autoPlay muted loop playsInline preload='auto' aria-hidden='true' />}
                     </div>
                 </div>

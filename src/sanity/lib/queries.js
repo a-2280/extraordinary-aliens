@@ -132,6 +132,15 @@ const CASE_STUDY_ITEM_PROJECTION = `_type == "textLarge" => {
   _type == "section" => {
     left[]{ ${SECTION_CHILD_PROJECTION} },
     right[]{ ${SECTION_CHILD_PROJECTION} }
+  },
+  _type == "imageTrio" => {
+    variant,
+    aspect,
+    items[]{
+      _key,
+      "image": image.asset->url,
+      "video": video.asset->url
+    }
   }`
 
 export const PROJECT_BY_SLUG_QUERY = `*[_type == "projects" && slug.current == $slug][0]{

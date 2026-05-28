@@ -5,9 +5,8 @@ import Image from "next/image"
 import Link from "next/link"
 import gsap from "gsap"
 import { Flip } from "gsap/Flip"
-import { useGSAP } from "@gsap/react"
 
-gsap.registerPlugin(useGSAP, Flip)
+gsap.registerPlugin(Flip)
 
 export default function AllWork({ projects, exitingSlugs = new Set(), onTagClick }) {
     const gridRef = useRef()
@@ -53,55 +52,8 @@ export default function AllWork({ projects, exitingSlugs = new Set(), onTagClick
         flipStateRef.current = null
     })
 
-    useGSAP(
-        () => {
-            if (typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches) return
-
-            const cards = gsap.utils.toArray(gridRef.current.querySelectorAll(".work-card"))
-            const bound = []
-
-            cards.forEach(card => {
-                const tags = card.querySelector(".tags")
-                const image = card.querySelector(".image")
-                gsap.set(tags, { autoAlpha: 0 })
-                gsap.set(image, { filter: "blur(0px)", scale: 1 })
-
-                const others = cards.filter(c => c !== card).map(c => c.querySelector(".image"))
-                let activeTl
-
-                const onEnter = () => {
-                    activeTl?.kill()
-                    activeTl = gsap
-                        .timeline({ defaults: { duration: 0.3, ease: "power2.out" } })
-                        .to(others, { filter: "blur(30px)", scale: 1.2 }, 0)
-                        .to(tags, { autoAlpha: 1 }, 0)
-                }
-
-                const onLeave = () => {
-                    activeTl?.kill()
-                    activeTl = gsap
-                        .timeline({ defaults: { duration: 0.3, ease: "power2.out" } })
-                        .to(others, { filter: "blur(0px)", scale: 1 }, 0)
-                        .to(tags, { autoAlpha: 0 }, 0)
-                }
-
-                card.addEventListener("mouseenter", onEnter)
-                card.addEventListener("mouseleave", onLeave)
-                bound.push([card, onEnter, onLeave])
-            })
-
-            return () => {
-                bound.forEach(([card, onEnter, onLeave]) => {
-                    card.removeEventListener("mouseenter", onEnter)
-                    card.removeEventListener("mouseleave", onLeave)
-                })
-            }
-        },
-        { scope: gridRef, dependencies: [projects] },
-    )
-
     return (
-        <div ref={gridRef} className='p15 grid gap-90 m-gap-80 m-flex m-flex-col pos-rel'>
+        <div ref={gridRef} className='work-grid p15 grid gap-90 m-gap-80 m-flex m-flex-col pos-rel'>
             {projects.map(project => (
                 <Link href={`/case-study/${project.slug.current}`} className={`work-card max-full flex flex-col fade--in ${exitingSlugs.has(project.slug.current) ? "is-exiting" : ""}`} data-sal key={project.slug.current}>
                     <div className='bg-grey pos-rel ratio-16-18 overflow radius-15'>

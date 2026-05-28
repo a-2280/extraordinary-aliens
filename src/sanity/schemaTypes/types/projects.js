@@ -59,7 +59,9 @@ export default defineType({
             title: "Hero Image",
             type: "image",
             fieldset: "caseStudy",
-            validation: Rule => Rule.required(),
+            validation: Rule => Rule.custom((heroImage, context) =>
+                heroImage || context.parent?.heroVideo ? true : "Add a hero image or hero video"
+            ),
         }),
         defineField({
             name: "heroVideo",
@@ -104,6 +106,7 @@ export default defineType({
                 { type: "quote", components: { item: makeBackButtonItem("Case Study") } },
                 { type: "list", components: { item: makeBackButtonItem("Case Study") } },
                 { type: "credits", components: { item: makeBackButtonItem("Case Study") } },
+                { type: "imageTrio", components: { item: makeBackButtonItem("Case Study") } },
                 { type: "sectionGroup", components: { item: makeBackButtonItem("Case Study") } },
             ],
             fieldset: "caseStudy",

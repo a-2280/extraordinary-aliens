@@ -5,10 +5,12 @@ import Image from "next/image"
 import { GrAdd } from "react-icons/gr"
 import { PortableText } from "next-sanity"
 import { useImageModal } from "../imageModalContext"
+import VideoModal from "../videoModal"
 
 export default function ImageCaptionHover({ _key, image, video, caption, variant = "normal" }) {
     const ctx = useImageModal()
-    const handleOpen = () => ctx?.open(_key)
+    const [videoOpen, setVideoOpen] = useState(false)
+    const handleTriggerClick = video ? () => setVideoOpen(true) : () => ctx?.open(_key)
     const [isExpanded, setIsExpanded] = useState(false)
     const [isFullyExpanded, setIsFullyExpanded] = useState(false)
     const [collapsedHeight, setCollapsedHeight] = useState(0)
@@ -63,7 +65,7 @@ export default function ImageCaptionHover({ _key, image, video, caption, variant
         if (isExpanded) setIsFullyExpanded(true)
     }
 
-    if (!image) return null
+    if (!image && !video) return null
 
     const captionStyle = isOverflowing
         ? {
@@ -81,20 +83,22 @@ export default function ImageCaptionHover({ _key, image, video, caption, variant
         <div className={`variant-${variant} caption-wrapper`}>
             <div className='image-sticky-area pos-rel'>
                 <div className={`variant-${variant} image-shell pos-rel ratio-3-4 radius-15 overflow`} {...hoverHandlers}>
-                    <Image className='bg-image' src={image} alt='' width={1600} height={1000} />
+                    {image && <Image className='bg-image' src={image} alt='' width={1600} height={1000} />}
                     {video && <video className='bg-image' src={video} autoPlay muted loop playsInline preload='metadata' aria-hidden='true' />}
-                    <button className='button-secondary lightbox-trigger pos-abs top-30 left-30 z-2' onClick={handleOpen}>
+                    <button className='button-secondary lightbox-trigger pos-abs top-30 left-30 z-2' onClick={handleTriggerClick}>
                         <img src="/images/expand.svg" alt="" width="16" height="14" />
                     </button>
                 </div>
                 <div className='p15 pb0 flex gap-40 space-between caption-row caption-row-clamp'>
-                    <div
-                        ref={captionRef}
-                        className={`h4 text-grey-4 max-600${!isExpanded ? ' line-clamp-2' : ''}`}
-                        style={captionStyle}
-                        onTransitionEnd={handleTransitionEnd}
-                    >
-                        <PortableText value={caption} />
+                    <div style={{ minHeight: `${collapsedHeight + 90}px` }}>
+                        <div
+                            ref={captionRef}
+                            className={`h4 text-grey-4 max-600${!isExpanded ? ' line-clamp-2' : ''}`}
+                            style={captionStyle}
+                            onTransitionEnd={handleTransitionEnd}
+                        >
+                            <PortableText value={caption} />
+                        </div>
                     </div>
                     {isOverflowing && (
                         <div className='p8 radius-5 shrink-0 h-fit'>
@@ -111,6 +115,15 @@ export default function ImageCaptionHover({ _key, image, video, caption, variant
                     )}
                 </div>
             </div>
+            {video && (
+                <VideoModal
+                    open={videoOpen}
+                    onClose={() => setVideoOpen(false)}
+                    src={video}
+                    poster={image}
+                    description={caption}
+                />
+            )}
         </div>
     )
 }

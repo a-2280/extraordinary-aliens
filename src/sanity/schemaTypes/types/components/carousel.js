@@ -26,8 +26,8 @@ export default {
             options: {
                 list: [
                     { title: "Full Width", value: "fullWidth" },
-                    { title: "Normal", value: "normal" },
-                    { title: "Cut", value: "cut" },
+                    { title: "Portrait", value: "normal" },
+                    { title: "Landscape", value: "cut" },
                 ],
                 layout: "radio",
             },

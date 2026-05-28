@@ -195,17 +195,16 @@ export default function ImageModal() {
 
     return createPortal(
         <div ref={overlayRef} className='image-modal' onClick={close}>
-            <div ref={frameRef} className='image-modal__frame radius-15 overflow ratio-3-4' onClick={stop} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+            <div ref={frameRef} className='image-modal__frame radius-15 overflow' onClick={stop} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
                 <Image
                     key={rendered._key}
-                    className='bg-image'
+                    className='image-modal__img'
                     src={rendered.image}
                     alt=''
                     width={renderedWidth}
                     height={renderedHeight}
                     sizes='(max-width: 768px) 100vw, calc(100vw - 200px)'
                 />
-                {rendered.video && <video key={`${rendered._key}-video`} className='bg-image' src={rendered.video} autoPlay muted loop playsInline preload='auto' aria-hidden='true' />}
             </div>
 
             {showNav && (

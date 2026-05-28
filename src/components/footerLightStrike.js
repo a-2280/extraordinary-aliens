@@ -280,7 +280,7 @@ export default function FooterLightStrike() {
                 const w = Math.max(1, rect.width)
                 const h = Math.max(1, rect.height)
                 renderer.setSize(w, h)
-                program.uniforms.uResolution.value.set(w, h)
+                program.uniforms.uResolution.value.set(gl.drawingBufferWidth, gl.drawingBufferHeight)
             }
             setSize()
             state.resizeObs = new ResizeObserver(setSize)

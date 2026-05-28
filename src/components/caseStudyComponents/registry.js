@@ -5,6 +5,7 @@ import AnnotationImageCard from "./annotationImageCard"
 import ImageHotspot from "./imageHotspot"
 import ImageExpandableCaption from "./imageExpandableCaption"
 import ImageCaptionHover from "./imageCaptionHover"
+import ImageTrio from "./imageTrio"
 import AudioPlayer from "./audioPlayer"
 import TextBlock from "./textBlock"
 
@@ -16,6 +17,7 @@ const REGISTRY = {
     imageHotspot: ImageHotspot,
     imageExpandableCaption: ImageExpandableCaption,
     imageCaptionHover: ImageCaptionHover,
+    imageTrio: ImageTrio,
     audioPlayer: AudioPlayer,
     textBlock: TextBlock,
     // Add new component types here, keyed by their schema `name`:

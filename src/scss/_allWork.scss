@@ -1,0 +1,27 @@
+/*--------------------------------------------------------------
+## All Work Grid
+--------------------------------------------------------------*/
+
+@media (min-width: 769px) {
+    .work-grid {
+        .bg-image {
+            transition: filter 0.3s ease, transform 0.3s ease;
+        }
+
+        .tags {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .work-card:hover .tags {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        &:has(.work-card:hover) .work-card:not(:hover) .bg-image {
+            filter: blur(30px);
+            transform: scale(1.2);
+        }
+    }
+}

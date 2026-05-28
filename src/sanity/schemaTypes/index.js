@@ -31,6 +31,7 @@ import annotationImage from './types/components/annotationImage'
 import imageHotspot from './types/components/imageHotspot'
 import imageExpandableCaption from './types/components/imageExpandableCaption'
 import imageCaptionHover from './types/components/imageCaptionHover'
+import imageTrio from './types/components/imageTrio'
 import spot from './types/components/spot'
 import audioPlayer from './types/components/audioPlayer'
 import videoModal from './types/components/videoModal'
@@ -49,5 +50,5 @@ import name from './types/name'
 import inquire from './types/inquire'
 
 export const schema = {
-  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail, colorSwatch, projects, tag, mission, missionCard, specialProjects, specialProjectsPage, specialProjectsSettings, contactCta, section, textLarge, quote, list, credits, sectionGroup, imageCard, imageCarousel, captionCarousel, annotationImage, imageHotspot, imageExpandableCaption, imageCaptionHover, spot, audioPlayer, videoModal, mediaSlide, textBlock, listItem, credit, creditInfo, about, aboutComponentList, studio, approach, capabilities, clientsAndPress, name, inquire],
+  types: [page, layout, header, ctaList, link, pageComponentList, hero, globalComponentList, footer, footerDetails, footerDetail, colorSwatch, projects, tag, mission, missionCard, specialProjects, specialProjectsPage, specialProjectsSettings, contactCta, section, textLarge, quote, list, credits, sectionGroup, imageCard, imageCarousel, captionCarousel, annotationImage, imageHotspot, imageExpandableCaption, imageCaptionHover, imageTrio, spot, audioPlayer, videoModal, mediaSlide, textBlock, listItem, credit, creditInfo, about, aboutComponentList, studio, approach, capabilities, clientsAndPress, name, inquire],
 }

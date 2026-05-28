@@ -10,7 +10,9 @@ export default {
             name: "image",
             title: "Image",
             type: "image",
-            validation: Rule => Rule.required(),
+            validation: Rule => Rule.custom((image, context) =>
+                image || context.parent?.video ? true : "Add an image or a video"
+            ),
         },
         {
             name: "video",

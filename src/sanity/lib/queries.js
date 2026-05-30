@@ -12,7 +12,8 @@ export const HERO_QUERY = `*[_type == "layout"][0].homepage->.components[_type =
   videoModal{
     title,
     description,
-    "video": video.asset->url
+    "video": video.asset->url,
+    bunnyVideoId
   }
 }`
 
@@ -30,7 +31,7 @@ export const LAYOUT_QUERY = `*[_type == "layout"][0]{
   }
 }`
 
-export const PROJECTS_QUERY = `*[_type == "projects"] | order(orderRank asc){ title, slug, description, "tags": tags[]->{ name }, "image": images[0].image.asset->url, "video": images[0].video.asset->url }`
+export const PROJECTS_QUERY = `*[_type == "projects"] | order(orderRank asc){ title, slug, description, "tags": tags[]->{ name }, "image": images[0].image.asset->url, "video": images[0].video.asset->url, "bunnyVideoId": images[0].bunnyVideoId }`
 
 export const PROJECT_SLUGS_QUERY = `*[_type == "projects" && defined(slug.current)][].slug.current`
 
@@ -38,7 +39,8 @@ export const PROJECT_NAV_QUERY = `*[_type == "projects" && defined(slug.current)
   title,
   "slug": slug.current,
   "image": images[0].image.asset->url,
-  "video": images[0].video.asset->url
+  "video": images[0].video.asset->url,
+  "bunnyVideoId": images[0].bunnyVideoId
 }`
 
 const SECTION_CHILD_PROJECTION = `_key, _type,
@@ -46,11 +48,12 @@ const SECTION_CHILD_PROJECTION = `_key, _type,
     variant,
     description,
     "image": image.asset->url,
-    "video": video.asset->url
+    "video": video.asset->url,
+    bunnyVideoId
   },
   _type == "carousel" => {
     variant,
-    "slides": images[]{ _key, "image": image.asset->url, "video": video.asset->url }
+    "slides": images[]{ _key, "image": image.asset->url, "video": video.asset->url, bunnyVideoId }
   },
   _type == "captionCarousel" => {
     variant,
@@ -58,6 +61,7 @@ const SECTION_CHILD_PROJECTION = `_key, _type,
       _key,
       "image": image.asset->url,
       "video": video.asset->url,
+      bunnyVideoId,
       caption
     }
   },
@@ -66,12 +70,14 @@ const SECTION_CHILD_PROJECTION = `_key, _type,
     title,
     annotation,
     "image": image.asset->url,
-    "video": video.asset->url
+    "video": video.asset->url,
+    bunnyVideoId
   },
   _type == "imageHotspot" => {
     variant,
     "image": image.asset->url,
     "video": video.asset->url,
+    bunnyVideoId,
     spots[]{
       _key,
       title,
@@ -83,12 +89,14 @@ const SECTION_CHILD_PROJECTION = `_key, _type,
     variant,
     "image": image.asset->url,
     "video": video.asset->url,
+    bunnyVideoId,
     caption
   },
   _type == "imageCaptionHover" => {
     variant,
     "image": image.asset->url,
     "video": video.asset->url,
+    bunnyVideoId,
     caption
   },
   _type == "audioPlayer" => {
@@ -139,7 +147,8 @@ const CASE_STUDY_ITEM_PROJECTION = `_type == "textLarge" => {
     items[]{
       _key,
       "image": image.asset->url,
-      "video": video.asset->url
+      "video": video.asset->url,
+      bunnyVideoId
     }
   }`
 
@@ -152,6 +161,7 @@ export const PROJECT_BY_SLUG_QUERY = `*[_type == "projects" && slug.current == $
   "tags": tags[]->{ name },
   "heroImage": heroImage.asset->url,
   "heroVideo": heroVideo.asset->url,
+  "heroBunnyVideoId": heroBunnyVideoId,
   caseStudySections[]{
     _key, _type,
     ${CASE_STUDY_ITEM_PROJECTION},
@@ -166,7 +176,7 @@ export const PROJECT_BY_SLUG_QUERY = `*[_type == "projects" && slug.current == $
   }
 }`
 
-export const FEATURED_QUERY = `*[_type == "projects" && featured == true] | order(orderRank asc){ title, slug, description, "tags": tags[]->{ name }, "images": images[]{ "image": image.asset->url, "video": video.asset->url } }`
+export const FEATURED_QUERY = `*[_type == "projects" && featured == true] | order(orderRank asc){ title, slug, description, "tags": tags[]->{ name }, "images": images[]{ "image": image.asset->url, "video": video.asset->url, bunnyVideoId } }`
 
 export const MISSION_QUERY = `*[_type == "layout"][0].homepage->.components[_type == "mission"][0]{
   title,
@@ -184,14 +194,15 @@ export const SPECIAL_PROJECTS_QUERY = `*[_type == "layout"][0].homepage->.compon
   title,
   description,
   "image": image.asset->url,
-  "video": video.asset->url
+  "video": video.asset->url,
+  bunnyVideoId
 }`
 
 export const SPECIAL_PROJECT_PAGES_QUERY = `*[_type == "specialProjectsPage"] | order(orderRank asc){
   title,
   slug,
   description,
-  "images": images[]{ "image": image.asset->url, "video": video.asset->url }
+  "images": images[]{ "image": image.asset->url, "video": video.asset->url, bunnyVideoId }
 }`
 
 export const SPECIAL_PROJECT_PAGE_SLUGS_QUERY = `*[_type == "specialProjectsPage" && defined(slug.current)][].slug.current`
@@ -200,7 +211,8 @@ export const SPECIAL_PROJECT_PAGE_NAV_QUERY = `*[_type == "specialProjectsPage" 
   title,
   "slug": slug.current,
   "image": images[0].image.asset->url,
-  "video": images[0].video.asset->url
+  "video": images[0].video.asset->url,
+  "bunnyVideoId": images[0].bunnyVideoId
 }`
 
 export const SPECIAL_PROJECT_PAGE_BY_SLUG_QUERY = `*[_type == "specialProjectsPage" && slug.current == $slug][0]{
@@ -212,6 +224,7 @@ export const SPECIAL_PROJECT_PAGE_BY_SLUG_QUERY = `*[_type == "specialProjectsPa
   "tags": tags[]->{ name },
   "heroImage": heroImage.asset->url,
   "heroVideo": heroVideo.asset->url,
+  "heroBunnyVideoId": heroBunnyVideoId,
   caseStudySections[]{
     _key, _type,
     ${CASE_STUDY_ITEM_PROJECTION},
@@ -229,7 +242,7 @@ export const SPECIAL_PROJECT_PAGE_BY_SLUG_QUERY = `*[_type == "specialProjectsPa
 export const SPECIAL_PROJECTS_LANDING_QUERY = `*[_type == "layout"][0].specialProjectsLanding->{
   title,
   description,
-  "featured": featured->{ title, "slug": slug.current, "heroImage": heroImage.asset->url, "heroVideo": heroVideo.asset->url }
+  "featured": featured->{ title, "slug": slug.current, "heroImage": heroImage.asset->url, "heroVideo": heroVideo.asset->url, "heroBunnyVideoId": heroBunnyVideoId }
 }`
 
 export const ABOUT_QUERY = `*[_type == "layout"][0].aboutPage->{
@@ -276,7 +289,8 @@ export const ABOUT_QUERY = `*[_type == "layout"][0].aboutPage->{
     }
   },
   "image": image.asset->url,
-  "video": video.asset->url
+  "video": video.asset->url,
+  bunnyVideoId
 }`
 
 export const INQUIRE_ONLY_QUERY = `*[_type == "layout"][0].inquirePage->.inquireOnly`
@@ -304,9 +318,11 @@ export const INQUIRE_QUERY = `*[_type == "layout"][0].inquirePage->{
   buttons[]{ _key, title },
   "footerImage": footerImage.asset->url,
   "footerVideo": footerVideo.asset->url,
+  "footerBunnyVideoId": footerBunnyVideoId,
   location,
   "locationImage": locationImage.asset->url,
   "locationVideo": locationVideo.asset->url,
+  "locationBunnyVideoId": locationBunnyVideoId,
   copyright
 }`
 

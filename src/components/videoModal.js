@@ -9,6 +9,7 @@ import { useGSAP } from "@gsap/react"
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin"
 import { HeaderTitleContext } from "@/layouts/layout"
 import { runNavSwap } from "@/components/pageTransition"
+import { bunnyHlsUrl, bunnyThumbUrl } from "@/utils/bunny"
 
 gsap.registerPlugin(useGSAP, MorphSVGPlugin)
 
@@ -22,7 +23,9 @@ function prefersReducedMotion() {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches
 }
 
-export default function VideoModal({ open, onClose, src, poster, title, description }) {
+export default function VideoModal({ open, onClose, src, poster, title, description, bunnyVideoId }) {
+    const hlsSrc = bunnyVideoId ? bunnyHlsUrl(bunnyVideoId) : null
+    const posterSrc = poster || (bunnyVideoId ? bunnyThumbUrl(bunnyVideoId) : undefined)
     const [mounted, setMounted] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
     const [isMuted, setIsMuted] = useState(true)
@@ -154,6 +157,36 @@ export default function VideoModal({ open, onClose, src, poster, title, descript
         return () => document.removeEventListener("fullscreenchange", onFsChange)
     }, [])
 
+    // Attach the Bunny HLS stream for long-form video. Safari plays HLS natively;
+    // other browsers get hls.js (lazy-loaded so it's not in the main bundle).
+    useEffect(() => {
+        if (!open || !hlsSrc) return
+        const el = videoRef.current
+        if (!el) return
+        if (el.canPlayType("application/vnd.apple.mpegurl")) {
+            el.src = hlsSrc
+            return
+        }
+        let hls
+        let cancelled = false
+        import("hls.js").then(({ default: Hls }) => {
+            if (cancelled) return
+            const node = videoRef.current
+            if (!node) return
+            if (Hls.isSupported()) {
+                hls = new Hls()
+                hls.loadSource(hlsSrc)
+                hls.attachMedia(node)
+            } else {
+                node.src = hlsSrc
+            }
+        })
+        return () => {
+            cancelled = true
+            if (hls) hls.destroy()
+        }
+    }, [open, hlsSrc])
+
     useGSAP(() => {
         if (!pathRef.current) return
         gsap.to(pathRef.current, {
@@ -224,8 +257,8 @@ export default function VideoModal({ open, onClose, src, poster, title, descript
             <div ref={frameRef} className='video-modal__frame radius-15 overflow' onClick={stop}>
                 <video
                     ref={videoRef}
-                    src={src}
-                    poster={poster}
+                    src={hlsSrc ? undefined : src}
+                    poster={posterSrc}
                     autoPlay
                     muted
                     playsInline

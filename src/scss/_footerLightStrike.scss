@@ -2,6 +2,10 @@
     position: relative;
     overflow: hidden;
     isolation: isolate;
+    // Clip composited children (the mix-blend-mode canvas) to the rounded
+    // corners — overflow:hidden alone doesn't clip GPU layers, so the radius
+    // appears to drop out while the WebGL strike is active on hover.
+    clip-path: inset(0 round 15px);
 }
 
 .footer-light-strike {

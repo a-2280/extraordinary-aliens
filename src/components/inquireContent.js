@@ -14,6 +14,10 @@ const components = {
     },
 }
 
+// Temporary: until a proper meeting booker is wired up, the CTA links straight to a
+// Google Calendar booking page. The custom-fields form below is commented out for now.
+const BOOKING_URL = "https://calendar.app.google/UbEsr2Pej5pC6gRm6"
+
 export default function InquireContent({ inquire }) {
     const [formOpen, setFormOpen] = useState(false)
     const [slotOpen, setSlotOpen] = useState(false)
@@ -57,6 +61,7 @@ export default function InquireContent({ inquire }) {
             .to(ctaContentRef.current, { autoAlpha: 1, duration: 0.18, ease: "power2.out" })
     }, { dependencies: [formOpen] })
 
+    /* Temporarily disabled — form open/close animation. Restore with the form below.
     useGSAP(() => {
         const out = 0.25
         const inDur = 0.3
@@ -98,6 +103,7 @@ export default function InquireContent({ inquire }) {
         gsap.to(enteringLeft, { autoAlpha: 1, duration: inDur, delay: out, ease: "power2.out" })
         gsap.to(enteringRight, { autoAlpha: 1, duration: inDur, delay: out + stag, ease: "power2.out" })
     }, { dependencies: [formOpen] })
+    */
 
     return (
         <div className='p28 h-100vh flex flex-col justify-center fade--in m-justify-start' data-sal>
@@ -111,18 +117,12 @@ export default function InquireContent({ inquire }) {
                             <PortableText value={inquire?.formText} components={components} />
                         </div>
                     </div>
-                    <button className='button flex align-center fade--in delay-100 inquire-cta' data-sal onClick={() => {
-                        const willOpen = !formOpen
-                        const isMobile = window.matchMedia("(max-width: 768px)").matches
-                        if (willOpen) setSlotOpen(true)
-                        else if (!isMobile) setSlotOpen(false)
-                        setFormOpen(willOpen)
-                    }}>
+                    <a href={BOOKING_URL} target='_blank' rel='noopener noreferrer' className='button flex align-center fade--in delay-100 inquire-cta' data-sal>
                         <span ref={ctaContentRef} className='flex align-center'>
-                            {!ctaDisplay && <img className='icon' src='/images/top-right.svg' alt='' width='14' height='9' />}
-                            <p>{ctaDisplay ? "Close" : "Book a call"}</p>
+                            <img className='icon' src='/images/top-right.svg' alt='' width='14' height='9' />
+                            <p>Book a call</p>
                         </span>
-                    </button>
+                    </a>
                 </div>
                 <div ref={slotRef} className='flex-1 inquire-slot'>
                     <div ref={newDivRef} className='flex gap-3 inquire-buttons m-pt15'>
@@ -138,6 +138,7 @@ export default function InquireContent({ inquire }) {
                             </div>
                         </div>
                     </div>
+                    {/* Temporarily hidden — custom-fields form. Restore when a proper booker is wired up.
                     <form
                         ref={formRef}
                         name='inquire-form'
@@ -186,6 +187,7 @@ export default function InquireContent({ inquire }) {
                             <p>Schedule</p>
                         </button>
                     </form>
+                    */}
                 </div>
             </div>
             <InquireFooter inquire={inquire} className='m-show' />

@@ -71,6 +71,13 @@ export default defineType({
             fieldset: "caseStudy",
         }),
         defineField({
+            name: "heroBunnyVideoId",
+            title: "Hero Bunny video ID (for large videos)",
+            type: "string",
+            description: "Paste the video's ID from the Bunny Stream library. Takes priority over an uploaded file.",
+            fieldset: "caseStudy",
+        }),
+        defineField({
             name: "client",
             title: "Client",
             type: "string",

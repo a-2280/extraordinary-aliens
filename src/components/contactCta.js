@@ -15,6 +15,10 @@ const components = {
     },
 }
 
+// Temporary: until a proper meeting booker is wired up, the CTA links straight to a
+// Google Calendar booking page. The custom-fields form below is commented out for now.
+const BOOKING_URL = "https://calendar.app.google/UbEsr2Pej5pC6gRm6"
+
 export default function ContactCta({ contactCta }) {
     const [formOpen, setFormOpen] = useState(false)
     const rootRef = useRef()
@@ -27,6 +31,7 @@ export default function ContactCta({ contactCta }) {
         rootRef.current?.classList.toggle("form-open", formOpen)
     }, [formOpen])
 
+    /* Temporarily disabled — form-open animation, restore with the form below.
     useGSAP(() => {
         gsap.set(buttonRef.current, { transition: "none" })
         gsap.to(formRef.current, {
@@ -53,6 +58,7 @@ export default function ContactCta({ contactCta }) {
             })
         }
     }, { dependencies: [formOpen] })
+    */
 
     return (
         <div ref={rootRef} className='contact-cta p30 flex align-center gap-20 fade--in' data-sal>
@@ -68,11 +74,12 @@ export default function ContactCta({ contactCta }) {
                             </div>
                         )}
                     </div>
-                    <button ref={buttonRef} className='button flex align-center fade--in delay-100 m-mt20' data-sal onClick={() => setFormOpen(true)}>
+                    <a ref={buttonRef} href={BOOKING_URL} target='_blank' rel='noopener noreferrer' className='button flex align-center fade--in delay-100 m-mt20' data-sal>
                         <FaPhoneAlt className='icon' />
                         <p>{contactCta?.button}</p>
-                    </button>
+                    </a>
                 </div>
+                {/* Temporarily hidden — custom-fields form. Restore when a proper booker is wired up.
                 <div className={`flex-1 m-flex-none ${formOpen ? "m-flex align-center m-w-100" : "m-hide"}`}>
                     <form
                         ref={formRef}
@@ -104,6 +111,7 @@ export default function ContactCta({ contactCta }) {
                         </button>
                     </form>
                 </div>
+                */}
             </div>
         </div>
     )

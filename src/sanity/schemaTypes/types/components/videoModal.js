@@ -13,6 +13,12 @@ export default {
             options: { accept: "video/*" },
         },
         {
+            name: "bunnyVideoId",
+            title: "Bunny video ID (for large videos)",
+            type: "string",
+            description: "Paste the long video's ID from the Bunny Stream library. Plays as adaptive HLS; takes priority over an uploaded file.",
+        },
+        {
             name: "title",
             title: "Title",
             type: "string",

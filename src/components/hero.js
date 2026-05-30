@@ -16,7 +16,8 @@ const components = {
 export default function Hero({ data, headerLinks }) {
     const [open, setOpen] = useState(false)
     const videoSrc = data?.videoModal?.video
-    const hasVideo = Boolean(videoSrc)
+    const bunnyVideoId = data?.videoModal?.bunnyVideoId
+    const hasVideo = Boolean(videoSrc || bunnyVideoId)
 
     return (
         <div className='px30 pth h-75vh'>
@@ -41,6 +42,7 @@ export default function Hero({ data, headerLinks }) {
                     open={open}
                     onClose={() => setOpen(false)}
                     src={videoSrc}
+                    bunnyVideoId={bunnyVideoId}
                     title={data?.videoModal?.title}
                     description={data?.videoModal?.description}
                     headerLinks={headerLinks}

@@ -103,6 +103,12 @@ export default defineType({
             options: { accept: "video/*" },
         }),
         defineField({
+            name: "footerBunnyVideoId",
+            title: "Footer Bunny video ID (for large videos)",
+            type: "string",
+            description: "Paste the video's ID from the Bunny Stream library. Takes priority over an uploaded file.",
+        }),
+        defineField({
             name: "location",
             title: "Location",
             type: "string",
@@ -117,6 +123,12 @@ export default defineType({
             title: "Location Hover Video",
             type: "file",
             options: { accept: "video/*" },
+        }),
+        defineField({
+            name: "locationBunnyVideoId",
+            title: "Location Bunny video ID (for large videos)",
+            type: "string",
+            description: "Paste the video's ID from the Bunny Stream library. Takes priority over an uploaded file.",
         }),
         defineField({
             name: "copyright",

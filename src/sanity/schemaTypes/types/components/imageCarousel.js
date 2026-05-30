@@ -34,6 +34,12 @@ export default {
             options: { accept: "video/*" },
         },
         {
+            name: "bunnyVideoId",
+            title: "Bunny video ID (for large videos)",
+            type: "string",
+            description: "Paste the video's ID from the Bunny Stream library. Takes priority over an uploaded file.",
+        },
+        {
             name: "description",
             title: "Description",
             type: "text",
